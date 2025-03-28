@@ -6,7 +6,7 @@ public class Walker : MonoBehaviour
     public float spriteScale = 0.25f;
     public float speed = 2f;
     public List<Vector3> waypoints;
-    private int currentWaypoint = 1;
+    private int currentWaypoint = 1; // prvy vykreslime na Start()
     private Vector3 baseScale;
     private float xOffset = 0.5f;
     private bool isWalking = true;
@@ -26,6 +26,7 @@ public class Walker : MonoBehaviour
         
         Vector3 target = waypoints[currentWaypoint];
         Vector3 direction = target - transform.position;
+        // kul vec co ai navrhla
         if (Mathf.Abs(direction.x) > 0.01f)
         {
             baseScale.x = Mathf.Abs(spriteScale) * (direction.x > 0 ? 1 : -1);
