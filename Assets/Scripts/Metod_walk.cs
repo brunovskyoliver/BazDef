@@ -6,23 +6,27 @@ public class Walker : MonoBehaviour
     public float spriteScale = 0.25f;
     public float speed = 2f;
     public List<Vector3> waypoints;
-    private int currentWaypoint = 0;
+    private int currentWaypoint = 1;
     private Vector3 baseScale;
     private float xOffset = 0.5f;
+    private bool isWalking = true;
+    private Animator animator;
 
     void Start()
     {
-        transform.position = new Vector3(-1 + xOffset, 9, -1);
+        transform.position = waypoints[0];
         baseScale = new Vector3(spriteScale, spriteScale, 1);
         transform.localScale = baseScale;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (waypoints.Count == 0) return;
+        if (waypoints.Count == 0 || !isWalking) return;
+        
         Vector3 target = waypoints[currentWaypoint];
         Vector3 direction = target - transform.position;
-        if (Mathf.Abs(direction.x) > 0.10f)
+        if (Mathf.Abs(direction.x) > 0.01f)
         {
             baseScale.x = Mathf.Abs(spriteScale) * (direction.x > 0 ? 1 : -1);
             transform.localScale = baseScale;
@@ -35,14 +39,18 @@ public class Walker : MonoBehaviour
             new Vector2(transform.position.x, transform.position.y),
             new Vector2(target.x + xOffset, target.y)
         );
-        
 
         if (distance < 0.1f)
         {
             currentWaypoint++;
             if (currentWaypoint >= waypoints.Count)
             {
-                speed = 0;
+                isWalking = false;
+                transform.position = targetPos;
+                if (animator != null)
+                {
+                    animator.enabled = false;
+                }
             }
         }
     }
