@@ -31,13 +31,14 @@ public class level_settings : MonoBehaviour
     public EnemySettings enemySettings;
     [Tooltip("Prvy waypoint je startovacia pozicia")]
     public List<Vector3> enemyWaypoints;
+    public GameObject parentWaypoint;
     public WaveSettings waveSettings;
 
     public static level_settings Instance { get; private set; }
 
     void Awake()
     {
-        enemyWaypoints = FindWayPoints();
+       // enemyWaypoints = FindWayPoints();
         if (Instance == null) Instance = this;
         else
         {
