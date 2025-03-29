@@ -6,6 +6,8 @@ using UnityEngine;
 public class gameloop : MonoBehaviour
 {
     public Sprite walkerSkin;
+    private Animator animator;
+    public  RuntimeAnimatorController Mety;
 
     int spawnedmetys = 0;
     const int numOfMetods = 5;
@@ -29,9 +31,11 @@ public class gameloop : MonoBehaviour
             {
                 timer.Restart();
                 GameObject newWalker = new GameObject("Mety");
-                SpriteRenderer renderer = newWalker.AddComponent<SpriteRenderer>();
-                renderer.sprite = walkerSkin;
+                newWalker.AddComponent<SpriteRenderer>();
                 newWalker.AddComponent<Walker>();
+                newWalker.AddComponent<Animator>();
+                animator = newWalker.GetComponent<Animator>();
+                animator.runtimeAnimatorController = Mety; 
 
                 if (spawnedmetys >= numOfMetods) spawnMety = false;
                 spawnedmetys ++;
