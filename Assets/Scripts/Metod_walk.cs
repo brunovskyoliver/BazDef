@@ -5,6 +5,7 @@ public class Walker : MonoBehaviour
 {
     public float spriteScale = 0.25f;
     public float speed = 2f;
+    [Tooltip("Prvy waypoint je startovacia pozicia")]
     public List<Vector3> waypoints;
     private int currentWaypoint = 1; // prvy vykreslime na Start()
     private Vector3 baseScale;
