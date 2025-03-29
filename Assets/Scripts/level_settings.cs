@@ -9,12 +9,27 @@ public class WaveSettings
     public float speed = 2f;
 }
 
-public class level_settings : MonoBehaviour
+[System.Serializable]
+public class PlayerSettings
+{
+    public Sprite sprite;
+    public RuntimeAnimatorController animator;
+    public Vector3 position;
+    public Vector3 scale;
+}
+
+[System.Serializable]
+public class EnemySettings
 {
     public GameObject parentWaypoint;
     public Sprite enemySprite;
     public RuntimeAnimatorController enemyAnimator;
-     [Tooltip("Prvy waypoint je startovacia pozicia")]
+}
+public class level_settings : MonoBehaviour
+{
+    public PlayerSettings playerSettings;  
+    public EnemySettings enemySettings;
+    [Tooltip("Prvy waypoint je startovacia pozicia")]
     public List<Vector3> enemyWaypoints;
     public WaveSettings waveSettings;
 

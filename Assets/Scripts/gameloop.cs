@@ -13,6 +13,7 @@ public class gameloop : MonoBehaviour
     void Start()
     {
         UnityEngine.Debug.Log("Game Started");
+        SpawnPlayer();
     }
 
     void Update()
@@ -27,10 +28,10 @@ public class gameloop : MonoBehaviour
     {
         GameObject newWalker = new GameObject("Mety_"+spawnedEnemies); // rozdelime ich podla poradia spawnutia
         SpriteRenderer sr = newWalker.AddComponent<SpriteRenderer>();
-        sr.sprite = level_settings.Instance.enemySprite;
+        sr.sprite = level_settings.Instance.enemySettings.enemySprite;
         
         Animator anim = newWalker.AddComponent<Animator>();
-        anim.runtimeAnimatorController = level_settings.Instance.enemyAnimator;
+        anim.runtimeAnimatorController = level_settings.Instance.enemySettings.enemyAnimator;
         
         var walker = newWalker.AddComponent<Walker>();
         walker.waypoints = new List<Vector3>(level_settings.Instance.enemyWaypoints);
@@ -44,4 +45,17 @@ public class gameloop : MonoBehaviour
         
         nextSpawnTime = Time.time + level_settings.Instance.waveSettings.spawnDelay;
     }
+    void SpawnPlayer()
+    {
+        GameObject player = new GameObject("Player");
+        SpriteRenderer sr = player.AddComponent<SpriteRenderer>();
+        sr.sprite = level_settings.Instance.playerSettings.sprite;
+        
+        Animator anim = player.AddComponent<Animator>();
+        anim.runtimeAnimatorController = level_settings.Instance.playerSettings.animator;
+        
+        player.transform.position = level_settings.Instance.playerSettings.position;
+        player.transform.localScale = level_settings.Instance.playerSettings.scale;
+    }
+
 }

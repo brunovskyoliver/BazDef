@@ -219,9 +219,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.50825083
-    width: 0.53613865
-    height: 0.53613865
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 558864021}
   - component: {fileID: 558864024}
   m_Layer: 0
-  m_Name: Metod
+  m_Name: Metod_drawn_for_visualization
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +310,7 @@ Animator:
   m_GameObject: {fileID: 558864020}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
+  m_Controller: {fileID: 9100000, guid: b9c322cc527a944b1b2e89e855bccf00, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -409,6 +409,7 @@ MonoBehaviour:
   - {x: -7, y: 1, z: 0}
   - {x: 2, y: 1, z: 0}
   speed: 2
+  toBeDestroyed: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +551,7 @@ GameObject:
   - component: {fileID: 1150044555}
   - component: {fileID: 1150044557}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_drawn_for_visualization
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5305,11 +5306,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51d7551dffb7d42d0a1af9f18a7ce8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySprite: {fileID: 0}
-  enemyAnimator: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
+  playerSettings:
+    sprite: {fileID: 0}
+    animator: {fileID: 9100000, guid: 3b7c79b79abf64729bc5319edaf255d2, type: 2}
+    position: {x: 7.42, y: 1.54, z: -2}
+    scale: {x: -1.3, y: 1.3, z: 0}
+  enemySettings:
+    enemySprite: {fileID: 0}
+    enemyAnimator: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
   enemyWaypoints:
   - {x: -7, y: 1, z: -1}
-  - {x: 6, y: 1, z: -1}
+  - {x: 7, y: 1, z: -1}
   waveSettings:
     numberOfEnemies: 5
     spawnDelay: 1.5
