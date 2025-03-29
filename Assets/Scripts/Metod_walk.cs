@@ -4,14 +4,15 @@ using System.Collections.Generic;
 public class Walker : MonoBehaviour
 {
     public float spriteScale = 0.25f;
-    public float speed = 2f;
     [Tooltip("Prvy waypoint je startovacia pozicia")]
     public List<Vector3> waypoints;
     private int currentWaypoint = 1; // prvy vykreslime na Start()
+    public float speed;
     private Vector3 baseScale;
     private float xOffset = 0.5f;
     private bool isWalking = true;
     private Animator animator;
+    private float lastDirection = 1f;
 
     void Start()
     {
@@ -27,10 +28,12 @@ public class Walker : MonoBehaviour
         
         Vector3 target = waypoints[currentWaypoint];
         Vector3 direction = target - transform.position;
-        // kul vec co ai navrhla
-        if (Mathf.Abs(direction.x) > 0.01f)
+
+        // pri poslednom checkpointe sa neotaca
+        if (isWalking && Mathf.Abs(direction.x) > 0.01f && currentWaypoint < waypoints.Count -1 )
         {
-            baseScale.x = Mathf.Abs(spriteScale) * (direction.x > 0 ? 1 : -1);
+            lastDirection = Mathf.Sign(direction.x); 
+            baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
             transform.localScale = baseScale;
         }
         
@@ -53,6 +56,9 @@ public class Walker : MonoBehaviour
                 {
                     animator.enabled = false;
                 }
+                // toto zabezpeci, ze sa zachova posledny smer
+                baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
+                transform.localScale = baseScale;
             }
         }
     }

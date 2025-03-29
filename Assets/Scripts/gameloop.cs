@@ -1,49 +1,47 @@
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using System.Collections.Generic;
 
 public class gameloop : MonoBehaviour
 {
-    public Sprite walkerSkin;
-    private Animator animator;
-    public  RuntimeAnimatorController Mety;
+    private int spawnedEnemies = 0;
+    private bool isSpawnable = true;
+    private float nextSpawnTime = 0f;
 
-    int spawnedmetys = 0;
-    const int numOfMetods = 5;
-    const int timeDelay = 1500; // v milisekundach
-    bool spawnMety = true;
 
-    Stopwatch timer = new Stopwatch();
-    
     void Start()
     {
         UnityEngine.Debug.Log("Game Started");
-
-        timer.Start();
     }
 
     void Update()
     {
-        if (spawnMety)
+        if (isSpawnable && Time.time >= nextSpawnTime)
         {
-            if (timer.ElapsedMilliseconds > timeDelay)
-            {
-                timer.Restart();
-                GameObject newWalker = new GameObject("Mety");
-                newWalker.AddComponent<SpriteRenderer>();
-                newWalker.AddComponent<Walker>();
-                newWalker.AddComponent<Animator>();
-                animator = newWalker.GetComponent<Animator>();
-                animator.runtimeAnimatorController = Mety; 
-
-                if (spawnedmetys >= numOfMetods) spawnMety = false;
-                spawnedmetys ++;
-
-            }
+            SpawnEnemy();
         }
     }
 
+    void SpawnEnemy()
+    {
+        GameObject newWalker = new GameObject("Mety_"+spawnedEnemies); // rozdelime ich podla poradia spawnutia
+        SpriteRenderer sr = newWalker.AddComponent<SpriteRenderer>();
+        sr.sprite = level_settings.Instance.enemySprite;
+        
+        Animator anim = newWalker.AddComponent<Animator>();
+        anim.runtimeAnimatorController = level_settings.Instance.enemyAnimator;
+        
+        var walker = newWalker.AddComponent<Walker>();
+        walker.waypoints = new List<Vector3>(level_settings.Instance.enemyWaypoints);
+        walker.speed = level_settings.Instance.waveSettings.speed;
 
-
+        spawnedEnemies++;
+        if (spawnedEnemies >= level_settings.Instance.waveSettings.numberOfEnemies)
+        {
+            isSpawnable = false;
+        }
+        
+        nextSpawnTime = Time.time + level_settings.Instance.waveSettings.spawnDelay;
+    }
 }
