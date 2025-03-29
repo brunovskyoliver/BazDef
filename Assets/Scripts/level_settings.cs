@@ -11,6 +11,7 @@ public class WaveSettings
 
 public class level_settings : MonoBehaviour
 {
+    public GameObject parentWaypoint;
     public Sprite enemySprite;
     public RuntimeAnimatorController enemyAnimator;
      [Tooltip("Prvy waypoint je startovacia pozicia")]
@@ -21,10 +22,21 @@ public class level_settings : MonoBehaviour
 
     void Awake()
     {
+        enemyWaypoints = FindWayPoints();
         if (Instance == null) Instance = this;
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    public List<Vector3> FindWayPoints()
+    {
+        List<Vector3> waypointsPos = new List<Vector3>();
+        foreach (Transform child in parentWaypoint.transform)
+        {
+            waypointsPos.Add(child.position);  
+        }
+        return waypointsPos;
     }
 } 
