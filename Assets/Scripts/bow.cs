@@ -10,7 +10,7 @@ public class TowerPlacement : MonoBehaviour
     private Color validColor = new Color(1, 1, 1, 0.7f);
     private Color invalidColor = new Color(1, 0, 0, 0.7f);
     private bool isMouseOver = false;
-    private float yOffset = 2.50f;
+    private float yOffset = 0.75f;
 
     void Start()
     {
