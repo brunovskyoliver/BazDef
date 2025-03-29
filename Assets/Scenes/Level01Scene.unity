@@ -218,10 +218,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.50825083
-    width: 0.53613865
-    height: 0.53613865
+    x: 0.125
+    y: 0
+    width: 0.75000006
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -358,6 +358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72abd2977b624b5b8a4215c33c515b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundTilemap: {fileID: 1665685314}
+  grassTile: {fileID: 11400000, guid: 2bac73dcd06284db99654afa5171d826, type: 2}
+  towerSprite: {fileID: 4625833658082079308, guid: 8ea778e79c06347459d89a5c39fe08f3, type: 3}
 --- !u!212 &528101414
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,15 +1,19 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TowerPlacement : MonoBehaviour
 {
+    public Tilemap groundTilemap;
+    public TileBase grassTile;
     private bool isDragging = false;
     private GameObject towerPreview;
     public Sprite towerSprite;
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
-    private Color invalidColor = new Color(1, 0, 0, 0.7f);
+    private Color invalidColor = new Color(1, 0, 0, 0.7f); // red
     private bool isMouseOver = false;
+    private float xOffset = 0.5f;
     private float yOffset = 0.75f;
 
     void Start()
@@ -36,13 +40,12 @@ public class TowerPlacement : MonoBehaviour
             CreateTowerPreview();
             return;
         }
-
         if (isDragging && towerPreview != null)
         {
             Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = -1;
 
-            mousePosition.x = Mathf.Floor(mousePosition.x) + 0.5f;
+            mousePosition.x = Mathf.Floor(mousePosition.x) + xOffset;
             mousePosition.y = Mathf.Floor(mousePosition.y) + yOffset;
             
             towerPreview.transform.position = mousePosition;
@@ -72,7 +75,9 @@ public class TowerPlacement : MonoBehaviour
 
     bool CheckValidPosition(Vector3 position)
     {
-        return true;
+        Vector3Int cellPosition = groundTilemap.WorldToCell(position);
+        TileBase tile = groundTilemap.GetTile(cellPosition);
+        return tile == grassTile;
     }
 
     void PlaceTower(Vector3 position)
