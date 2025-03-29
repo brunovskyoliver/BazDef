@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 public class TowerPlacement : MonoBehaviour
 {
     public Tilemap groundTilemap;
     public TileBase grassTile;
+    private GameObject playerTower;
     private bool isDragging = false;
     private GameObject towerPreview;
     public Sprite towerSprite;
@@ -15,11 +17,13 @@ public class TowerPlacement : MonoBehaviour
     private bool isMouseOver = false;
     private float xOffset = 0.5f;
     private float yOffset = 0.75f;
+    private HashSet<Vector2Int> towerPositions = new HashSet<Vector2Int>();
 
     void Start()
     {
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerTower = GameObject.Find("Player_tower");
     }
 
     void OnMouseEnter()
@@ -75,17 +79,39 @@ public class TowerPlacement : MonoBehaviour
 
     bool CheckValidPosition(Vector3 position)
     {
+        if (playerTower != null && Vector3.Distance(playerTower.transform.position, position) < 0.5f)
+        {
+            return false;
+        }
+        
         Vector3Int cellPosition = groundTilemap.WorldToCell(position);
+        Vector2Int gridPosition = new Vector2Int(cellPosition.x, cellPosition.y);
+        
+        if (towerPositions.Contains(gridPosition))
+        {
+            return false;
+        }
+        
         TileBase tile = groundTilemap.GetTile(cellPosition);
         return tile == grassTile;
     }
 
     void PlaceTower(Vector3 position)
     {
+        Vector3Int cellPosition = groundTilemap.WorldToCell(position);
+        Vector2Int gridPosition = new Vector2Int(cellPosition.x, cellPosition.y);
+        
+        if (towerPositions.Contains(gridPosition))
+        {
+            return;
+        }
+        
         GameObject newTower = new GameObject("Tower");
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
+        
+        towerPositions.Add(gridPosition);
         CancelPlacement();
     }
 
