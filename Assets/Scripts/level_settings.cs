@@ -21,12 +21,13 @@ public class PlayerSettings
 [System.Serializable]
 public class EnemySettings
 {
-    public GameObject parentWaypoint;
+    
     public Sprite enemySprite;
     public RuntimeAnimatorController enemyAnimator;
 }
 public class level_settings : MonoBehaviour
 {
+    public GameObject parentWaypoint;
     public PlayerSettings playerSettings;  
     public EnemySettings enemySettings;
     [Tooltip("Prvy waypoint je startovacia pozicia")]
