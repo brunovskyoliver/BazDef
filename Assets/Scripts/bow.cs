@@ -42,7 +42,6 @@ public class TowerPlacement : MonoBehaviour
             Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = -1;
 
-            // Zarovnanie na grid
             mousePosition.x = Mathf.Floor(mousePosition.x) + 0.5f;
             mousePosition.y = Mathf.Floor(mousePosition.y) + yOffset;
             
