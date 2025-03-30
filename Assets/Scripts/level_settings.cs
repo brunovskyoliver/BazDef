@@ -13,6 +13,7 @@ public class WaveSettings
 public class PlayerSettings
 {
     public Sprite sprite;
+    public Sprite healthBarSprite;
     public GameObject playerTowerObject;
     public RuntimeAnimatorController animator;
     public Vector3 scale;

@@ -83,6 +83,14 @@ public class gameloop : MonoBehaviour
         player.transform.SetParent(playerTowerObj.transform);
         player.transform.localPosition = level_settings.Instance.playerSettings.offset;
         player.transform.localScale = level_settings.Instance.playerSettings.scale;
+
+        GameObject playerHealthBar = new GameObject("HealthBar");
+        playerHealthBar.transform.SetParent(player.transform);
+        playerHealthBar.transform.localPosition = new Vector3(-0.3f, 0.5f, 0);
+        SpriteRenderer healthBarRenderer = playerHealthBar.AddComponent<SpriteRenderer>();
+        healthBarRenderer.sprite = level_settings.Instance.playerSettings.healthBarSprite;
+        healthBarRenderer.sortingOrder = 2;
+
     }
 
 }
