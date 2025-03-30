@@ -29,6 +29,7 @@ public class TowerPlacement : MonoBehaviour
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
+        towerRange = level_settings.Instance.towerSettings.towerRange;
     }
 
     void OnMouseEnter()
@@ -158,6 +159,10 @@ public class TowerPlacement : MonoBehaviour
 
     void PlaceTower(Vector3 position)
     {
+        if (gameloop.Instance.waveStarted) {
+            Debug.Log("game started - cant place nomore");
+            return;
+        }
         Vector3Int cellPosition = groundTilemap.WorldToCell(position);
         Vector2Int gridPosition = new Vector2Int(cellPosition.x, cellPosition.y);
         

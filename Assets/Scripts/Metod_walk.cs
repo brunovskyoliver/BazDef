@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Walker : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Walker : MonoBehaviour
     public bool toAttack = false;
     private float destroyDelay = 0.58f; 
     public float health = 2f;
+    private Animator player_animator;
+    private static List<Walker> activeWalkers = new List<Walker>();
 
     void Start()
     {
@@ -26,41 +29,22 @@ public class Walker : MonoBehaviour
         transform.localScale = baseScale;
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
+        player_animator = player.GetComponent<Animator>();
+        activeWalkers.Add(this);
+    }
+
+    void OnDestroy()
+    {
+        activeWalkers.Remove(this);
+        RestoreIdleAnimation();
     }
 
     void Update()
     {
-        
-
-        if (waypoints.Count == 0 || !isWalking) return;
-        
-        Vector3 target = waypoints[currentWaypoint];
-        Vector3 direction = target - transform.position;
-
-        if (player != null && !toBeDestroyed)
-        {
-            float distanceToPlayer = Vector2.Distance(
-                new Vector2(transform.position.x, transform.position.y),
-                new Vector2(player.transform.position.x, player.transform.position.y)
-            );
-            if (distanceToPlayer < 1f){
-                toAttack = true;
-            }
-        }
-
+        // najskor riesime animaciu smrti az potom attack / move
         if (health <= 0)
         {
             toBeDestroyed = true;
-        }
-
-        if (toAttack)
-        {
-            if (animator != null)
-            {
-                animator.SetTrigger("Attack");
-                isWalking = false;
-            }
-            return;
         }
 
         if (toBeDestroyed)
@@ -74,6 +58,43 @@ public class Walker : MonoBehaviour
             return;
         }
 
+        if (toAttack)
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+                player_animator.SetTrigger("Hurt");
+                isWalking = false;
+            }
+            // tu nesmie byt return, chceme pokracovat v update
+        }
+
+        if (waypoints.Count == 0 || !isWalking) return;
+        
+        Vector3 target = waypoints[currentWaypoint];
+        Vector3 direction = target - transform.position;
+
+        if (player != null && !toBeDestroyed)
+        {
+            float distanceToPlayer = Vector2.Distance(
+                new Vector2(transform.position.x, transform.position.y),
+                new Vector2(player.transform.position.x, player.transform.position.y)
+            );
+            // simple mechanika aby sme vedeli kedy prestat animovat player "Hurt" 
+            if (distanceToPlayer < 1f)
+            {
+                if (!toAttack)
+                {
+                    toAttack = true;
+                }
+            }
+            else if (toAttack)
+            {
+                toAttack = false;
+                RestoreIdleAnimation();
+            }
+        }
+
         // pri poslednom checkpointe sa neotaca
         if (isWalking && Mathf.Abs(direction.x) > 0.01f && currentWaypoint < waypoints.Count -1 )
         {
@@ -81,7 +102,6 @@ public class Walker : MonoBehaviour
             baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
             transform.localScale = baseScale;
         }
-        
         Vector3 currentPos = transform.position;
         Vector3 targetPos = new Vector3(target.x + xOffset, target.y, -1);
         transform.position = Vector3.MoveTowards(currentPos, targetPos, speed * Time.deltaTime);
@@ -105,6 +125,16 @@ public class Walker : MonoBehaviour
                 baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
                 transform.localScale = baseScale;
             }
+        }
+    }
+
+    private void RestoreIdleAnimation()
+    {
+        // toto je velky goofy vec co som nasiel, ale funguje to
+        bool anyEnemyAttacking = activeWalkers.Any(w => w != null && w.toAttack);
+        if (!anyEnemyAttacking && player_animator != null)
+        {
+            player_animator.SetTrigger("Idle");
         }
     }
 }
