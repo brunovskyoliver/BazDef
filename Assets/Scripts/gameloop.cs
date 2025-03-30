@@ -28,6 +28,10 @@ public class gameloop : MonoBehaviour
     void SpawnEnemy()
     {
         GameObject newWalker = new GameObject("Mety_"+spawnedEnemies); // rozdelime ich podla poradia spawnutia
+        newWalker.layer = LayerMask.NameToLayer("Enemy");
+        CircleCollider2D collider = newWalker.AddComponent<CircleCollider2D>();
+        collider.isTrigger = true;
+
         SpriteRenderer sr = newWalker.AddComponent<SpriteRenderer>();
         sr.sprite = level_settings.Instance.enemySettings.enemySprite;
         
@@ -54,8 +58,9 @@ public class gameloop : MonoBehaviour
         
         Animator anim = player.AddComponent<Animator>();
         anim.runtimeAnimatorController = level_settings.Instance.playerSettings.animator;
-        
-        player.transform.position = level_settings.Instance.playerSettings.position;
+        GameObject playerTowerObj = level_settings.Instance.playerSettings.playerTowerObject;
+        player.transform.SetParent(playerTowerObj.transform);
+        player.transform.localPosition = level_settings.Instance.playerSettings.offset; 
         player.transform.localScale = level_settings.Instance.playerSettings.scale;
     }
 

@@ -13,9 +13,10 @@ public class WaveSettings
 public class PlayerSettings
 {
     public Sprite sprite;
+    public GameObject playerTowerObject;
     public RuntimeAnimatorController animator;
-    public Vector3 position;
     public Vector3 scale;
+    public Vector3 offset;
 }
 
 [System.Serializable]
