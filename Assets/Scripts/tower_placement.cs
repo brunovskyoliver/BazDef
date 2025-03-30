@@ -10,6 +10,9 @@ public class TowerPlacement : MonoBehaviour
     private bool isDragging = false;
     private GameObject towerPreview;
     public Sprite towerSprite;
+    public Sprite towerRangeSprite; 
+    public Sprite towerRangePlacedSprite;
+    public Sprite towerArcherSprite;
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
@@ -18,6 +21,8 @@ public class TowerPlacement : MonoBehaviour
     private float xOffset = 0.5f;
     private float yOffset = 0.75f;
     private HashSet<Vector2Int> towerPositions = new HashSet<Vector2Int>();
+    public float towerRange = 2f; 
+    public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
 
     void Start()
     {
@@ -57,7 +62,21 @@ public class TowerPlacement : MonoBehaviour
             bool isValidPosition = CheckValidPosition(mousePosition);
             towerPreview.GetComponent<SpriteRenderer>().color = 
                 isValidPosition ? validColor : invalidColor;
-
+            Transform archerPreview = towerPreview.transform.Find("Archer");
+            if (archerPreview != null)
+            {
+                Color archerColorCurrent = isValidPosition ? 
+                    validColor : new Color(invalidColor.r, invalidColor.g, invalidColor.b, validColor.a);
+                archerPreview.GetComponent<SpriteRenderer>().color = archerColorCurrent;
+            }
+            Transform rangeCircle = towerPreview.transform.Find("TowerPreviewRange");
+            if (rangeCircle != null)
+            {
+                Color rangeColorCurrent = isValidPosition ? 
+                    rangeColor : new Color(invalidColor.r, invalidColor.g, invalidColor.b, rangeColor.a);
+                rangeCircle.GetComponent<SpriteRenderer>().color = rangeColorCurrent;
+            }
+            
             if (Input.GetMouseButtonDown(0) && isValidPosition)
             {
                 PlaceTower(mousePosition);
@@ -75,7 +94,48 @@ public class TowerPlacement : MonoBehaviour
         SpriteRenderer sr = towerPreview.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         sr.color = validColor;
+        CreateArcher(towerPreview, sr);
+        CreateTowerPreviewRange(towerPreview);
     }
+
+    void CreateTowerPreviewRange(GameObject tower)
+    {
+        GameObject rangeCircle = new GameObject("TowerPreviewRange");
+        rangeCircle.transform.SetParent(tower.transform);
+        rangeCircle.transform.localPosition = Vector3.zero;
+
+        SpriteRenderer rangeRenderer = rangeCircle.AddComponent<SpriteRenderer>();
+        rangeRenderer.sprite = towerRangeSprite;
+        rangeRenderer.color = rangeColor;
+        rangeRenderer.sortingOrder = -2;
+        float scaleFactor = towerRange;
+        rangeCircle.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+    }
+    void CreateTowerRange(GameObject tower)
+    {
+        GameObject rangeCircle = new GameObject("TowerRange");
+        rangeCircle.transform.SetParent(tower.transform);
+        rangeCircle.transform.localPosition = Vector3.zero;
+        SpriteRenderer rangeRenderer = rangeCircle.AddComponent<SpriteRenderer>();
+        rangeRenderer.sprite = towerRangePlacedSprite;
+        rangeRenderer.color = rangeColor;
+        rangeRenderer.sortingOrder = -2;
+        float scaleFactor = towerRange;
+        rangeCircle.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+    }
+
+
+    void CreateArcher(GameObject tower, SpriteRenderer towerRenderer)
+    {
+        GameObject archer = new GameObject("Archer");
+        archer.transform.SetParent(tower.transform);
+        archer.transform.localPosition = new Vector3(0, 0.5f, 0);
+        SpriteRenderer archerRenderer = archer.AddComponent<SpriteRenderer>();
+        archerRenderer.sprite = towerArcherSprite;
+        archerRenderer.sortingOrder = 1;
+        archerRenderer.color = towerRenderer.color;
+
+    } 
 
     bool CheckValidPosition(Vector3 position)
     {
@@ -105,14 +165,14 @@ public class TowerPlacement : MonoBehaviour
         {
             return;
         }
-        
         GameObject newTower = new GameObject("Tower");
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
-        
         towerPositions.Add(gridPosition);
         CancelPlacement();
+        CreateTowerRange(newTower);
+        CreateArcher(newTower, sr);
     }
 
     void CancelPlacement()
