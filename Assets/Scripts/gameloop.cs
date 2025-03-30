@@ -28,6 +28,10 @@ public class gameloop : MonoBehaviour
     void SpawnEnemy()
     {
         GameObject newWalker = new GameObject("Mety_"+spawnedEnemies); // rozdelime ich podla poradia spawnutia
+        newWalker.layer = LayerMask.NameToLayer("Enemy");
+        CircleCollider2D collider = newWalker.AddComponent<CircleCollider2D>();
+        collider.isTrigger = true;
+
         SpriteRenderer sr = newWalker.AddComponent<SpriteRenderer>();
         sr.sprite = level_settings.Instance.enemySettings.enemySprite;
         

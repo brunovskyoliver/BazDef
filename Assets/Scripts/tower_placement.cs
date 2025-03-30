@@ -169,10 +169,13 @@ public class TowerPlacement : MonoBehaviour
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
-        towerPositions.Add(gridPosition);
-        CancelPlacement();
+        
         CreateTowerRange(newTower);
         CreateArcher(newTower, sr);
+        newTower.AddComponent<TowerTargeting>();
+        newTower.AddComponent<TowerAttack>();
+        towerPositions.Add(gridPosition);
+        CancelPlacement();
     }
 
     void CancelPlacement()

@@ -15,7 +15,8 @@ public class Walker : MonoBehaviour
     private float lastDirection = 1f;
     private GameObject player;
     public bool toBeDestroyed = false;
-    private float destroyDelay = 0.58f; // čas na prehratie animácie smrti
+    private float destroyDelay = 0.58f; 
+    public float health = 2f;
 
     void Start()
     {
@@ -45,6 +46,12 @@ public class Walker : MonoBehaviour
                 toBeDestroyed = true;
             }
         }
+
+        if (health <= 0)
+        {
+            toBeDestroyed = true;
+        }
+
         if (toBeDestroyed)
         {
             if (animator != null)
