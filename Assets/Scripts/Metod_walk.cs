@@ -15,6 +15,7 @@ public class Walker : MonoBehaviour
     private float lastDirection = 1f;
     private GameObject player;
     public bool toBeDestroyed = false;
+    public bool toAttack = false;
     private float destroyDelay = 0.58f; 
     public float health = 2f;
 
@@ -43,13 +44,23 @@ public class Walker : MonoBehaviour
                 new Vector2(player.transform.position.x, player.transform.position.y)
             );
             if (distanceToPlayer < 1f){
-                toBeDestroyed = true;
+                toAttack = true;
             }
         }
 
         if (health <= 0)
         {
             toBeDestroyed = true;
+        }
+
+        if (toAttack)
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+                isWalking = false;
+            }
+            return;
         }
 
         if (toBeDestroyed)

@@ -58,8 +58,9 @@ public class gameloop : MonoBehaviour
         
         Animator anim = player.AddComponent<Animator>();
         anim.runtimeAnimatorController = level_settings.Instance.playerSettings.animator;
-        
-        player.transform.position = level_settings.Instance.playerSettings.position;
+        GameObject playerTowerObj = level_settings.Instance.playerSettings.playerTowerObject;
+        player.transform.SetParent(playerTowerObj.transform);
+        player.transform.localPosition = level_settings.Instance.playerSettings.offset; 
         player.transform.localScale = level_settings.Instance.playerSettings.scale;
     }
 
