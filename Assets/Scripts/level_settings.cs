@@ -26,6 +26,16 @@ public class EnemySettings
     public Sprite enemySprite;
     public RuntimeAnimatorController enemyAnimator;
 }
+
+[System.Serializable]
+
+public class TowerSettings
+{
+    public float towerRange = 2f;
+    public float attackSpeed = 0.5f;
+    public float attackDamage = 1f;
+}
+
 public class level_settings : MonoBehaviour
 {
     public PlayerSettings playerSettings;  
@@ -34,6 +44,7 @@ public class level_settings : MonoBehaviour
     public List<Vector3> enemyWaypoints;
     public GameObject parentWaypoint;
     public WaveSettings waveSettings;
+    public TowerSettings towerSettings;
 
     public static level_settings Instance { get; private set; }
 

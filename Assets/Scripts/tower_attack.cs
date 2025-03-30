@@ -5,10 +5,13 @@ public class TowerAttack : MonoBehaviour
     private TowerTargeting targeting;
     private float attackCooldown = 0.5f;
     private float nextAttackTime = 0f;
+    private float attackDamage = 1f;
 
     void Start()
     {
         targeting = GetComponent<TowerTargeting>();
+        attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
+        attackDamage = level_settings.Instance.towerSettings.attackDamage;
     }
 
     void Update()
@@ -35,7 +38,7 @@ public class TowerAttack : MonoBehaviour
         Walker enemy = target.GetComponent<Walker>();
         if (enemy != null)
         {
-            enemy.health -= 1f; 
+            enemy.health -= attackDamage;
         }
         GameObject line = new GameObject("Line");
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();

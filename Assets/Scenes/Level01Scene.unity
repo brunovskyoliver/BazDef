@@ -297,9 +297,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.125
     y: 0
-    width: 0.99983466
+    width: 0.75000006
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -5862,6 +5862,10 @@ MonoBehaviour:
     numberOfEnemies: 5
     spawnDelay: 1.5
     speed: 2
+  towerSettings:
+    towerRange: 2
+    attackSpeed: 0.5
+    attackDamage: 1
 --- !u!4 &1673638268
 Transform:
   m_ObjectHideFlags: 0
@@ -5921,6 +5925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb4dbefc14194aa3acf771cd8d31838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveStarted: 0
   startWaveButton: {fileID: 650270383}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

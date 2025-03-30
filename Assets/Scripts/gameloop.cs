@@ -9,9 +9,17 @@ public class gameloop : MonoBehaviour
     private int spawnedEnemies = 0;
     private bool isSpawnable = true;
     private float nextSpawnTime = 0f;
-    private bool waveStarted = false;
+    public bool waveStarted = false;
     public Button startWaveButton;
-
+    public static gameloop Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         UnityEngine.Debug.Log("Game Started");
