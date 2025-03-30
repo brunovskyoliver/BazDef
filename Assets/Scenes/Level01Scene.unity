@@ -298,9 +298,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.5062872
-    width: 0.54342437
-    height: 0.54351425
+    y: 0
+    width: 0.99983466
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 528101413}
   - component: {fileID: 528101412}
   m_Layer: 0
-  m_Name: Basic_archer_tower
+  m_Name: Archer_tower_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
