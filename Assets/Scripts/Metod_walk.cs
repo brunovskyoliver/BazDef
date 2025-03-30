@@ -21,6 +21,9 @@ public class Walker : MonoBehaviour
     public float health = 2f;
     private Animator player_animator;
     private static List<Walker> activeWalkers = new List<Walker>();
+    private float nextAttackTime = 0f;
+    private float attackDamage;
+    private float attackSpeed;
 
     void Start()
     {
@@ -31,6 +34,8 @@ public class Walker : MonoBehaviour
         player = GameObject.Find("Player");
         player_animator = player.GetComponent<Animator>();
         activeWalkers.Add(this);
+        attackDamage = level_settings.Instance.enemySettings.attackDamage;
+        attackSpeed = level_settings.Instance.enemySettings.attackSpeed;
     }
 
     void OnDestroy()
@@ -63,7 +68,14 @@ public class Walker : MonoBehaviour
             if (animator != null)
             {
                 animator.SetTrigger("Attack");
-                player_animator.SetTrigger("Hurt");
+                if (Time.time >= nextAttackTime)
+                {
+                    player_animator.SetTrigger("Hurt");
+                    level_settings.Instance.playerSettings.health -= attackDamage;
+                    float healthPercent = level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth;
+                    gameloop.Instance.UpdateHealthBar(healthPercent);
+                    nextAttackTime = Time.time + attackSpeed;
+                }
                 isWalking = false;
             }
             // tu nesmie byt return, chceme pokracovat v update

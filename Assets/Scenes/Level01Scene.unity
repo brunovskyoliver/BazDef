@@ -5846,7 +5846,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSettings:
     sprite: {fileID: 0}
-    healthBarSprite: {fileID: -5027232336098108418, guid: eecca7f4622f74e3ea99a56a9627d17e, type: 3}
+    health: 5
+    maxHealth: 5
     playerTowerObject: {fileID: 1462883848}
     animator: {fileID: 9100000, guid: 3b7c79b79abf64729bc5319edaf255d2, type: 2}
     scale: {x: -1.3, y: 1.3, z: 0}
@@ -5855,6 +5856,8 @@ MonoBehaviour:
     parentWaypoint: {fileID: 0}
     enemySprite: {fileID: 0}
     enemyAnimator: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
+    attackDamage: 1
+    attackSpeed: 2
   enemyWaypoints:
   - {x: -7, y: 1, z: -1}
   - {x: 7, y: 1, z: -1}

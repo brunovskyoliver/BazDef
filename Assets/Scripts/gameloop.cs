@@ -12,6 +12,9 @@ public class gameloop : MonoBehaviour
     public bool waveStarted = false;
     public Button startWaveButton;
     public static gameloop Instance { get; private set; }
+    private GameObject player;
+    private Image healthBarFill;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -72,7 +75,7 @@ public class gameloop : MonoBehaviour
     }
     void SpawnPlayer()
     {
-        GameObject player = new GameObject("Player");
+        player = new GameObject("Player");
         SpriteRenderer sr = player.AddComponent<SpriteRenderer>();
         sr.sprite = level_settings.Instance.playerSettings.sprite;
         sr.sortingOrder = 1;
@@ -84,14 +87,40 @@ public class gameloop : MonoBehaviour
         player.transform.localPosition = level_settings.Instance.playerSettings.offset;
         player.transform.localScale = level_settings.Instance.playerSettings.scale;
 
-        GameObject playerHealthBar = new GameObject("HealthBar");
-        playerHealthBar.transform.SetParent(player.transform);
-        playerHealthBar.transform.localPosition = new Vector3(-0.3f, 0.5f, 0);
-        SpriteRenderer healthBarRenderer = playerHealthBar.AddComponent<SpriteRenderer>();
-        healthBarRenderer.sprite = level_settings.Instance.playerSettings.healthBarSprite;
-        healthBarRenderer.sortingOrder = 2;
+        GameObject healthBarContainer = new GameObject("HealthBarContainer");
+        Canvas canvas = healthBarContainer.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.sortingOrder = 2;
+        
+        healthBarContainer.transform.SetParent(player.transform);
+        healthBarContainer.transform.localPosition = new Vector3(-0.3f, 0.5f, 0);
+        healthBarContainer.transform.localScale = new Vector3(0.01f, 0.01f, 1f); 
 
+        GameObject healthBarBg = new GameObject("HealthBarBackground");
+        healthBarBg.transform.SetParent(healthBarContainer.transform);
+        Image bgImage = healthBarBg.AddComponent<Image>();
+        bgImage.color = new Color(0.2f, 0.2f, 0.2f, 0.8f); 
+        RectTransform bgRect = bgImage.rectTransform;
+        bgRect.sizeDelta = new Vector2(100, 10); 
+        bgRect.localPosition = Vector3.zero;
+        bgRect.localScale = new Vector3(1f, 1f, 0);
+
+        GameObject healthBarFillObj = new GameObject("HealthBarFill");
+        healthBarFillObj.transform.SetParent(healthBarBg.transform);
+        healthBarFill = healthBarFillObj.AddComponent<Image>(); 
+        healthBarFill.color = Color.green;
+        RectTransform fillRect = healthBarFill.rectTransform;
+        fillRect.sizeDelta = new Vector2(100, 10);
+        fillRect.localPosition = Vector3.zero;
+        fillRect.localScale = new Vector3(1f, 1f, 0);
     }
 
+    public void UpdateHealthBar(float healthPercent)
+    {
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = healthPercent;
+        }
+    }
 }
 
