@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class TowerAttack : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class TowerAttack : MonoBehaviour
         
         if (Time.time >= nextAttackTime)
         {
+            Assert.IsNotNull(targeting, "failed to init target script");
             if (targeting != null && targeting.HasTargetsInRange())
             {
                 GameObject target = targeting.GetClosestEnemy();

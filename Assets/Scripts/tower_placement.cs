@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public class TowerPlacement : MonoBehaviour
 {
@@ -50,6 +51,7 @@ public class TowerPlacement : MonoBehaviour
             CreateTowerPreview();
             return;
         }
+        Assert.IsNotNull(towerPreview, "failed to init tower preview");
         if (isDragging && towerPreview != null)
         {
             Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
