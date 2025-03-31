@@ -73,9 +73,11 @@ public class TowerAttack : MonoBehaviour
             else if (enemyDir == 2)
                 archerAnim.Play("archer_Shoot_Left");
             else 
+            {
                 archerAnim.Play("archer_Shoot_Left");
                 archer.transform.localScale = new Vector3(-3, 3, 1); // if I want to shoot to the right i have to miiror the left anim
-
+            }
+              
             StartCoroutine(CreateArrow());
         }
 
