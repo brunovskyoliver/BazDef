@@ -16,7 +16,7 @@ public class TowerPlacement : MonoBehaviour
     public Sprite towerArcherSprite;
     public RuntimeAnimatorController archerAnimator;
     public Sprite arrowSprite;
-    private Vector3 archerSize = new Vector3(3,3,0);
+    public Vector3 archerSize = new Vector3(3,3,0);
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
