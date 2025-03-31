@@ -1,5 +1,7 @@
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using UnityEditor.Rendering;
+using UnityEditor.Toolbars;
 using UnityEngine;
 
 public class TowerAttack : MonoBehaviour
@@ -10,11 +12,16 @@ public class TowerAttack : MonoBehaviour
     private float attackCooldown;
     private float nextAttackTime = 0f;
     private float attackDamage = 1f;
+    private float waitToChangeArcherAnim = 0.2f;
+    private float startWaitTime;
+    private const float animLenght = 0.5f;
+    private bool toCreateArrow;
+    private Walker enemy;
 
 
     void Start()
     {
-        archer = FindClosestObjectByName("Archer", transform.position);
+        
         targeting = GetComponent<TowerTargeting>();
         placement = FindAnyObjectByType<TowerPlacement>();
         attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
@@ -33,30 +40,48 @@ public class TowerAttack : MonoBehaviour
                 GameObject target = targeting.GetClosestEnemy();
                 if (target != null)
                 {
+                    startWaitTime = Time.time + animLenght;
+                    toCreateArrow = true; // aby nerobil animaciu ked uz umiera enemy
                     Attack(target);
+                    
                     nextAttackTime = Time.time + attackCooldown;
-                    Debug.Log(nextAttackTime);
-                    Debug.Log(Time.time);
                 }
             }
+        }
+
+        if (toCreateArrow && Time.time > startWaitTime)
+        {
+            CreateArrow();
+            toCreateArrow = false;
         }
     }
 
     void Attack(GameObject target)
     {
+        archer = FindClosestObjectByName("Archer", transform.position);
         Debug.Log(target.name);
-        Walker enemy = target.GetComponent<Walker>();
+        enemy = target.GetComponent<Walker>();
+
+        Animator archerAnim = archer.GetComponent<Animator>();
+        archerAnim.SetTrigger("archer_Shoot");
+
+    }
+
+    void CreateArrow()
+    {
+        Animator archerAnim = archer.GetComponent<Animator>();
+        archerAnim.SetTrigger("archer_Idle");
         
         GameObject arrowObject = new GameObject("arrow");
         var arrow = arrowObject.AddComponent<Arrow>();
         SpriteRenderer arrowsr = arrowObject.AddComponent<SpriteRenderer>();
-        // Animator archerAnim = archer.GetComponent<Animator>();
 
         arrowsr.sprite = placement.arrowSprite;
         arrow.towerPos = transform;
         arrow.targetedEnemy = enemy;
         arrow.arrow = arrowObject;
         arrow.attackDamage = attackDamage;
+
     }
 
     GameObject FindClosestObjectByName(string targetName, Vector3 position)
