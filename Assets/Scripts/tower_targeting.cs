@@ -76,12 +76,13 @@ public class TowerTargeting : MonoBehaviour
             // }
             // get the furthest enemy
             Walker walker = enemy.GetComponent<Walker>();
-            if (walker != null && walker.priority > priority)
+            if (walker != null && walker.priority > priority && !walker.toBeDestroyed)
             {
                 closest = enemy;
                 priority = walker.priority;
             }
         }
+        
         return closest;
     }
 }
