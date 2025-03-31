@@ -1,5 +1,9 @@
-using System.Linq.Expressions;
+using System;
+using System.Collections;
+using System.Runtime.ExceptionServices;
 using JetBrains.Annotations;
+using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering;
 using UnityEditor.Toolbars;
 using UnityEngine;
@@ -14,9 +18,9 @@ public class TowerAttack : MonoBehaviour
     private float nextAttackTime = 0f;
     private float attackDamage = 1f;
     private float waitToChangeArcherAnim = 0.2f;
-    private float startWaitTime;
     private const float animLenght = 0.5f;
     private bool toCreateArrow;
+    private int enemyDir; // 0 = down, 1 = up, 2 = left, 3 = right
     private Walker enemy;
 
 
@@ -41,20 +45,14 @@ public class TowerAttack : MonoBehaviour
                 GameObject target = targeting.GetClosestEnemy();
                 if (target != null)
                 {
-                    startWaitTime = Time.time + animLenght;
-                    toCreateArrow = true; 
                     Attack(target);
+                    
                     
                     nextAttackTime = Time.time + attackCooldown;
                 }
             }
         }
 
-        if (toCreateArrow && Time.time > startWaitTime)
-        {
-            CreateArrow();
-            toCreateArrow = false;
-        }
     }
 
     void Attack(GameObject target)
@@ -64,15 +62,70 @@ public class TowerAttack : MonoBehaviour
         enemy = target.GetComponent<Walker>();
 
         Animator archerAnim = archer.GetComponent<Animator>();
-        archerAnim.SetTrigger("archer_Shoot");
+        if (!enemy.toBeDestroyed)
+        { 
+            enemyDir = FindEnemeyDir();
+            archer.transform.localScale = placement.archerSize; // reset the orientation
+            if (enemyDir == 0)
+                archerAnim.Play("archer_Shoot_Back");
+            else if (enemyDir == 1)
+                archerAnim.Play("archer_Shoot_Front");
+            else if (enemyDir == 2)
+                archerAnim.Play("archer_Shoot_Left");
+            else 
+                archerAnim.Play("archer_Shoot_Left");
+                archer.transform.localScale = new Vector3(-3, 3, 1); // if I want to shoot to the right i have to miiror the left anim
+
+            StartCoroutine(CreateArrow());
+        }
 
     }
 
-    void CreateArrow()
+    int FindEnemeyDir()
     {
+        int dir;
+        float xOffset = archer.transform.position.x - enemy.transform.position.x;
+        float yOffset = archer.transform.position.y - enemy.transform.position.y;
+        if (Math.Abs(yOffset) > Math.Abs(xOffset))
+        {
+            if (yOffset > 0)
+            {
+                dir = 1;
+            }
+            else
+            {
+                dir = 0;
+            }
+        }
+        else
+        {
+            if (xOffset > 0)
+            {
+                dir = 2;
+            }
+            else
+            {
+                dir = 3;
+            }
+        }
+
+        return dir;
+    }
+
+    IEnumerator CreateArrow()
+    {
+        yield return new WaitForSeconds(animLenght); 
         Animator archerAnim = archer.GetComponent<Animator>();
-        archerAnim.SetTrigger("archer_Idle");
-        
+        if (enemyDir == 0)
+                archerAnim.Play("archer_Idle_Back");
+        else if (enemyDir == 1)
+            archerAnim.Play("archer_Idle_Front");
+        else 
+            archerAnim.Play("archer_Idle_Left");
+
+
+
+
         GameObject arrowObject = new GameObject("arrow");
         var arrow = arrowObject.AddComponent<Arrow>();
         SpriteRenderer arrowsr = arrowObject.AddComponent<SpriteRenderer>();
@@ -82,8 +135,9 @@ public class TowerAttack : MonoBehaviour
         arrow.targetedEnemy = enemy;
         arrow.arrow = arrowObject;
         arrow.attackDamage = attackDamage;
-
+        yield break;
     }
+
 
     GameObject FindClosestObjectByName(string targetName, Vector3 position)
     {
