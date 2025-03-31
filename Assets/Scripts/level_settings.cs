@@ -37,7 +37,7 @@ public class EnemySettings
 public class TowerSettings
 {
     public float towerRange = 2f;
-    public float attackSpeed = 0.5f;
+    public float attackSpeed = 2f;
     public float attackDamage = 1f;
 }
 

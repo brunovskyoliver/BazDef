@@ -443,6 +443,7 @@ MonoBehaviour:
   towerRangeSprite: {fileID: -2036660381736881138, guid: 634bff306018c4f0eb24277dcdcc2491, type: 3}
   towerRangePlacedSprite: {fileID: -7817414820505436063, guid: 75cd0ebf53f5442f49b52bf0b0e34619, type: 3}
   towerArcherSprite: {fileID: 2847894867104497665, guid: 323d8dc9ee9e04215bc55adbdf1dbdbc, type: 3}
+  archerAnimator: {fileID: 9100000, guid: 342352cb9453847868db60b886a15ea4, type: 2}
   arrowSprite: {fileID: -855298285791758126, guid: dde2632eeda934e0188a4e3cf43b9103, type: 3}
   towerRange: 2
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
@@ -5871,7 +5872,7 @@ MonoBehaviour:
     speed: 2
   towerSettings:
     towerRange: 2
-    attackSpeed: 0.5
+    attackSpeed: 1
     attackDamage: 1
 --- !u!4 &1673638268
 Transform:
