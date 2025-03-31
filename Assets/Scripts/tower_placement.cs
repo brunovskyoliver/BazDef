@@ -13,6 +13,7 @@ public class TowerPlacement : MonoBehaviour
     public Sprite towerRangeSprite; 
     public Sprite towerRangePlacedSprite;
     public Sprite towerArcherSprite;
+    public Sprite arrowSprite;
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
