@@ -5868,7 +5868,7 @@ MonoBehaviour:
   parentWaypoint: {fileID: 0}
   waveSettings:
     numberOfEnemies: 10
-    spawnDelay: 0.5
+    spawnDelay: 1
     speed: 2
   towerSettings:
     towerRange: 2
