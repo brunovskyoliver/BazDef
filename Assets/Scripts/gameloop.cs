@@ -47,7 +47,7 @@ public class gameloop : MonoBehaviour
             SpawnEnemy();
         }
         if (player == null) return;
-        if (level_settings.Instance.playerSettings.health >= 0) UpdateHealthBar(level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth);
+        //if (level_settings.Instance.playerSettings.health >= 0) UpdateHealthBar(level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth);
     }
 
     void SpawnEnemy()
@@ -120,7 +120,7 @@ public class gameloop : MonoBehaviour
 
     public void UpdateHealthBar(float healthPercent)
     {
-        if (healthPercent < 0 && !level_settings.Instance.playerSettings.playerDeath) {
+        if (healthPercent <= 0 && !level_settings.Instance.playerSettings.playerDeath) {
             PlayerDeath();
             level_settings.Instance.playerSettings.playerDeath = true;
         }
@@ -137,7 +137,10 @@ public class gameloop : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("Death");
+            float deathAnimLength = 1.0f; 
+            Destroy(player, deathAnimLength);
         }
     }
+    
 }
 

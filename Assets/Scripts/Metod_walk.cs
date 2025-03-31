@@ -25,6 +25,9 @@ public class Walker : MonoBehaviour
     private float attackDamage;
     private float attackSpeed;
     public float priority = 0f;
+    private bool hasStartedAttack = false;
+    private bool hasDealtFirstHit = false;
+    private float firstHitTime = 0f;
 
     void Start()
     {
@@ -50,7 +53,11 @@ public class Walker : MonoBehaviour
         // najskor riesime animaciu smrti az potom attack / move
         if (health <= 0)
         {
-            toBeDestroyed = true;
+            if (!toBeDestroyed)
+            {
+                toBeDestroyed = true;
+                animator.SetTrigger("Death");
+            }
         }
 
         if (toBeDestroyed)
@@ -64,24 +71,30 @@ public class Walker : MonoBehaviour
             return;
         }
 
-        if (toAttack)
+        if (toAttack && animator != null)
         {
-            if (animator != null)
+            if (!level_settings.Instance.playerSettings.playerDeath && Time.time >= nextAttackTime)
             {
                 animator.SetTrigger("Attack");
-                if (Time.time >= nextAttackTime)
+                
+                if (!hasDealtFirstHit)
                 {
-                    if (!level_settings.Instance.playerSettings.playerDeath) {
-                    player_animator.SetTrigger("Hurt");
-                    }
-                    level_settings.Instance.playerSettings.health -= attackDamage;
-                    float healthPercent = level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth;
-                    gameloop.Instance.UpdateHealthBar(healthPercent);
-                    nextAttackTime = Time.time + attackSpeed;
+                    DealDamage();
+                    hasDealtFirstHit = true;
                 }
-                isWalking = false;
+                else
+                {
+                    DealDamage();
+                }
+                nextAttackTime = Time.time + attackSpeed;
             }
+            isWalking = false;
             // tu nesmie byt return, chceme pokracovat v update
+        }
+        else
+        {
+            hasStartedAttack = false;
+            hasDealtFirstHit = false;
         }
 
         if (waypoints.Count == 0 || !isWalking) return;
@@ -142,6 +155,16 @@ public class Walker : MonoBehaviour
                 transform.localScale = baseScale;
             }
         }
+    }
+
+    private void DealDamage()
+    {
+        level_settings.Instance.playerSettings.health -= attackDamage;
+        float healthPercent = Mathf.Max(0, level_settings.Instance.playerSettings.health / 
+                                         level_settings.Instance.playerSettings.maxHealth);
+        player_animator.SetTrigger("Hurt");
+        gameloop.Instance.UpdateHealthBar(healthPercent);
+        nextAttackTime = Time.time + attackSpeed;
     }
 
     private void RestoreIdleAnimation()

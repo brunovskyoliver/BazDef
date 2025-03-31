@@ -300,7 +300,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 0.99979985
+    height: 0.99966705
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -5861,15 +5861,15 @@ MonoBehaviour:
     enemySprite: {fileID: 0}
     enemyAnimator: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
     attackDamage: 1
-    attackSpeed: 2
+    attackSpeed: 0.75
   enemyWaypoints:
   - {x: -7, y: 1, z: -1}
   - {x: 7, y: 1, z: -1}
   parentWaypoint: {fileID: 0}
   waveSettings:
-    numberOfEnemies: 10
+    numberOfEnemies: 1
     spawnDelay: 1
-    speed: 2
+    speed: 4
   towerSettings:
     towerRange: 2
     attackSpeed: 1
