@@ -51,7 +51,6 @@ public class TowerPlacement : MonoBehaviour
             CreateTowerPreview();
             return;
         }
-        Assert.IsNotNull(towerPreview, "failed to init tower preview");
         if (isDragging && towerPreview != null)
         {
             Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);

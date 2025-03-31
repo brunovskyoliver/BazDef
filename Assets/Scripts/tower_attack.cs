@@ -15,7 +15,7 @@ public class TowerAttack : MonoBehaviour
         attackDamage = level_settings.Instance.towerSettings.attackDamage;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Time.timeSinceLevelLoad < attackCooldown) return;
         

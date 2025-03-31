@@ -64,17 +64,24 @@ public class TowerTargeting : MonoBehaviour
     {
         if (enemiesInRange.Count == 0) return null;
         GameObject closest = null;
-        float closestDistance = 1000f;
+        //float closestDistance = 1000f;
+        float priority = 0f;
         foreach (GameObject enemy in enemiesInRange)
         {
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
+            // float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            // if (distance < closestDistance)
+            // {
+            //     closest = enemy;
+            //     closestDistance = distance;
+            // }
+            // get the furthest enemy
+            Walker walker = enemy.GetComponent<Walker>();
+            if (walker != null && walker.priority > priority)
             {
                 closest = enemy;
-                closestDistance = distance;
+                priority = walker.priority;
             }
         }
-
         return closest;
     }
 }

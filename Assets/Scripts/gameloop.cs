@@ -14,6 +14,7 @@ public class gameloop : MonoBehaviour
     public static gameloop Instance { get; private set; }
     private GameObject player;
     private Image healthBarFill;
+    private RectTransform fillRect;
 
     private void Awake()
     {
@@ -45,6 +46,8 @@ public class gameloop : MonoBehaviour
         {
             SpawnEnemy();
         }
+        if (player == null) return;
+        if (level_settings.Instance.playerSettings.health >= 0) UpdateHealthBar(level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth);
     }
 
     void SpawnEnemy()
@@ -109,7 +112,7 @@ public class gameloop : MonoBehaviour
         healthBarFillObj.transform.SetParent(healthBarBg.transform);
         healthBarFill = healthBarFillObj.AddComponent<Image>(); 
         healthBarFill.color = Color.green;
-        RectTransform fillRect = healthBarFill.rectTransform;
+        fillRect = healthBarFill.rectTransform;
         fillRect.sizeDelta = new Vector2(100, 10);
         fillRect.localPosition = Vector3.zero;
         fillRect.localScale = new Vector3(1f, 1f, 0);
@@ -117,9 +120,23 @@ public class gameloop : MonoBehaviour
 
     public void UpdateHealthBar(float healthPercent)
     {
+        if (healthPercent < 0 && !level_settings.Instance.playerSettings.playerDeath) {
+            PlayerDeath();
+            level_settings.Instance.playerSettings.playerDeath = true;
+        }
         if (healthBarFill != null)
         {
-            healthBarFill.fillAmount = healthPercent;
+            UnityEngine.Debug.Log("health " + healthPercent);
+            fillRect.sizeDelta = new Vector2(100 * healthPercent, 10);
+            fillRect.localPosition = new Vector3(50 * (1 - healthPercent), 0, 0);
+        }
+    }
+    public void PlayerDeath()
+    {
+        Animator animator = player.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
         }
     }
 }

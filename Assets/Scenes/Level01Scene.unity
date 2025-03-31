@@ -297,9 +297,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.125
+    x: 0
     y: 0
-    width: 0.75000006
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -646,6 +646,7 @@ MonoBehaviour:
   toBeDestroyed: 0
   toAttack: 0
   health: 2
+  priority: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5863,8 +5864,8 @@ MonoBehaviour:
   - {x: 7, y: 1, z: -1}
   parentWaypoint: {fileID: 0}
   waveSettings:
-    numberOfEnemies: 5
-    spawnDelay: 1.5
+    numberOfEnemies: 10
+    spawnDelay: 0.5
     speed: 2
   towerSettings:
     towerRange: 2

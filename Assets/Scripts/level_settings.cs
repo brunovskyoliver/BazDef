@@ -15,6 +15,7 @@ public class PlayerSettings
     public Sprite sprite;
     public float health = 5f;
     public float maxHealth = 5f;
+    public bool playerDeath = false;
     public GameObject playerTowerObject;
     public RuntimeAnimatorController animator;
     public Vector3 scale;
