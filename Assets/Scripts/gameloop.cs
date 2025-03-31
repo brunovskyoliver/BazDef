@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class gameloop : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class gameloop : MonoBehaviour
     private GameObject player;
     private Image healthBarFill;
     private RectTransform fillRect;
+    private static List<Walker> activeWalkers = new List<Walker>();
 
     private void Awake()
     {
@@ -136,11 +138,25 @@ public class gameloop : MonoBehaviour
         Animator animator = player.GetComponent<Animator>();
         if (animator != null)
         {
-            animator.SetTrigger("Death");
+            animator.Play("Player_death");
             float deathAnimLength = 1.0f; 
             Destroy(player, deathAnimLength);
         }
     }
-    
+
+    public static void AddWalker(Walker walker)
+    {
+        activeWalkers.Add(walker);
+    }
+
+    public static void RemoveWalker(Walker walker)
+    {
+        activeWalkers.Remove(walker);
+    }
+
+    public static bool IsAnyWalkerAttacking()
+    {
+        return activeWalkers.Any(w => w != null && w.toAttack);
+    }
 }
 

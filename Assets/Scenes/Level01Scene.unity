@@ -297,10 +297,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.20233463
+    x: 0
     y: 0
-    width: 1.5953307
-    height: 2.0759494
+    width: 0.99979466
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -445,6 +445,7 @@ MonoBehaviour:
   towerArcherSprite: {fileID: 2847894867104497665, guid: 323d8dc9ee9e04215bc55adbdf1dbdbc, type: 3}
   archerAnimator: {fileID: 9100000, guid: 342352cb9453847868db60b886a15ea4, type: 2}
   arrowSprite: {fileID: -855298285791758126, guid: dde2632eeda934e0188a4e3cf43b9103, type: 3}
+  archerSize: {x: 3, y: 3, z: 0}
   towerRange: 2
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
 --- !u!212 &528101414
@@ -5867,9 +5868,9 @@ MonoBehaviour:
   - {x: 7, y: 1, z: -1}
   parentWaypoint: {fileID: 0}
   waveSettings:
-    numberOfEnemies: 1
+    numberOfEnemies: 2
     spawnDelay: 1
-    speed: 4
+    speed: 2
   towerSettings:
     towerRange: 2
     attackSpeed: 1

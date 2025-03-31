@@ -20,7 +20,6 @@ public class Walker : MonoBehaviour
     private float destroyDelay = 0.58f; 
     public float health = 2f;
     private Animator player_animator;
-    private static List<Walker> activeWalkers = new List<Walker>();
     private float nextAttackTime = 0f;
     private float attackDamage;
     private float attackSpeed;
@@ -37,20 +36,18 @@ public class Walker : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
         player_animator = player.GetComponent<Animator>();
-        activeWalkers.Add(this);
+        gameloop.AddWalker(this);
         attackDamage = level_settings.Instance.enemySettings.attackDamage;
         attackSpeed = level_settings.Instance.enemySettings.attackSpeed;
     }
 
     void OnDestroy()
     {
-        activeWalkers.Remove(this);
+        gameloop.RemoveWalker(this);
         RestoreIdleAnimation();
     }
-
-    void FixedUpdate()
+    void Update()
     {
-        // najskor riesime animaciu smrti az potom attack / move
         if (health <= 0)
         {
             if (!toBeDestroyed)
@@ -59,6 +56,11 @@ public class Walker : MonoBehaviour
                 animator.SetTrigger("Death");
             }
         }
+    }
+    void FixedUpdate()
+    {
+        // najskor riesime animaciu smrti az potom attack / move
+        
 
         if (toBeDestroyed)
         {
@@ -159,21 +161,24 @@ public class Walker : MonoBehaviour
 
     private void DealDamage()
     {
+        if (!toBeDestroyed){
         level_settings.Instance.playerSettings.health -= attackDamage;
         float healthPercent = Mathf.Max(0, level_settings.Instance.playerSettings.health / 
                                          level_settings.Instance.playerSettings.maxHealth);
-        player_animator.SetTrigger("Hurt");
+        player_animator.Play("Player_hurt");
         gameloop.Instance.UpdateHealthBar(healthPercent);
         nextAttackTime = Time.time + attackSpeed;
+        }
     }
 
     private void RestoreIdleAnimation()
     {
-        // toto je velky goofy vec co som nasiel, ale funguje to
-        bool anyEnemyAttacking = activeWalkers.Any(w => w != null && w.toAttack);
-        if (!anyEnemyAttacking && player_animator != null && !level_settings.Instance.playerSettings.playerDeath)
+        if (player_animator == null || level_settings.Instance.playerSettings.playerDeath)
+            return;
+
+        if (!gameloop.IsAnyWalkerAttacking())
         {
-            player_animator.SetTrigger("Idle");
+            player_animator.Play("Player_idle");
         }
     }
 }
