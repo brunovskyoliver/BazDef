@@ -300,7 +300,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 1
+    height: 0.99979985
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -443,6 +443,7 @@ MonoBehaviour:
   towerRangeSprite: {fileID: -2036660381736881138, guid: 634bff306018c4f0eb24277dcdcc2491, type: 3}
   towerRangePlacedSprite: {fileID: -7817414820505436063, guid: 75cd0ebf53f5442f49b52bf0b0e34619, type: 3}
   towerArcherSprite: {fileID: 2847894867104497665, guid: 323d8dc9ee9e04215bc55adbdf1dbdbc, type: 3}
+  arrowSprite: {fileID: -855298285791758126, guid: dde2632eeda934e0188a4e3cf43b9103, type: 3}
   towerRange: 2
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
 --- !u!212 &528101414
@@ -5849,6 +5850,7 @@ MonoBehaviour:
     sprite: {fileID: 0}
     health: 5
     maxHealth: 5
+    playerDeath: 0
     playerTowerObject: {fileID: 1462883848}
     animator: {fileID: 9100000, guid: 3b7c79b79abf64729bc5319edaf255d2, type: 2}
     scale: {x: -1.3, y: 1.3, z: 0}
