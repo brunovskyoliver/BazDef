@@ -21,6 +21,10 @@ public class Walker : MonoBehaviour
     public float health = 2f;
     private Animator player_animator;
     private static List<Walker> activeWalkers = new List<Walker>();
+    private float nextAttackTime = 0f;
+    private float attackDamage;
+    private float attackSpeed;
+    public float priority = 0f;
 
     void Start()
     {
@@ -31,6 +35,8 @@ public class Walker : MonoBehaviour
         player = GameObject.Find("Player");
         player_animator = player.GetComponent<Animator>();
         activeWalkers.Add(this);
+        attackDamage = level_settings.Instance.enemySettings.attackDamage;
+        attackSpeed = level_settings.Instance.enemySettings.attackSpeed;
     }
 
     void OnDestroy()
@@ -39,7 +45,7 @@ public class Walker : MonoBehaviour
         RestoreIdleAnimation();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // najskor riesime animaciu smrti az potom attack / move
         if (health <= 0)
@@ -63,7 +69,16 @@ public class Walker : MonoBehaviour
             if (animator != null)
             {
                 animator.SetTrigger("Attack");
-                player_animator.SetTrigger("Hurt");
+                if (Time.time >= nextAttackTime)
+                {
+                    if (!level_settings.Instance.playerSettings.playerDeath) {
+                    player_animator.SetTrigger("Hurt");
+                    }
+                    level_settings.Instance.playerSettings.health -= attackDamage;
+                    float healthPercent = level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth;
+                    gameloop.Instance.UpdateHealthBar(healthPercent);
+                    nextAttackTime = Time.time + attackSpeed;
+                }
                 isWalking = false;
             }
             // tu nesmie byt return, chceme pokracovat v update
@@ -76,6 +91,7 @@ public class Walker : MonoBehaviour
 
         if (player != null && !toBeDestroyed)
         {
+            priority += Time.deltaTime;
             float distanceToPlayer = Vector2.Distance(
                 new Vector2(transform.position.x, transform.position.y),
                 new Vector2(player.transform.position.x, player.transform.position.y)
@@ -132,7 +148,7 @@ public class Walker : MonoBehaviour
     {
         // toto je velky goofy vec co som nasiel, ale funguje to
         bool anyEnemyAttacking = activeWalkers.Any(w => w != null && w.toAttack);
-        if (!anyEnemyAttacking && player_animator != null)
+        if (!anyEnemyAttacking && player_animator != null && !level_settings.Instance.playerSettings.playerDeath)
         {
             player_animator.SetTrigger("Idle");
         }
