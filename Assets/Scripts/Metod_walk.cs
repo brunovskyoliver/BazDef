@@ -37,7 +37,6 @@ public class Walker : MonoBehaviour
         activeWalkers.Add(this);
         attackDamage = level_settings.Instance.enemySettings.attackDamage;
         attackSpeed = level_settings.Instance.enemySettings.attackSpeed;
-        nextAttackTime = attackSpeed;
     }
 
     void OnDestroy()
