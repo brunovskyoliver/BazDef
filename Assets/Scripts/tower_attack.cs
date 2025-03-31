@@ -41,7 +41,7 @@ public class TowerAttack : MonoBehaviour
                 if (target != null)
                 {
                     startWaitTime = Time.time + animLenght;
-                    toCreateArrow = true; // aby nerobil animaciu ked uz umiera enemy
+                    toCreateArrow = true; 
                     Attack(target);
                     
                     nextAttackTime = Time.time + attackCooldown;
