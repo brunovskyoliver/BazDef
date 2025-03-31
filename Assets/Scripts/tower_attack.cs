@@ -1,16 +1,19 @@
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class TowerAttack : MonoBehaviour
 {
     private TowerTargeting targeting;
-    private float attackCooldown = 0.5f;
+    private TowerPlacement placement;
+    private float attackCooldown = 1f;
     private float nextAttackTime = 0f;
     private float attackDamage = 1f;
 
     void Start()
     {
         targeting = GetComponent<TowerTargeting>();
+        placement = FindAnyObjectByType<TowerPlacement>();
         attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
         attackDamage = level_settings.Instance.towerSettings.attackDamage;
     }
@@ -38,19 +41,14 @@ public class TowerAttack : MonoBehaviour
     {
         Debug.Log(target.name);
         Walker enemy = target.GetComponent<Walker>();
-        if (enemy != null)
-        {
-            enemy.health -= attackDamage;
-        }
-        GameObject line = new GameObject("Line");
-        LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor = Color.red;
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, target.transform.position);
-        Destroy(line, attackCooldown);
+        
+        GameObject arrowObject = new GameObject("arrow");
+        var arrow = arrowObject.AddComponent<Arrow>();
+        SpriteRenderer arrowsr = arrowObject.AddComponent<SpriteRenderer>();
+        arrowsr.sprite = placement.arrowSprite;
+        arrow.towerPos = transform;
+        arrow.targetedEnemy = enemy;
+        arrow.arrow = arrowObject;
+        arrow.attackDamage = attackDamage;
     }
 }
