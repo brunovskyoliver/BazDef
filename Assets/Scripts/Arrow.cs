@@ -1,5 +1,6 @@
 using System;
 using Unity.Mathematics;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
@@ -16,7 +17,7 @@ public class Arrow : MonoBehaviour
     
     void Start()
     {
-        arrow.transform.position = towerPos.position;
+        arrow.transform.position = towerPos.position + new Vector3(0f, 0.5f, 0); // to spawn fro marcher not the middle of tower
         arrow.transform.localScale = arrowScale;
     }
 

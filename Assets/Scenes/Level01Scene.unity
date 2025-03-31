@@ -297,10 +297,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.10390625
+    x: 1.1652989
     y: 0
-    width: 0.7916667
-    height: 1
+    width: 0.8826365
+    height: 1.1152073
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -5866,7 +5866,7 @@ MonoBehaviour:
     speed: 2
   towerSettings:
     towerRange: 2
-    attackSpeed: 0.5
+    attackSpeed: 2
     attackDamage: 1
 --- !u!4 &1673638268
 Transform:

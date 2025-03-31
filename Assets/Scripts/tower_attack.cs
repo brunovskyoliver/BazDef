@@ -7,14 +7,14 @@ public class TowerAttack : MonoBehaviour
     private TowerTargeting targeting;
     private TowerPlacement placement;
     private GameObject archer;
-    private float attackCooldown = 2f;
+    private float attackCooldown;
     private float nextAttackTime = 0f;
     private float attackDamage = 1f;
 
 
     void Start()
     {
-        // archer = FindClosestObjectByName("Archer", transform.position);
+        archer = FindClosestObjectByName("Archer", transform.position);
         targeting = GetComponent<TowerTargeting>();
         placement = FindAnyObjectByType<TowerPlacement>();
         attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
@@ -27,6 +27,7 @@ public class TowerAttack : MonoBehaviour
         
         if (Time.time >= nextAttackTime)
         {
+            
             if (targeting != null && targeting.HasTargetsInRange())
             {
                 GameObject target = targeting.GetClosestEnemy();
@@ -34,6 +35,8 @@ public class TowerAttack : MonoBehaviour
                 {
                     Attack(target);
                     nextAttackTime = Time.time + attackCooldown;
+                    Debug.Log(nextAttackTime);
+                    Debug.Log(Time.time);
                 }
             }
         }
