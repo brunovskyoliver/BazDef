@@ -13,7 +13,9 @@ public class TowerPlacement : MonoBehaviour
     public Sprite towerRangeSprite; 
     public Sprite towerRangePlacedSprite;
     public Sprite towerArcherSprite;
+    public RuntimeAnimatorController archerAnimator;
     public Sprite arrowSprite;
+    private Vector3 archerSize = new Vector3(3,3,0);
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
@@ -132,7 +134,10 @@ public class TowerPlacement : MonoBehaviour
         GameObject archer = new GameObject("Archer");
         archer.transform.SetParent(tower.transform);
         archer.transform.localPosition = new Vector3(0, 0.5f, 0);
+        archer.transform.localScale = archerSize;
         SpriteRenderer archerRenderer = archer.AddComponent<SpriteRenderer>();
+        Animator archerAnim = archer.AddComponent<Animator>();
+        archerAnim.runtimeAnimatorController  = archerAnimator;
         archerRenderer.sprite = towerArcherSprite;
         archerRenderer.sortingOrder = 1;
         archerRenderer.color = towerRenderer.color;

@@ -8,26 +8,28 @@ public class Arrow : MonoBehaviour
     public Walker targetedEnemy;
     public GameObject arrow;
     private Vector3 move;
-    private float arrowSpeed = 0.1f;
+    private float arrowSpeed = 0.2f;
     private float xOffset;
     private float yOffset;
     public float attackDamage;
+    private Vector3 arrowScale = new Vector3(1.5f, 1.5f, 0);
     
     void Start()
     {
         arrow.transform.position = towerPos.position;
+        arrow.transform.localScale = arrowScale;
     }
 
     void FixedUpdate()
     {
-        if (targetedEnemy == null)
+        if (targetedEnemy.toBeDestroyed == true)
         {
             Destroy(arrow);
             return;
         }
         xOffset = arrow.transform.position.x - targetedEnemy.transform.position.x;
         yOffset = arrow.transform.position.y - targetedEnemy.transform.position.y;
-
+        
         if (Mathf.Abs(xOffset) < 0.1f && Mathf.Abs(yOffset) < 0.1f) 
         {
             if (targetedEnemy != null)
@@ -37,8 +39,8 @@ public class Arrow : MonoBehaviour
             }
         }
         double angleToEnemyRadians = Math.Atan(yOffset/xOffset);
-
-        if (xOffset > 0)
+        arrow.transform.rotation = Quaternion.Euler(0,0,(float)angleToEnemyRadians * Mathf.Rad2Deg + 90);
+        if (xOffset > 0) // inak to islo napok v prvej polke tak preto to minusko
         {
             move = -new Vector3((float)(1*Math.Cos(angleToEnemyRadians)), (float)(1*Math.Sin(angleToEnemyRadians)), 0);  
         }
@@ -46,7 +48,6 @@ public class Arrow : MonoBehaviour
         {
             move = new Vector3((float)(1*Math.Cos(angleToEnemyRadians)), (float)(1*Math.Sin(angleToEnemyRadians)), 0);  
         }
-        Debug.Log(move);
 
         arrow.transform.position += move * arrowSpeed;
         
