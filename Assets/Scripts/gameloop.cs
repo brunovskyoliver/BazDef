@@ -54,21 +54,26 @@ public class gameloop : MonoBehaviour
 
     void SpawnEnemy()
     {
-        GameObject newWalker = new GameObject("Mety_" + spawnedEnemies); // rozdelime ich podla poradia spawnutia
-        newWalker.transform.position = level_settings.Instance.enemyWaypoints[0]; // toto je kvoli attackovaniu, pretoze unity ked spawne objekt tak ho hodi na 0,0,0 a tym padom moze triggerovat attack veze
+        GameObject newWalker = new GameObject("Mety_" + spawnedEnemies);
+        newWalker.transform.position = level_settings.Instance.enemyWaypoints[0];
         newWalker.layer = LayerMask.NameToLayer("Enemy");
+        
         CircleCollider2D collider = newWalker.AddComponent<CircleCollider2D>();
         collider.isTrigger = true;
 
         SpriteRenderer sr = newWalker.AddComponent<SpriteRenderer>();
-        sr.sprite = level_settings.Instance.enemySettings.enemySprite;
-
         Animator anim = newWalker.AddComponent<Animator>();
-        anim.runtimeAnimatorController = level_settings.Instance.enemySettings.enemyAnimator;
-
+        
         var walker = newWalker.AddComponent<Walker>();
         walker.waypoints = new List<Vector3>(level_settings.Instance.enemyWaypoints);
-        walker.speed = level_settings.Instance.waveSettings.speed;
+
+        var enemyTypes = level_settings.Instance.enemySettings.enemyTypes;
+        if (enemyTypes.Count > 0)
+        {
+            int i = Random.Range(0, enemyTypes.Count);
+            EnemyType randType = enemyTypes[i];
+            walker.Initialize(randType);
+        }
 
         spawnedEnemies++;
         if (spawnedEnemies >= level_settings.Instance.waveSettings.numberOfEnemies)

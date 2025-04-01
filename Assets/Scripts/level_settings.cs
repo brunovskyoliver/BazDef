@@ -26,10 +26,9 @@ public class PlayerSettings
 public class EnemySettings
 {
     public GameObject parentWaypoint;
-    public Sprite enemySprite;
-    public RuntimeAnimatorController enemyAnimator;
-    public float attackDamage = 1f;
-    public float attackSpeed = 0.8f;
+    public List<EnemyType> enemyTypes = new List<EnemyType>();
+    public float baseAttackDamage = 1f;
+    public float baseAttackSpeed = 0.8f;
 }
 
 [System.Serializable]
