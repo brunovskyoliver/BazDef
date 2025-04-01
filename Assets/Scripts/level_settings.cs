@@ -34,7 +34,15 @@ public class EnemySettings
 
 [System.Serializable]
 
-public class TowerSettings
+public class ArcherTowerSettings
+{
+    public float towerRange = 2f;
+    public float attackSpeed = 2f;
+    public float attackDamage = 1f;
+}
+
+[System.Serializable]
+public class MortarTowerSettings
 {
     public float towerRange = 2f;
     public float attackSpeed = 2f;
@@ -49,7 +57,8 @@ public class level_settings : MonoBehaviour
     public List<Vector3> enemyWaypoints;
     public GameObject parentWaypoint;
     public WaveSettings waveSettings;
-    public TowerSettings towerSettings;
+    public ArcherTowerSettings archerTowerSettings;
+    public MortarTowerSettings mortarTowerSettings;
 
     public static level_settings Instance { get; private set; }
 

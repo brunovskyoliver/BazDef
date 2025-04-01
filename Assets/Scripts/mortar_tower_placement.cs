@@ -30,6 +30,7 @@ public class MortarTowerPlacement : MonoBehaviour
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
+        towerRange = level_settings.Instance.mortarTowerSettings.towerRange;
     }
 
 

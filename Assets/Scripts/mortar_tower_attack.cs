@@ -27,6 +27,8 @@ public class MortarTowerAttack : MonoBehaviour
         
         targeting = GetComponent<MortarTowerTargeting>();
         placement = FindAnyObjectByType<MortarTowerPlacement>();
+        attackCooldown = level_settings.Instance.mortarTowerSettings.attackSpeed;
+        attackDamage = level_settings.Instance.mortarTowerSettings.attackDamage;
 
 
     }

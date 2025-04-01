@@ -33,7 +33,7 @@ public class ArcherTowerPlacement : MonoBehaviour
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
-        towerRange = level_settings.Instance.towerSettings.towerRange;
+        towerRange = level_settings.Instance.archerTowerSettings.towerRange;
     }
 
 

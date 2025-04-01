@@ -29,8 +29,8 @@ public class ArcherTowerAttack : MonoBehaviour
         
         targeting = GetComponent<AcrherTowerTargeting>();
         placement = FindAnyObjectByType<ArcherTowerPlacement>();
-        attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
-        attackDamage = level_settings.Instance.towerSettings.attackDamage;
+        attackCooldown = level_settings.Instance.archerTowerSettings.attackSpeed;
+        attackDamage = level_settings.Instance.archerTowerSettings.attackDamage;
     }
 
     void FixedUpdate()
