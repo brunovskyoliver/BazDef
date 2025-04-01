@@ -25,7 +25,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     public bool isMouseOver = false;
     private float xOffset = 0.5f;
     private float yOffset = 0.75f;
-    private HashSet<Vector2Int> towerPositions = new HashSet<Vector2Int>();
+    public HashSet<Vector2Int> towerPositions;
     public float towerRange = 2f; 
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
    

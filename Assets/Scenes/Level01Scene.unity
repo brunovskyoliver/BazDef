@@ -297,7 +297,7 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.20233463
     y: 0
     width: 0.9995743
     height: 1
@@ -5899,7 +5899,7 @@ MonoBehaviour:
   waveSettings:
     numberOfEnemies: 10
     spawnDelay: 0.5
-    speed: 4
+    speed: 2
   archerTowerSettings:
     towerRange: 2
     attackSpeed: 2
@@ -5907,7 +5907,7 @@ MonoBehaviour:
   mortarTowerSettings:
     towerRange: 4
     attackSpeed: 2
-    attackDamage: 1
+    attackDamage: 5
 --- !u!4 &1673638268
 Transform:
   m_ObjectHideFlags: 0

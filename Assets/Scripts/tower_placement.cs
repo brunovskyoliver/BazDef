@@ -12,10 +12,16 @@ public class TowerPlacement : MonoBehaviour
     private ArcherTowerPlacement archerTowerPlacement;
     private MortarTowerPlacement mortarTowerPlacement;
 
+    private HashSet<Vector2Int> towerPositions = new HashSet<Vector2Int>();
+
+
     void Start()
     {
         archerTowerPlacement = FindAnyObjectByType<ArcherTowerPlacement>();
+        archerTowerPlacement.towerPositions = towerPositions;
         mortarTowerPlacement = FindAnyObjectByType<MortarTowerPlacement>();
+        mortarTowerPlacement.towerPositions = towerPositions;
+        
     }
     void Update()
     {
