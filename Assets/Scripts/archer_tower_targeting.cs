@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class TowerTargeting : MonoBehaviour
+public class AcrherTowerTargeting : MonoBehaviour
 {
     private float targetRange;
     private LayerMask enemyLayer;
@@ -17,7 +17,7 @@ public class TowerTargeting : MonoBehaviour
     {
         if (isInitialized) return;
 
-        TowerPlacement towerPlacement = Object.FindFirstObjectByType<TowerPlacement>();
+        ArcherTowerPlacement towerPlacement = Object.FindFirstObjectByType<ArcherTowerPlacement>();
         if (towerPlacement != null)
         {
             targetRange = towerPlacement.towerRange * 2f; 

@@ -9,10 +9,10 @@ using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class TowerAttack : MonoBehaviour
+public class ArcherTowerAttack : MonoBehaviour
 {
-    private TowerTargeting targeting;
-    private TowerPlacement placement;
+    private AcrherTowerTargeting targeting;
+    private ArcherTowerPlacement placement;
     private GameObject archer;
     private float attackCooldown;
     private float nextAttackTime = 0f;
@@ -27,8 +27,8 @@ public class TowerAttack : MonoBehaviour
     void Start()
     {
         
-        targeting = GetComponent<TowerTargeting>();
-        placement = FindAnyObjectByType<TowerPlacement>();
+        targeting = GetComponent<AcrherTowerTargeting>();
+        placement = FindAnyObjectByType<ArcherTowerPlacement>();
         attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
         attackDamage = level_settings.Instance.towerSettings.attackDamage;
     }
