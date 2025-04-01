@@ -39,7 +39,7 @@ public class Arrow : MonoBehaviour
                 Destroy(arrow);
             }
         }
-        double angleToEnemyRadians = Math.Atan(yOffset/xOffset);
+        double angleToEnemyRadians = Math.Atan(yOffset/xOffset) + 0.5f;
         arrow.transform.rotation = Quaternion.Euler(0,0,(float)angleToEnemyRadians * Mathf.Rad2Deg + 90);
         if (xOffset > 0) // inak to islo napok v prvej polke tak preto to minusko
         {

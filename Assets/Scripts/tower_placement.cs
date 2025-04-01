@@ -6,13 +6,16 @@ using UnityEngine.Assertions;
 public class TowerPlacement : MonoBehaviour
 {
     public GameObject ArcherTowerButton;
+    public GameObject MortarTowerButton;
     public LayerMask targetLayer;
 
     private ArcherTowerPlacement archerTowerPlacement;
+    private MortarTowerPlacement mortarTowerPlacement;
 
     void Start()
     {
         archerTowerPlacement = FindAnyObjectByType<ArcherTowerPlacement>();
+        mortarTowerPlacement = FindAnyObjectByType<MortarTowerPlacement>();
     }
     void Update()
     {
@@ -23,6 +26,11 @@ public class TowerPlacement : MonoBehaviour
             if (CheckObjectClicked("Archer_tower_button"))
             {
                 archerTowerPlacement.isMouseOver = true;
+                Debug.Log("clicked");
+            }
+            else if (CheckObjectClicked("Mortar_tower_button"))
+            {
+                mortarTowerPlacement.isMouseOver = true;
                 Debug.Log("clicked");
             }
         }
