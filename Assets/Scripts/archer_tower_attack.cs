@@ -89,29 +89,7 @@ public class ArcherTowerAttack : MonoBehaviour
         int dir;
         float xOffset = archer.transform.position.x - enemy.transform.position.x;
         float yOffset = archer.transform.position.y - enemy.transform.position.y;
-        if (Math.Abs(yOffset) > Math.Abs(xOffset))
-        {
-            if (yOffset > 0)
-            {
-                dir = 1;
-            }
-            else
-            {
-                dir = 0;
-            }
-        }
-        else
-        {
-            if (xOffset > 0)
-            {
-                dir = 2;
-            }
-            else
-            {
-                dir = 3;
-            }
-        }
-
+        dir = Math.Abs(yOffset) > Math.Abs(xOffset) ? yOffset > 0 ? 1 : 0 : xOffset > 0 ? 2 : 3;
         return dir;
     }
 
