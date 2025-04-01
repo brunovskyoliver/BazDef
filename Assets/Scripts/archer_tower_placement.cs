@@ -12,6 +12,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     private GameObject towerPreview;
     public Sprite towerSprite;
     public Sprite towerRangeSprite; 
+    public Material arrowTrailMaterial;
     public Sprite towerRangePlacedSprite;
     public Sprite towerArcherSprite;
     public RuntimeAnimatorController archerAnimator;
@@ -27,6 +28,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     private HashSet<Vector2Int> towerPositions = new HashSet<Vector2Int>();
     public float towerRange = 2f; 
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
+   
 
     void Start()
     {

@@ -34,8 +34,10 @@ public class Walker : MonoBehaviour
         baseScale = new Vector3(spriteScale, spriteScale, 1);
         transform.localScale = baseScale;
         animator = GetComponent<Animator>();
-        player = GameObject.Find("Player");
-        player_animator = player.GetComponent<Animator>();
+        if (!level_settings.Instance.playerSettings.playerDeath){
+            player = GameObject.Find("Player");
+            player_animator = player.GetComponent<Animator>();
+        }
         gameloop.AddWalker(this);
         attackDamage = level_settings.Instance.enemySettings.attackDamage;
         attackSpeed = level_settings.Instance.enemySettings.attackSpeed;
@@ -75,6 +77,12 @@ public class Walker : MonoBehaviour
 
         if (toAttack && animator != null)
         {
+            if (player != null)
+            {
+                // Face the player when attacking
+                FaceTarget(player.transform.position);
+            }
+
             if (!level_settings.Instance.playerSettings.playerDeath && Time.time >= nextAttackTime)
             {
                 animator.SetTrigger("Attack");
@@ -129,9 +137,7 @@ public class Walker : MonoBehaviour
         // pri poslednom checkpointe sa neotaca
         if (isWalking && Mathf.Abs(direction.x) > 0.01f && currentWaypoint < waypoints.Count -1 )
         {
-            lastDirection = Mathf.Sign(direction.x); 
-            baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
-            transform.localScale = baseScale;
+            FaceTarget(target);
         }
         Vector3 currentPos = transform.position;
         Vector3 targetPos = new Vector3(target.x + xOffset, target.y, -1);
@@ -179,6 +185,17 @@ public class Walker : MonoBehaviour
         if (!gameloop.IsAnyWalkerAttacking())
         {
             player_animator.Play("Player_idle");
+        }
+    }
+
+    private void FaceTarget(Vector3 target)
+    {
+        float direction = target.x - transform.position.x;
+        if (Mathf.Abs(direction) > 0.01f)
+        {
+            lastDirection = Mathf.Sign(direction);
+            baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
+            transform.localScale = baseScale;
         }
     }
 }

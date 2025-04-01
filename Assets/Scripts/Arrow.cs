@@ -13,7 +13,8 @@ public class Arrow : MonoBehaviour
     private float xOffset;
     private float yOffset;
     public float attackDamage;
-    private Vector3 arrowScale = new Vector3(1.5f, 1.5f, 0);
+    private Vector3 arrowScale = new Vector3(2f, 2f, 0);
+    private GameObject arrowTrail;
     
     void Start()
     {

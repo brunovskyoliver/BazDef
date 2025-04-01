@@ -22,6 +22,7 @@ public class ArcherTowerAttack : MonoBehaviour
     private bool toCreateArrow;
     private int enemyDir; // 0 = down, 1 = up, 2 = left, 3 = right
     private Walker enemy;
+    private TrailRenderer arrowTrail;
 
 
     void Start()
@@ -129,6 +130,17 @@ public class ArcherTowerAttack : MonoBehaviour
 
 
         GameObject arrowObject = new GameObject("arrow");
+        arrowTrail = arrowObject.AddComponent<TrailRenderer>();
+        arrowTrail.time = 0.2f;
+        arrowTrail.startWidth = 0f;
+        arrowTrail.endWidth = 0f;
+        arrowTrail.material = placement.arrowTrailMaterial;
+        arrowTrail.transform.localPosition = new Vector3(0, 0, -0.5f);
+        AnimationCurve widthCurve = new AnimationCurve();
+        widthCurve.AddKey(0.08f, 0f);
+        widthCurve.AddKey(0.126f, 0.10f);
+        widthCurve.AddKey(0.89f, 0f);
+        arrowTrail.widthCurve = widthCurve;
         var arrow = arrowObject.AddComponent<Arrow>();
         SpriteRenderer arrowsr = arrowObject.AddComponent<SpriteRenderer>();
 

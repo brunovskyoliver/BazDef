@@ -299,7 +299,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.9998005
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -511,6 +511,7 @@ MonoBehaviour:
   grassTile: {fileID: 11400000, guid: 2bac73dcd06284db99654afa5171d826, type: 2}
   towerSprite: {fileID: 6156901781275099173, guid: 8ea778e79c06347459d89a5c39fe08f3, type: 3}
   towerRangeSprite: {fileID: -2036660381736881138, guid: 634bff306018c4f0eb24277dcdcc2491, type: 3}
+  arrowTrailMaterial: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   towerRangePlacedSprite: {fileID: -7817414820505436063, guid: 75cd0ebf53f5442f49b52bf0b0e34619, type: 3}
   towerArcherSprite: {fileID: 2847894867104497665, guid: ba53bb86dd47943af8ecd16aa0208b41, type: 3}
   archerAnimator: {fileID: 9100000, guid: 342352cb9453847868db60b886a15ea4, type: 2}
@@ -5879,12 +5880,16 @@ MonoBehaviour:
   - {x: 7, y: 1, z: -1}
   parentWaypoint: {fileID: 0}
   waveSettings:
-    numberOfEnemies: 200
+    numberOfEnemies: 10
     spawnDelay: 0.5
-    speed: 2
-  towerSettings:
+    speed: 4
+  archerTowerSettings:
     towerRange: 2
-    attackSpeed: 1
+    attackSpeed: 2
+    attackDamage: 1
+  mortarTowerSettings:
+    towerRange: 4
+    attackSpeed: 2
     attackDamage: 1
 --- !u!4 &1673638268
 Transform:
@@ -6032,7 +6037,7 @@ MonoBehaviour:
   towerSprite: {fileID: -855298285791758126, guid: 231c5b418f8d4418180f16619473ff19, type: 3}
   towerRangeSprite: {fileID: -2036660381736881138, guid: 634bff306018c4f0eb24277dcdcc2491, type: 3}
   towerRangePlacedSprite: {fileID: -7817414820505436063, guid: 75cd0ebf53f5442f49b52bf0b0e34619, type: 3}
-  arrowSprite: {fileID: -855298285791758126, guid: dde2632eeda934e0188a4e3cf43b9103, type: 3}
+  arrowSprite: {fileID: -6470460504253458178, guid: ab30eb276dc354639b2b2b1919d0d41d, type: 3}
   isMouseOver: 0
   towerRange: 5
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
