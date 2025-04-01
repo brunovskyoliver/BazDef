@@ -14,9 +14,9 @@ public class MortarTowerAttack : MonoBehaviour
     private MortarTowerTargeting targeting;
     private MortarTowerPlacement placement;
     private GameObject archer;
-    private float attackCooldown;
+    private float attackCooldown = 2f;
     private float nextAttackTime = 0f;
-    private float attackDamage = 1f;
+    private float attackDamage = 10f;
     private const float animLenght = 0.5f;
     private int enemyDir; // 0 = down, 1 = up, 2 = left, 3 = right
     private Walker enemy;
@@ -27,8 +27,8 @@ public class MortarTowerAttack : MonoBehaviour
         
         targeting = GetComponent<MortarTowerTargeting>();
         placement = FindAnyObjectByType<MortarTowerPlacement>();
-        attackCooldown = level_settings.Instance.towerSettings.attackSpeed;
-        attackDamage = level_settings.Instance.towerSettings.attackDamage;
+
+
     }
 
     void FixedUpdate()
@@ -101,15 +101,15 @@ public class MortarTowerAttack : MonoBehaviour
     void CreateArrow()
     {
 
-        GameObject arrowObject = new GameObject("arrow");
-        var arrow = arrowObject.AddComponent<Arrow>();
-        SpriteRenderer arrowsr = arrowObject.AddComponent<SpriteRenderer>();
+        GameObject ballObject = new GameObject("mortarBall");
+        var ball = ballObject.AddComponent<MortarBall>();
+        SpriteRenderer ballsr = ballObject.AddComponent<SpriteRenderer>();
 
-        arrowsr.sprite = placement.arrowSprite;
-        arrow.towerPos = transform;
-        arrow.targetedEnemy = enemy;
-        arrow.arrow = arrowObject;
-        arrow.attackDamage = attackDamage;
+        ballsr.sprite = placement.arrowSprite;
+        ball.towerPos = transform;
+        ball.targetedEnemy = enemy;
+        ball.mortarBall = ballObject;
+        ball.attackDamage = attackDamage;
 
     }
 
