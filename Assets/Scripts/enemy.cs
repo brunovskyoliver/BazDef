@@ -27,6 +27,33 @@ public class Walker : MonoBehaviour
     private bool hasStartedAttack = false;
     private bool hasDealtFirstHit = false;
     private float firstHitTime = 0f;
+    private EnemyType enemyType;
+    
+    public void Initialize(EnemyType type)
+    {
+        enemyType = type;
+        health = type.health;
+        attackDamage = type.attackDamage;
+        attackSpeed = type.attackSpeed;
+        speed = type.moveSpeed;
+        spriteScale = type.scale;
+        destroyDelay = type.destroyDelay;
+        
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            animator = gameObject.AddComponent<Animator>();
+        }
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.sprite = type.sprite;
+        }
+        if (type.animatorController != null)
+        {
+            animator.runtimeAnimatorController = type.animatorController;
+        }
+    }
 
     void Start()
     {
@@ -39,8 +66,6 @@ public class Walker : MonoBehaviour
             player_animator = player.GetComponent<Animator>();
         }
         gameloop.AddWalker(this);
-        attackDamage = level_settings.Instance.enemySettings.attackDamage;
-        attackSpeed = level_settings.Instance.enemySettings.attackSpeed;
     }
 
     void OnDestroy()
@@ -61,9 +86,6 @@ public class Walker : MonoBehaviour
     }
     void FixedUpdate()
     {
-        // najskor riesime animaciu smrti az potom attack / move
-        
-
         if (toBeDestroyed)
         {
             if (animator != null)
@@ -77,16 +99,14 @@ public class Walker : MonoBehaviour
 
         if (toAttack && animator != null)
         {
+            animator.SetTrigger("Attack");
             if (player != null)
             {
-                // Face the player when attacking
                 FaceTarget(player.transform.position);
             }
 
             if (!level_settings.Instance.playerSettings.playerDeath && Time.time >= nextAttackTime)
             {
-                animator.SetTrigger("Attack");
-                
                 if (!hasDealtFirstHit)
                 {
                     DealDamage();
@@ -99,7 +119,6 @@ public class Walker : MonoBehaviour
                 nextAttackTime = Time.time + attackSpeed;
             }
             isWalking = false;
-            // tu nesmie byt return, chceme pokracovat v update
         }
         else
         {

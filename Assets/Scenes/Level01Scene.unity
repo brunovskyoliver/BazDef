@@ -299,7 +299,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.9998005
+    width: 0.9995743
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -5861,10 +5861,27 @@ MonoBehaviour:
     offset: {x: 0, y: 0.5, z: 0}
   enemySettings:
     parentWaypoint: {fileID: 0}
-    enemySprite: {fileID: 0}
-    enemyAnimator: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
-    attackDamage: 1
-    attackSpeed: 0.75
+    enemyTypes:
+    - enemyName: Metod
+      sprite: {fileID: 2845847367447352074, guid: 6185e1e7c126345648e0f40c78166248, type: 3}
+      animatorController: {fileID: 9100000, guid: a33ec4d5cea2b4f8585d381978deae10, type: 2}
+      health: 2
+      attackDamage: 1
+      attackSpeed: 1
+      moveSpeed: 2
+      scale: 0.25
+      destroyDelay: 0.58
+    - enemyName: Wizard
+      sprite: {fileID: -3442688040396696736, guid: 18fa2d84ba5af44b480330c5cc3df652, type: 3}
+      animatorController: {fileID: 9100000, guid: e65d67f31bd2d4dc9bb466502a6a6827, type: 2}
+      health: 2
+      attackDamage: 1
+      attackSpeed: 1
+      moveSpeed: 2
+      scale: 0.25
+      destroyDelay: 1
+    baseAttackDamage: 1
+    baseAttackSpeed: 0.8
   enemyWaypoints:
   - {x: -9, y: -3, z: -1}
   - {x: -3, y: -3, z: -1}
