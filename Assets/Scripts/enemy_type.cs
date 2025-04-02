@@ -12,4 +12,5 @@ public class EnemyType
     public float moveSpeed = 2f;
     public float scale = 0.25f;
     public float destroyDelay;
+
 }

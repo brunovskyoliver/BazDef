@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class gameloop : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class gameloop : MonoBehaviour
     private Image healthBarFill;
     private RectTransform fillRect;
     private static List<Walker> activeWalkers = new List<Walker>();
+    private float numEnemiesTospawn;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class gameloop : MonoBehaviour
     }
     void Start()
     {
+        numEnemiesTospawn = (float)level_settings.Instance.waveSettings.numberOfEnemies;
         UnityEngine.Debug.Log("Game Started");
         SpawnPlayer();
         if (startWaveButton == null) UnityEngine.Debug.Log("Pridaj button do inspectoru");
@@ -38,6 +41,9 @@ public class gameloop : MonoBehaviour
     {
         waveStarted = true;
         startWaveButton.gameObject.SetActive(false); 
+        isSpawnable = true;
+        level_settings.Instance.waveSettings.numberOfEnemies = (int)(numEnemiesTospawn * level_settings.Instance.waveSettings.numberOfEnemiesMultiplier);
+        numEnemiesTospawn = level_settings.Instance.waveSettings.numberOfEnemies;
     }
 
     void Update()
@@ -49,12 +55,28 @@ public class gameloop : MonoBehaviour
             SpawnEnemy();
         }
         if (player == null) return;
+
+        GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemyObjects.Count() == 0)
+        {
+            var enemyType = level_settings.Instance.enemySettings.enemyTypes;
+            foreach (var type in enemyType)
+            {
+                type.health = type.health * level_settings.Instance.waveSettings.enemyHealthMultiplier;
+            }
+            startWaveButton.gameObject.SetActive(true);
+            waveStarted = false;
+            spawnedEnemies = 0;
+            level_settings.Instance.waveSettings.currentWave ++;
+        }
+
         //if (level_settings.Instance.playerSettings.health >= 0) UpdateHealthBar(level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth);
     }
 
     void SpawnEnemy()
     {
         GameObject newWalker = new GameObject("Mety_" + spawnedEnemies);
+        newWalker.tag = "Enemy";
         newWalker.transform.position = level_settings.Instance.enemyWaypoints[0];
         newWalker.layer = LayerMask.NameToLayer("Enemy");
         
@@ -70,7 +92,7 @@ public class gameloop : MonoBehaviour
         var enemyTypes = level_settings.Instance.enemySettings.enemyTypes;
         if (enemyTypes.Count > 0)
         {
-            int i = Random.Range(0, enemyTypes.Count);
+            int i = UnityEngine.Random.Range(0, enemyTypes.Count);
             EnemyType randType = enemyTypes[i];
             walker.Initialize(randType);
         }

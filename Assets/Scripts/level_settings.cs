@@ -7,6 +7,11 @@ public class WaveSettings
     public int numberOfEnemies = 5;
     public float spawnDelay = 1.5f;
     public float speed = 2f;
+
+    public float numberOfEnemiesMultiplier = 1.2f;
+    public float enemyAttackDamageMultiplier = 1.1f;
+    public float enemyHealthMultiplier = 1.1f;
+    public float currentWave;
 }
 
 [System.Serializable]
@@ -63,7 +68,7 @@ public class level_settings : MonoBehaviour
 
     void Awake()
     {
-       // enemyWaypoints = FindWayPoints();
+
         if (Instance == null) Instance = this;
         else
         {
@@ -71,13 +76,4 @@ public class level_settings : MonoBehaviour
         }
     }
 
-    public List<Vector3> FindWayPoints()
-    {
-        List<Vector3> waypointsPos = new List<Vector3>();
-        foreach (Transform child in parentWaypoint.transform)
-        {
-            waypointsPos.Add(child.position);  
-        }
-        return waypointsPos;
-    }
 }

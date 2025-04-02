@@ -297,10 +297,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.20233463
+    x: 1.3720632
     y: 0
-    width: 0.9995743
-    height: 1
+    width: 0.7689022
+    height: 0.79834414
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -5900,6 +5900,10 @@ MonoBehaviour:
     numberOfEnemies: 10
     spawnDelay: 0.5
     speed: 2
+    numberOfEnemiesMultiplier: 1.2
+    enemyAttackDamageMultiplier: 1.2
+    enemyHealthMultiplier: 1.1
+    currentWave: 0
   archerTowerSettings:
     towerRange: 2
     attackSpeed: 2
