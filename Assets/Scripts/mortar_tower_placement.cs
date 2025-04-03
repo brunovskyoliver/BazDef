@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
+
 
 public class MortarTowerPlacement : MonoBehaviour
 {
@@ -93,6 +93,7 @@ public class MortarTowerPlacement : MonoBehaviour
     void CreateTowerPreviewRange(GameObject tower)
     {
         GameObject rangeCircle = new GameObject("TowerPreviewRange");
+        rangeCircle.layer = 7;
         rangeCircle.transform.SetParent(tower.transform);
         rangeCircle.transform.localPosition = Vector3.zero;
 
@@ -106,6 +107,7 @@ public class MortarTowerPlacement : MonoBehaviour
     void CreateTowerRange(GameObject tower)
     {
         GameObject rangeCircle = new GameObject("TowerRange");
+        rangeCircle.layer = 7;
         rangeCircle.transform.SetParent(tower.transform);
         rangeCircle.transform.localPosition = Vector3.zero;
         SpriteRenderer rangeRenderer = rangeCircle.AddComponent<SpriteRenderer>();

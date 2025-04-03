@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
+
 
 public class Walker : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class Walker : MonoBehaviour
     public void Initialize(EnemyType type)
     {
         enemyType = type;
-        health = type.health * level_settings.Instance.waveSettings.enemyHealthMultiplier;
+        health = type.health;
         attackDamage = type.attackDamage;
         attackSpeed = type.attackSpeed;
         speed = type.moveSpeed;
