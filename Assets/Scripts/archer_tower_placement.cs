@@ -47,6 +47,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     {
         if (gameloopInstance.money < ArcherTowerCost) 
         {
+            isMouseOver = false;
             return;
         }
 

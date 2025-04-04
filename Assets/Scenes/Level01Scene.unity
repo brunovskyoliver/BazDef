@@ -297,10 +297,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 1.3720632
+    x: 1.3959845
     y: 0
-    width: 0.7689022
-    height: 0.79834414
+    width: 0.7210593
+    height: 0.7305251
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -520,6 +520,7 @@ MonoBehaviour:
   isMouseOver: 0
   towerRange: 2
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
+  ArcherTowerCost: 2
 --- !u!1 &558864020
 GameObject:
   m_ObjectHideFlags: 0
@@ -5871,15 +5872,17 @@ MonoBehaviour:
       moveSpeed: 2
       scale: 0.25
       destroyDelay: 0.58
+      droppedMoney: 1
     - enemyName: Wizard
       sprite: {fileID: -3442688040396696736, guid: 18fa2d84ba5af44b480330c5cc3df652, type: 3}
       animatorController: {fileID: 9100000, guid: e65d67f31bd2d4dc9bb466502a6a6827, type: 2}
       health: 2
       attackDamage: 1
-      attackSpeed: 1
-      moveSpeed: 2
+      attackSpeed: 2
+      moveSpeed: 1.9
       scale: 0.25
       destroyDelay: 1
+      droppedMoney: 1
     baseAttackDamage: 1
     baseAttackSpeed: 0.8
   enemyWaypoints:
@@ -5906,12 +5909,16 @@ MonoBehaviour:
     currentWave: 0
   archerTowerSettings:
     towerRange: 2
-    attackSpeed: 2
+    attackSpeed: 1.5
     attackDamage: 1
+    cost: 2
+    costMultiplier: 1.5
   mortarTowerSettings:
     towerRange: 4
-    attackSpeed: 2
+    attackSpeed: 5
     attackDamage: 5
+    cost: 5
+    costMultiplier: 1.5
 --- !u!4 &1673638268
 Transform:
   m_ObjectHideFlags: 0
@@ -5970,7 +5977,7 @@ Transform:
   m_GameObject: {fileID: 1930247872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.7952456, y: -5.99817, z: 2.8292115}
+  m_LocalPosition: {x: -7.96, y: -6.25, z: 2.8292115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5986,6 +5993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2125308853}
   - component: {fileID: 2125308854}
+  - component: {fileID: 2125308855}
   m_Layer: 0
   m_Name: gameloop
   m_TagString: Untagged
@@ -6022,6 +6030,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveStarted: 0
   startWaveButton: {fileID: 650270383}
+  money: 10
+--- !u!114 &2125308855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125308852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08180af66a83466e818915b2ca691f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2129481736
 GameObject:
   m_ObjectHideFlags: 0

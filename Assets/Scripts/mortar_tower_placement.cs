@@ -43,6 +43,7 @@ public class MortarTowerPlacement : MonoBehaviour
     {
         if (gameloopInstance.money < MortarTowerCost) 
         {
+            isMouseOver = false;
             return;
         }
 
