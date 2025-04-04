@@ -27,7 +27,9 @@ public class ArcherTowerPlacement : MonoBehaviour
     private float yOffset = 0.75f;
     public HashSet<Vector2Int> towerPositions;
     public float towerRange = 2f; 
-    public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
+    public Color rangeColor = new Color(1f, 1f, 1f, 0.2f);
+    public float ArcherTowerCost;
+    private gameloop gameloopInstance; 
    
 
     void Start()
@@ -36,11 +38,18 @@ public class ArcherTowerPlacement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
         towerRange = level_settings.Instance.archerTowerSettings.towerRange;
+        ArcherTowerCost = level_settings.Instance.archerTowerSettings.cost;
+        gameloopInstance = FindFirstObjectByType<gameloop>();
     }
 
 
     void Update()
     {
+        if (gameloopInstance.money < ArcherTowerCost) 
+        {
+            return;
+        }
+
         if (isMouseOver && Input.GetMouseButtonUp(0) && !isDragging) // toto zabezpeci ze sa prvotny klik nepocita ako kliknutie na place
         {
             isDragging = true;
@@ -161,7 +170,8 @@ public class ArcherTowerPlacement : MonoBehaviour
 
     void PlaceTower(Vector3 position)
     {
-        if (gameloop.Instance.waveStarted) {
+        if (gameloop.Instance.waveStarted) 
+        {
             Debug.Log("game started - cant place nomore");
             return;
         }
@@ -176,6 +186,8 @@ public class ArcherTowerPlacement : MonoBehaviour
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
+
+        PurchaseTower();
         
         CreateTowerRange(newTower);
         CreateArcher(newTower, sr);
@@ -183,6 +195,12 @@ public class ArcherTowerPlacement : MonoBehaviour
         newTower.AddComponent<ArcherTowerAttack>();
         towerPositions.Add(gridPosition);
         CancelPlacement();
+    }
+
+    void PurchaseTower()
+    {
+        gameloopInstance.money -= ArcherTowerCost;
+        ArcherTowerCost *= level_settings.Instance.mortarTowerSettings.costMultiplier;
     }
 
     void CancelPlacement()

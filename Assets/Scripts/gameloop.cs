@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 
 public class gameloop : MonoBehaviour
@@ -17,6 +18,8 @@ public class gameloop : MonoBehaviour
     private RectTransform fillRect;
     private static List<Walker> activeWalkers = new List<Walker>();
     private float numEnemiesTospawn;
+
+    public float money = 10;
 
     private void Awake()
     {

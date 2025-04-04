@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 
 public class MortarTowerPlacement : MonoBehaviour
@@ -24,6 +25,8 @@ public class MortarTowerPlacement : MonoBehaviour
     public HashSet<Vector2Int> towerPositions;
     public float towerRange; 
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
+    private float MortarTowerCost;
+    private gameloop gameloopInstance; 
 
     void Start()
     {
@@ -31,11 +34,18 @@ public class MortarTowerPlacement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
         towerRange = level_settings.Instance.mortarTowerSettings.towerRange;
+        MortarTowerCost = level_settings.Instance.mortarTowerSettings.cost;
+        gameloopInstance = FindFirstObjectByType<gameloop>();
     }
 
 
     void Update()
     {
+        if (gameloopInstance.money < MortarTowerCost) 
+        {
+            return;
+        }
+
         if (isMouseOver && Input.GetMouseButtonUp(0) && !isDragging) // toto zabezpeci ze sa prvotny klik nepocita ako kliknutie na place
         {
             isDragging = true;
@@ -141,7 +151,8 @@ public class MortarTowerPlacement : MonoBehaviour
 
     void PlaceTower(Vector3 position)
     {
-        if (gameloop.Instance.waveStarted) {
+        if (gameloop.Instance.waveStarted)
+        {
             Debug.Log("game started - cant place nomore");
             return;
         }
@@ -156,6 +167,8 @@ public class MortarTowerPlacement : MonoBehaviour
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
+
+        PurchaseTower();
         
         CreateTowerRange(newTower);
         newTower.AddComponent<MortarTowerTargeting>();
@@ -163,6 +176,12 @@ public class MortarTowerPlacement : MonoBehaviour
 
         towerPositions.Add(gridPosition);
         CancelPlacement();
+    }
+
+    void PurchaseTower()
+    {
+        gameloopInstance.money -= MortarTowerCost;
+        MortarTowerCost *= level_settings.Instance.mortarTowerSettings.costMultiplier;
     }
 
     void CancelPlacement()

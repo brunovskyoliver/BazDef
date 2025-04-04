@@ -27,7 +27,9 @@ public class Walker : MonoBehaviour
     private bool hasStartedAttack = false;
     private bool hasDealtFirstHit = false;
     private float firstHitTime = 0f;
+    private float droppedMoney;
     private EnemyType enemyType;
+    private gameloop gameloopInstance;
     
     public void Initialize(EnemyType type)
     {
@@ -38,6 +40,7 @@ public class Walker : MonoBehaviour
         speed = type.moveSpeed;
         spriteScale = type.scale;
         destroyDelay = type.destroyDelay;
+        droppedMoney = type.droppedMoney;
         
         animator = GetComponent<Animator>();
         if (animator == null)
@@ -57,6 +60,7 @@ public class Walker : MonoBehaviour
 
     void Start()
     {
+        gameloopInstance = FindFirstObjectByType<gameloop>();
         transform.position = waypoints[0];
         baseScale = new Vector3(spriteScale, spriteScale, 1);
         transform.localScale = baseScale;
@@ -81,6 +85,7 @@ public class Walker : MonoBehaviour
             {
                 toBeDestroyed = true;
                 animator.SetTrigger("Death");
+                gameloopInstance.money += droppedMoney;
             }
         }
     }

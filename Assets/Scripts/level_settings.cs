@@ -43,6 +43,8 @@ public class ArcherTowerSettings
     public float towerRange = 2f;
     public float attackSpeed = 2f;
     public float attackDamage = 1f;
+    public float cost = 2;
+    public float costMultiplier = 1.5f;
 }
 
 [System.Serializable]
@@ -51,6 +53,8 @@ public class MortarTowerSettings
     public float towerRange = 2f;
     public float attackSpeed = 2f;
     public float attackDamage = 1f;
+    public float cost = 5;
+    public float costMultiplier = 1.5f;
 }
 
 public class level_settings : MonoBehaviour
