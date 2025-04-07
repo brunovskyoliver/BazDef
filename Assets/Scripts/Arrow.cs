@@ -1,6 +1,4 @@
 using System;
-using Unity.Mathematics;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour

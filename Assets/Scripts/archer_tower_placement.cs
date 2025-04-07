@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
+using UnityEngine.UI;
+using Unity.Mathematics;
+using System;
+
 
 public class ArcherTowerPlacement : MonoBehaviour
 {
@@ -18,6 +21,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     public RuntimeAnimatorController archerAnimator;
     public Sprite arrowSprite;
     public Vector3 archerSize = new Vector3(3,3,0);
+    public Text costText;
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
@@ -27,7 +31,9 @@ public class ArcherTowerPlacement : MonoBehaviour
     private float yOffset = 0.75f;
     public HashSet<Vector2Int> towerPositions;
     public float towerRange = 2f; 
-    public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
+    public Color rangeColor = new Color(1f, 1f, 1f, 0.2f);
+    public float ArcherTowerCost;
+    private gameloop gameloopInstance; 
    
 
     void Start()
@@ -36,11 +42,21 @@ public class ArcherTowerPlacement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
         towerRange = level_settings.Instance.archerTowerSettings.towerRange;
+        ArcherTowerCost = level_settings.Instance.archerTowerSettings.cost;
+        gameloopInstance = FindFirstObjectByType<gameloop>();
+        UpdateCostText();
+
     }
 
 
     void Update()
     {
+        if (gameloopInstance.money < ArcherTowerCost) 
+        {
+            isMouseOver = false;
+            return;
+        }
+
         if (isMouseOver && Input.GetMouseButtonUp(0) && !isDragging) // toto zabezpeci ze sa prvotny klik nepocita ako kliknutie na place
         {
             isDragging = true;
@@ -99,6 +115,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     void CreateTowerPreviewRange(GameObject tower)
     {
         GameObject rangeCircle = new GameObject("TowerPreviewRange");
+        rangeCircle.layer = 7;
         rangeCircle.transform.SetParent(tower.transform);
         rangeCircle.transform.localPosition = Vector3.zero;
 
@@ -112,6 +129,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     void CreateTowerRange(GameObject tower)
     {
         GameObject rangeCircle = new GameObject("TowerRange");
+        rangeCircle.layer = 7;
         rangeCircle.transform.SetParent(tower.transform);
         rangeCircle.transform.localPosition = Vector3.zero;
         SpriteRenderer rangeRenderer = rangeCircle.AddComponent<SpriteRenderer>();
@@ -159,7 +177,8 @@ public class ArcherTowerPlacement : MonoBehaviour
 
     void PlaceTower(Vector3 position)
     {
-        if (gameloop.Instance.waveStarted) {
+        if (gameloop.Instance.waveStarted) 
+        {
             Debug.Log("game started - cant place nomore");
             return;
         }
@@ -174,6 +193,8 @@ public class ArcherTowerPlacement : MonoBehaviour
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
+
+        PurchaseTower();
         
         CreateTowerRange(newTower);
         CreateArcher(newTower, sr);
@@ -181,6 +202,14 @@ public class ArcherTowerPlacement : MonoBehaviour
         newTower.AddComponent<ArcherTowerAttack>();
         towerPositions.Add(gridPosition);
         CancelPlacement();
+    }
+
+    void PurchaseTower()
+    {
+        gameloopInstance.money -= ArcherTowerCost;
+        ArcherTowerCost *= level_settings.Instance.archerTowerSettings.costMultiplier;
+        ArcherTowerCost = (float)Math.Round(ArcherTowerCost, 2);
+        UpdateCostText();
     }
 
     void CancelPlacement()
@@ -191,5 +220,10 @@ public class ArcherTowerPlacement : MonoBehaviour
         }
         isDragging = false;
         isMouseOver = false;
+    }
+
+    void UpdateCostText()
+    {
+        costText.text = $"cost: {ArcherTowerCost}";
     }
 }

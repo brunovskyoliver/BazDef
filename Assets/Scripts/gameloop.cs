@@ -1,10 +1,9 @@
-using System.Diagnostics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using System.Net.NetworkInformation;
+
 
 public class gameloop : MonoBehaviour
 {
@@ -19,6 +18,9 @@ public class gameloop : MonoBehaviour
     private RectTransform fillRect;
     private static List<Walker> activeWalkers = new List<Walker>();
     private float numEnemiesTospawn;
+    public Text moneyText;
+
+    public float money = 10;
 
     private void Awake()
     {
@@ -48,6 +50,7 @@ public class gameloop : MonoBehaviour
 
     void Update()
     {
+        UpdateMoney();
         if (!waveStarted) return; 
 
         if (isSpawnable && Time.time >= nextSpawnTime)
@@ -62,7 +65,7 @@ public class gameloop : MonoBehaviour
             var enemyType = level_settings.Instance.enemySettings.enemyTypes;
             foreach (var type in enemyType)
             {
-                type.health = type.health * level_settings.Instance.waveSettings.enemyHealthMultiplier;
+                type.health *= level_settings.Instance.waveSettings.enemyHealthMultiplier;
             }
             startWaveButton.gameObject.SetActive(true);
             waveStarted = false;
@@ -71,6 +74,12 @@ public class gameloop : MonoBehaviour
         }
 
         //if (level_settings.Instance.playerSettings.health >= 0) UpdateHealthBar(level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth);
+    }
+
+    void UpdateMoney()
+    {
+        moneyText.text = $"money: {money}";
+
     }
 
     void SpawnEnemy()

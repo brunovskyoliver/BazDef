@@ -1,13 +1,7 @@
 using System;
 using System.Collections;
-using System.Runtime.ExceptionServices;
-using JetBrains.Annotations;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Rendering;
-using UnityEditor.Toolbars;
 using UnityEngine;
-using UnityEngine.Assertions;
+
 
 public class ArcherTowerAttack : MonoBehaviour
 {
@@ -17,7 +11,6 @@ public class ArcherTowerAttack : MonoBehaviour
     private float attackCooldown;
     private float nextAttackTime = 0f;
     private float attackDamage = 1f;
-    private float waitToChangeArcherAnim = 0.2f;
     private const float animLenght = 0.5f;
     private bool toCreateArrow;
     private int enemyDir; // 0 = down, 1 = up, 2 = left, 3 = right

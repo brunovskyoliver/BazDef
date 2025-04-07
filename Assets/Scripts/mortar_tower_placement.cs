@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
+using UnityEngine.UI;
+using Unity.Mathematics;
+using System;
 
 public class MortarTowerPlacement : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class MortarTowerPlacement : MonoBehaviour
     public Sprite towerRangeSprite; 
     public Sprite towerRangePlacedSprite;
     public Sprite arrowSprite;
+    public Text costText;   
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
@@ -24,6 +27,8 @@ public class MortarTowerPlacement : MonoBehaviour
     public HashSet<Vector2Int> towerPositions;
     public float towerRange; 
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
+    private float MortarTowerCost;
+    private gameloop gameloopInstance; 
 
     void Start()
     {
@@ -31,11 +36,21 @@ public class MortarTowerPlacement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
         towerRange = level_settings.Instance.mortarTowerSettings.towerRange;
+        MortarTowerCost = level_settings.Instance.mortarTowerSettings.cost;
+        gameloopInstance = FindFirstObjectByType<gameloop>();
+        UpdateCostText();
+
     }
 
 
     void Update()
     {
+        if (gameloopInstance.money < MortarTowerCost) 
+        {
+            isMouseOver = false;
+            return;
+        }
+
         if (isMouseOver && Input.GetMouseButtonUp(0) && !isDragging) // toto zabezpeci ze sa prvotny klik nepocita ako kliknutie na place
         {
             isDragging = true;
@@ -93,6 +108,7 @@ public class MortarTowerPlacement : MonoBehaviour
     void CreateTowerPreviewRange(GameObject tower)
     {
         GameObject rangeCircle = new GameObject("TowerPreviewRange");
+        rangeCircle.layer = 7;
         rangeCircle.transform.SetParent(tower.transform);
         rangeCircle.transform.localPosition = Vector3.zero;
 
@@ -106,6 +122,7 @@ public class MortarTowerPlacement : MonoBehaviour
     void CreateTowerRange(GameObject tower)
     {
         GameObject rangeCircle = new GameObject("TowerRange");
+        rangeCircle.layer = 7;
         rangeCircle.transform.SetParent(tower.transform);
         rangeCircle.transform.localPosition = Vector3.zero;
         SpriteRenderer rangeRenderer = rangeCircle.AddComponent<SpriteRenderer>();
@@ -139,7 +156,8 @@ public class MortarTowerPlacement : MonoBehaviour
 
     void PlaceTower(Vector3 position)
     {
-        if (gameloop.Instance.waveStarted) {
+        if (gameloop.Instance.waveStarted)
+        {
             Debug.Log("game started - cant place nomore");
             return;
         }
@@ -154,6 +172,8 @@ public class MortarTowerPlacement : MonoBehaviour
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;
+
+        PurchaseTower();
         
         CreateTowerRange(newTower);
         newTower.AddComponent<MortarTowerTargeting>();
@@ -161,6 +181,14 @@ public class MortarTowerPlacement : MonoBehaviour
 
         towerPositions.Add(gridPosition);
         CancelPlacement();
+    }
+
+    void PurchaseTower()
+    {
+        gameloopInstance.money -= MortarTowerCost;
+        MortarTowerCost *= level_settings.Instance.mortarTowerSettings.costMultiplier;
+        MortarTowerCost = (float)Math.Round(MortarTowerCost, 2);
+        UpdateCostText();
     }
 
     void CancelPlacement()
@@ -171,5 +199,10 @@ public class MortarTowerPlacement : MonoBehaviour
         }
         isDragging = false;
         isMouseOver = false;
+    }
+
+    void UpdateCostText()
+    {
+        costText.text = $"cost: {MortarTowerCost}";
     }
 }
