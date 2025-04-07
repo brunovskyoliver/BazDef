@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using Unity.Mathematics;
+using System;
 
 
 public class ArcherTowerPlacement : MonoBehaviour
@@ -18,6 +21,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     public RuntimeAnimatorController archerAnimator;
     public Sprite arrowSprite;
     public Vector3 archerSize = new Vector3(3,3,0);
+    public Text costText;
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
@@ -40,6 +44,8 @@ public class ArcherTowerPlacement : MonoBehaviour
         towerRange = level_settings.Instance.archerTowerSettings.towerRange;
         ArcherTowerCost = level_settings.Instance.archerTowerSettings.cost;
         gameloopInstance = FindFirstObjectByType<gameloop>();
+        UpdateCostText();
+
     }
 
 
@@ -201,7 +207,9 @@ public class ArcherTowerPlacement : MonoBehaviour
     void PurchaseTower()
     {
         gameloopInstance.money -= ArcherTowerCost;
-        ArcherTowerCost *= level_settings.Instance.mortarTowerSettings.costMultiplier;
+        ArcherTowerCost *= level_settings.Instance.archerTowerSettings.costMultiplier;
+        ArcherTowerCost = (float)Math.Round(ArcherTowerCost, 2);
+        UpdateCostText();
     }
 
     void CancelPlacement()
@@ -212,5 +220,10 @@ public class ArcherTowerPlacement : MonoBehaviour
         }
         isDragging = false;
         isMouseOver = false;
+    }
+
+    void UpdateCostText()
+    {
+        costText.text = $"cost: {ArcherTowerCost}";
     }
 }

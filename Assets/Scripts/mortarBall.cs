@@ -1,5 +1,4 @@
-using System;
-
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MortarBall : MonoBehaviour
@@ -7,51 +6,79 @@ public class MortarBall : MonoBehaviour
     public Transform towerPos;
     public Walker targetedEnemy;
     public GameObject mortarBall;
-    private Vector3 move;
-    private float arrowSpeed = 0.2f;
-    private float xOffset;
-    private float yOffset;
-    public float attackDamage;
-    private Vector3 arrowScale = new Vector3(1.5f, 1.5f, 0);
-    
+    public float attackDamage = 10f;
+    public float flightDuration = 0.8f;
+    public float arcHeight = 2.5f;
+
+
+    private Vector3 startPoint;
+    private Vector3 endPoint;
+    private float flightTime = 0f;
+    private bool flying = true;
+
     void Start()
     {
-        mortarBall.transform.position = towerPos.position + new Vector3(0f, 0.5f, 0); // to spawn fro marcher not the middle of tower
-        mortarBall.transform.localScale = arrowScale;
+        startPoint = towerPos.position + new Vector3(0f, 0.5f, 0); 
+        endPoint = targetedEnemy.transform.position;
+
+        transform.position = startPoint;
+        transform.localScale = new Vector3(1.5f, 1.5f, 0);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (targetedEnemy.toBeDestroyed == true)
+        if (!flying) return;
+
+        flightTime += Time.deltaTime;
+        float t = Mathf.Clamp01(flightTime / flightDuration);
+
+
+        Vector3 currentPos = Vector3.Lerp(startPoint, endPoint, t);
+
+
+        float height = arcHeight * 4 * (t - t * t);
+        currentPos.y += height;
+
+        transform.position = currentPos;
+
+
+        if (t < 1f)
         {
-            Destroy(mortarBall);
-            return;
+            Vector3 direction = (currentPos - transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
         }
-        xOffset = mortarBall.transform.position.x - targetedEnemy.transform.position.x;
-        yOffset = mortarBall.transform.position.y - targetedEnemy.transform.position.y;
-        
-        if (Mathf.Abs(xOffset) < 0.1f && Mathf.Abs(yOffset) < 0.1f) 
+
+
+        if (t >= 1f)
         {
-            if (targetedEnemy != null)
+            float radius = 1.5f;
+            LayerMask enemyMask = LayerMask.GetMask("Enemy");
+            List<GameObject> enemiesNearby = GetObjectsInRadius(transform.position, radius, enemyMask);
+            foreach (GameObject enemy in enemiesNearby)
             {
-                targetedEnemy.health -= attackDamage;
-                Destroy(mortarBall);
+                Walker enemyScript = enemy.GetComponent<Walker>();
+                enemyScript.health -= attackDamage;
             }
-        }
-        double angleToEnemyRadians = Math.Atan(yOffset/xOffset);
-        mortarBall.transform.rotation = Quaternion.Euler(0,0,(float)angleToEnemyRadians * Mathf.Rad2Deg + 90);
-        if (xOffset > 0) // inak to islo napok v prvej polke tak preto to minusko
-        {
-            move = -new Vector3((float)(1*Math.Cos(angleToEnemyRadians)), (float)(1*Math.Sin(angleToEnemyRadians)), 0);  
-        }
-        else
-        {
-            move = new Vector3((float)(1*Math.Cos(angleToEnemyRadians)), (float)(1*Math.Sin(angleToEnemyRadians)), 0);  
-        }
 
-        mortarBall.transform.position += move * arrowSpeed;
+            flying = false;
+            Destroy(gameObject);
+        }
+    }
+
+    public List<GameObject> GetObjectsInRadius(Vector3 center, float radius, LayerMask layerMask)
+    {
+        List<GameObject> objectsInRange = new List<GameObject>();
         
 
-        
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius, layerMask);
+
+        foreach (Collider2D col in hitColliders)
+        {
+            objectsInRange.Add(col.gameObject);
+
+        }
+
+        return objectsInRange;
     }
 }

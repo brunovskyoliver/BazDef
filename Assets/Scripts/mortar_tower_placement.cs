@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-
+using UnityEngine.UI;
+using Unity.Mathematics;
+using System;
 
 public class MortarTowerPlacement : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class MortarTowerPlacement : MonoBehaviour
     public Sprite towerRangeSprite; 
     public Sprite towerRangePlacedSprite;
     public Sprite arrowSprite;
+    public Text costText;   
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
     private Color validColor = new Color(1, 1, 1, 0.7f);
@@ -36,6 +38,8 @@ public class MortarTowerPlacement : MonoBehaviour
         towerRange = level_settings.Instance.mortarTowerSettings.towerRange;
         MortarTowerCost = level_settings.Instance.mortarTowerSettings.cost;
         gameloopInstance = FindFirstObjectByType<gameloop>();
+        UpdateCostText();
+
     }
 
 
@@ -183,6 +187,8 @@ public class MortarTowerPlacement : MonoBehaviour
     {
         gameloopInstance.money -= MortarTowerCost;
         MortarTowerCost *= level_settings.Instance.mortarTowerSettings.costMultiplier;
+        MortarTowerCost = (float)Math.Round(MortarTowerCost, 2);
+        UpdateCostText();
     }
 
     void CancelPlacement()
@@ -193,5 +199,10 @@ public class MortarTowerPlacement : MonoBehaviour
         }
         isDragging = false;
         isMouseOver = false;
+    }
+
+    void UpdateCostText()
+    {
+        costText.text = $"cost: {MortarTowerCost}";
     }
 }

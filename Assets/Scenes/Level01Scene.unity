@@ -297,10 +297,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 1.3959845
+    x: 0.20233463
     y: 0
-    width: 0.7210593
-    height: 0.7305251
+    width: 1.5953307
+    height: 2.0759494
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -360,6 +360,85 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!1 &522286413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522286414}
+  - component: {fileID: 522286416}
+  - component: {fileID: 522286415}
+  m_Layer: 5
+  m_Name: archerCost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &522286414
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522286413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1466178905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 80.70001, y: 95.899994}
+  m_SizeDelta: {x: 66.23, y: 18.01}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &522286415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522286413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 10
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &522286416
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522286413}
+  m_CullTransparentMesh: 1
 --- !u!1 &528101411
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +596,7 @@ MonoBehaviour:
   archerAnimator: {fileID: 9100000, guid: 342352cb9453847868db60b886a15ea4, type: 2}
   arrowSprite: {fileID: -855298285791758126, guid: dde2632eeda934e0188a4e3cf43b9103, type: 3}
   archerSize: {x: 3, y: 3, z: 0}
+  costText: {fileID: 522286415}
   isMouseOver: 0
   towerRange: 2
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
@@ -903,6 +983,85 @@ Transform:
   - {fileID: 1665685312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1048378138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1048378139}
+  - component: {fileID: 1048378141}
+  - component: {fileID: 1048378140}
+  m_Layer: 5
+  m_Name: money
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1048378139
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048378138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1466178905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -80, y: -15}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1048378140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048378138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &1048378141
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048378138}
+  m_CullTransparentMesh: 1
 --- !u!1 &1150044554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1251,85 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1214894758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1214894759}
+  - component: {fileID: 1214894761}
+  - component: {fileID: 1214894760}
+  m_Layer: 5
+  m_Name: mortarCost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1214894759
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214894758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1466178905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 171, y: 95.899994}
+  m_SizeDelta: {x: 66.23, y: 18.01}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1214894760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214894758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 10
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &1214894761
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214894758}
+  m_CullTransparentMesh: 1
 --- !u!1 &1462883848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,7 +1494,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: -2
@@ -1274,6 +1512,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 650270382}
+  - {fileID: 1048378139}
+  - {fileID: 522286414}
+  - {fileID: 1214894759}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5876,13 +6117,13 @@ MonoBehaviour:
     - enemyName: Wizard
       sprite: {fileID: -3442688040396696736, guid: 18fa2d84ba5af44b480330c5cc3df652, type: 3}
       animatorController: {fileID: 9100000, guid: e65d67f31bd2d4dc9bb466502a6a6827, type: 2}
-      health: 2
+      health: 5
       attackDamage: 1
-      attackSpeed: 2
-      moveSpeed: 1.9
+      attackSpeed: 0.5
+      moveSpeed: 1.5
       scale: 0.25
       destroyDelay: 1
-      droppedMoney: 1
+      droppedMoney: 3
     baseAttackDamage: 1
     baseAttackSpeed: 0.8
   enemyWaypoints:
@@ -5900,8 +6141,8 @@ MonoBehaviour:
   - {x: 7, y: 1, z: -1}
   parentWaypoint: {fileID: 0}
   waveSettings:
-    numberOfEnemies: 10
-    spawnDelay: 0.5
+    numberOfEnemies: 5
+    spawnDelay: 0.8
     speed: 2
     numberOfEnemiesMultiplier: 1.2
     enemyAttackDamageMultiplier: 1.2
@@ -5912,13 +6153,13 @@ MonoBehaviour:
     attackSpeed: 1.5
     attackDamage: 1
     cost: 2
-    costMultiplier: 1.5
+    costMultiplier: 1.9
   mortarTowerSettings:
     towerRange: 4
     attackSpeed: 5
     attackDamage: 5
     cost: 5
-    costMultiplier: 1.5
+    costMultiplier: 2
 --- !u!4 &1673638268
 Transform:
   m_ObjectHideFlags: 0
@@ -5977,7 +6218,7 @@ Transform:
   m_GameObject: {fileID: 1930247872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.96, y: -6.25, z: 2.8292115}
+  m_LocalPosition: {x: -8.45, y: -6.28, z: 2.8292115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6030,7 +6271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveStarted: 0
   startWaveButton: {fileID: 650270383}
-  money: 10
+  moneyText: {fileID: 1048378140}
+  money: 5
 --- !u!114 &2125308855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6080,6 +6322,7 @@ MonoBehaviour:
   towerRangeSprite: {fileID: -2036660381736881138, guid: 634bff306018c4f0eb24277dcdcc2491, type: 3}
   towerRangePlacedSprite: {fileID: -7817414820505436063, guid: 75cd0ebf53f5442f49b52bf0b0e34619, type: 3}
   arrowSprite: {fileID: -6470460504253458178, guid: ab30eb276dc354639b2b2b1919d0d41d, type: 3}
+  costText: {fileID: 1214894760}
   isMouseOver: 0
   towerRange: 5
   rangeColor: {r: 1, g: 1, b: 1, a: 0.2}
