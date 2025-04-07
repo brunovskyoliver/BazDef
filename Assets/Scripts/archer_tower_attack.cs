@@ -27,7 +27,7 @@ public class ArcherTowerAttack : MonoBehaviour
 
     void Start()
     {
-        
+
         targeting = GetComponent<AcrherTowerTargeting>();
         placement = FindAnyObjectByType<ArcherTowerPlacement>();
         attackCooldown = level_settings.Instance.archerTowerSettings.attackSpeed;
@@ -37,18 +37,18 @@ public class ArcherTowerAttack : MonoBehaviour
     void FixedUpdate()
     {
         if (Time.timeSinceLevelLoad < attackCooldown) return;
-        
+
         if (Time.time >= nextAttackTime)
         {
-            
+
             if (targeting != null && targeting.HasTargetsInRange())
             {
                 GameObject target = targeting.GetClosestEnemy();
                 if (target != null)
                 {
                     Attack(target);
-                    
-                    
+
+
                     nextAttackTime = Time.time + attackCooldown;
                 }
             }
@@ -64,7 +64,7 @@ public class ArcherTowerAttack : MonoBehaviour
 
         Animator archerAnim = archer.GetComponent<Animator>();
         if (!enemy.toBeDestroyed)
-        { 
+        {
             enemyDir = FindEnemeyDir();
             archer.transform.localScale = placement.archerSize; // reset the orientation
             if (enemyDir == 0)
@@ -73,12 +73,12 @@ public class ArcherTowerAttack : MonoBehaviour
                 archerAnim.Play("archer_Shoot_Front");
             else if (enemyDir == 2)
                 archerAnim.Play("archer_Shoot_Left");
-            else 
+            else
             {
                 archerAnim.Play("archer_Shoot_Left");
                 archer.transform.localScale = new Vector3(-3, 3, 1); // if I want to shoot to the right i have to miiror the left anim
             }
-              
+
             StartCoroutine(CreateArrow());
         }
 
@@ -95,13 +95,13 @@ public class ArcherTowerAttack : MonoBehaviour
 
     IEnumerator CreateArrow()
     {
-        yield return new WaitForSeconds(animLenght); 
+        yield return new WaitForSeconds(animLenght);
         Animator archerAnim = archer.GetComponent<Animator>();
         if (enemyDir == 0)
-                archerAnim.Play("archer_Idle_Back");
+            archerAnim.Play("archer_Idle_Back");
         else if (enemyDir == 1)
             archerAnim.Play("archer_Idle_Front");
-        else 
+        else
             archerAnim.Play("archer_Idle_Left");
 
 

@@ -297,10 +297,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 1.3720632
+    x: 0
     y: 0
-    width: 0.7689022
-    height: 0.79834414
+    width: 0.9995743
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -5880,6 +5880,15 @@ MonoBehaviour:
       moveSpeed: 2
       scale: 0.25
       destroyDelay: 1
+    - enemyName: Simulcik
+      sprite: {fileID: 5613834084759183116, guid: f1558a27fd91749a782bf1fe038b7b7f, type: 3}
+      animatorController: {fileID: 9100000, guid: e046d73792152465895b271e6390b716, type: 2}
+      health: 2
+      attackDamage: 1
+      attackSpeed: 1
+      moveSpeed: 2
+      scale: 0.25
+      destroyDelay: 1.2
     baseAttackDamage: 1
     baseAttackSpeed: 0.8
   enemyWaypoints:
