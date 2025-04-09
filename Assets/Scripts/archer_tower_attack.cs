@@ -10,12 +10,12 @@ public class ArcherTowerAttack : MonoBehaviour
     private GameObject archer;
     private float attackCooldown;
     private float nextAttackTime = 0f;
-    private float attackDamage = 1f;
+    public float attackDamage = 1f;
     private const float animLenght = 0.5f;
-    private bool toCreateArrow;
     private int enemyDir; // 0 = down, 1 = up, 2 = left, 3 = right
     private Walker enemy;
     private TrailRenderer arrowTrail;
+    public float upgradeCost = 2f;
 
 
     void Start()

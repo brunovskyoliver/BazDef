@@ -34,6 +34,7 @@ public class ArcherTowerPlacement : MonoBehaviour
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f);
     public float ArcherTowerCost;
     private gameloop gameloopInstance; 
+    public List<GameObject> ArcherPositions = new List<GameObject>();
    
 
     void Start()
@@ -191,8 +192,11 @@ public class ArcherTowerPlacement : MonoBehaviour
         }
         GameObject newTower = new GameObject("Tower");
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
+        newTower.layer = 8;
         sr.sprite = towerSprite;
         newTower.transform.position = position;
+
+        ArcherPositions.Add(newTower);
 
         PurchaseTower();
         
