@@ -8,7 +8,7 @@ public class ArcherTowerAttack : MonoBehaviour
     private AcrherTowerTargeting targeting;
     private ArcherTowerPlacement placement;
     private GameObject archer;
-    private float attackCooldown;
+    public float attackCooldown;
     private float nextAttackTime = 0f;
     public float attackDamage = 1f;
     private const float animLenght = 0.5f;

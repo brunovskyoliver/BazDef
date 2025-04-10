@@ -138,7 +138,6 @@ public class Walker : MonoBehaviour
 
         if (player != null && !toBeDestroyed)
         {
-            priority += Time.deltaTime;
             float distanceToPlayer = Vector2.Distance(
                 new Vector2(transform.position.x, transform.position.y),
                 new Vector2(player.transform.position.x, player.transform.position.y)
@@ -170,6 +169,8 @@ public class Walker : MonoBehaviour
             new Vector2(transform.position.x, transform.position.y),
             new Vector2(target.x + xOffset, target.y)
         );
+        // aby ratalo vydialenost prejdenu nie cas ktory zije
+        priority += speed*Time.deltaTime;
 
         if (distance < 0.1f)
         {

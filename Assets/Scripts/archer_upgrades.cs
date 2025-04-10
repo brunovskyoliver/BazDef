@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class ArcherUpgrade : MonoBehaviour
 {
@@ -17,6 +16,10 @@ public class ArcherUpgrade : MonoBehaviour
 
     public Button upgradeButtton;
     public Text upgradeText;
+    public Text damageText;
+    public Text plusDamageText;
+    public Text attackspeedText;
+    public GameObject stastPanel;
 
     void Start()
     {
@@ -43,16 +46,21 @@ public class ArcherUpgrade : MonoBehaviour
                 }
             }
         }
-        upgradeButtton.transform.position = new Vector3 (100, -1f, 0);
+        upgradeButtton.gameObject.SetActive(false);
+        stastPanel.gameObject.SetActive(false);
 
     }
 
     void ShowButton(Vector3 archerPos)
     {
-        attack = FindFirstObjectByType<ArcherTowerAttack>();
+        upgradeButtton.gameObject.SetActive(true);
+        stastPanel.gameObject.SetActive(true);
         upgradeButtton.transform.position = archerPos + new Vector3 (0, -1f, 0);
+        attack = FindClosestObject(upgradeButtton.transform);
         upgradeText.text = $"cost: {attack.upgradeCost}";
-
+        damageText.text = $"damage: {attack.attackDamage}";
+        plusDamageText.text = $"plus damage: {attack.attackDamage * attackDamageMultiplier -attack.attackDamage}";
+        attackspeedText.text = $"attack speed: {attack.attackCooldown}";
     }
 
     void OnUpgrade()
@@ -63,6 +71,25 @@ public class ArcherUpgrade : MonoBehaviour
             attack.attackDamage *= attackDamageMultiplier;
             attack.upgradeCost *= upgradeCostMultiplier;
         }
+    }
+
+    ArcherTowerAttack FindClosestObject(Transform reference)
+    {
+        ArcherTowerAttack[] allObjects = FindObjectsByType<ArcherTowerAttack>(FindObjectsSortMode.None);
+        ArcherTowerAttack closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (ArcherTowerAttack obj in allObjects)
+        {
+            float distance = Vector3.Distance(reference.position, obj.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closest = obj;
+            }
+        }
+
+        return closest;
     }
 
 }
