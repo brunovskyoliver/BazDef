@@ -29,6 +29,8 @@ public class MortarTowerPlacement : MonoBehaviour
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f); 
     private float MortarTowerCost;
     private gameloop gameloopInstance; 
+    public List<GameObject> MortarPositions = new List<GameObject>();
+
 
     void Start()
     {
@@ -174,6 +176,7 @@ public class MortarTowerPlacement : MonoBehaviour
         newTower.transform.position = position;
 
         PurchaseTower();
+        MortarPositions.Add(newTower);
         
         CreateTowerRange(newTower);
         newTower.AddComponent<MortarTowerTargeting>();
