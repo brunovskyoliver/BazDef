@@ -10,7 +10,7 @@ public class ArcherUpgrade : MonoBehaviour
     private gameloop gameLoop;
     private List<GameObject> ArcherPositions;
     private Vector3 mousePos;
-    private float searchRadius = 1.5f;
+    private float searchRadius = 0.7f;
     public float upgradeCostMultiplier = 1.5f;
     public float attackDamageMultiplier = 1.5f;
 
@@ -36,18 +36,16 @@ public class ArcherUpgrade : MonoBehaviour
 
         foreach (GameObject archer in ArcherPositions)
         {
-            Vector3 archerPos = archer.transform.position;
-            if (archerPos.x < mousePos.x+searchRadius && archerPos.x > mousePos.x-searchRadius)
+            float dist = Vector2.Distance(mousePos, archer.transform.position  + new Vector3 (0, -1f, 0));
+            if (dist <= searchRadius)
             {
-                if (archerPos.y < mousePos.y+searchRadius && archerPos.y > mousePos.y-searchRadius)
-                {
-                    ShowButton(archerPos);
-                    return;
-                }
+                attack = archer.GetComponent<ArcherTowerAttack>();
+                ShowButton(archer.transform.position);
+                return;
             }
         }
-        upgradeButtton.gameObject.SetActive(false);
-        stastPanel.gameObject.SetActive(false);
+        // upgradeButtton.gameObject.SetActive(false);
+        // stastPanel.gameObject.SetActive(false);
 
     }
 
