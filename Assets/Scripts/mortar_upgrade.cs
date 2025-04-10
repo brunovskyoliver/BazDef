@@ -63,6 +63,7 @@ public class MortarUpgrade : MonoBehaviour
 
     void OnUpgrade()
     {
+        if (attack == null) return;
         if(attack.upgradeCost <= gameLoop.money)
         {
             gameLoop.money -= attack.upgradeCost;
