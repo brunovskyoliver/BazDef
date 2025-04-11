@@ -69,6 +69,9 @@ public class MortarUpgrade : MonoBehaviour
             gameLoop.money -= attack.upgradeCost;
             attack.attackDamage *= attackDamageMultiplier;
             attack.upgradeCost *= upgradeCostMultiplier;
+            attack.attackDamage = Mathf.Round(attack.attackDamage * 100) / 100;
+            attack.upgradeCost = Mathf.Round(attack.upgradeCost * 100) / 100;
+
         }
     }
 
