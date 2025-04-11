@@ -44,8 +44,8 @@ public class ArcherUpgrade : MonoBehaviour
                 return;
             }
         }
-        // upgradeButtton.gameObject.SetActive(false);
-        // stastPanel.gameObject.SetActive(false);
+        upgradeButtton.gameObject.SetActive(false);
+        stastPanel.gameObject.SetActive(false);
 
     }
 
