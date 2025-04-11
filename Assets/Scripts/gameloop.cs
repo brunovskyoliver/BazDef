@@ -78,6 +78,7 @@ public class gameloop : MonoBehaviour
 
     void UpdateMoney()
     {
+        money = Mathf.Round(money * 100) / 100;
         moneyText.text = $"money: {money}";
 
     }
