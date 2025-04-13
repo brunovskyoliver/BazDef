@@ -576,7 +576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 221.70001, y: 196.9}
+  m_AnchoredPosition: {x: 221.70007, y: 196.90002}
   m_SizeDelta: {x: 70, y: 12.274}
   m_Pivot: {x: 0.25, y: 0.25}
 --- !u!114 &522286415
@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 528101412}
   - component: {fileID: 528101416}
   - component: {fileID: 528101417}
+  - component: {fileID: 528101418}
   m_Layer: 6
   m_Name: Archer_tower_button
   m_TagString: Untagged
@@ -806,6 +807,21 @@ MonoBehaviour:
   plusDamageText: {fileID: 2096434992}
   attackspeedText: {fileID: 1626460688}
   stastPanel: {fileID: 1952635542}
+--- !u!114 &528101418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528101411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ecf3dd25d504cb0a3027ca1f7e65d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 929632654}
+  costText: {fileID: 522286414}
+  hoverOffsetUI: {x: 0, y: 10}
 --- !u!1 &558864020
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &560651390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1706,7 +1722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1220597523
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2337,7 +2353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1659173740
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7426,7 +7442,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1952635543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7719,6 +7735,7 @@ GameObject:
   - component: {fileID: 2129481738}
   - component: {fileID: 2129481737}
   - component: {fileID: 2129481741}
+  - component: {fileID: 2129481742}
   m_Layer: 6
   m_Name: Mortar_tower_button
   m_TagString: Untagged
@@ -7887,6 +7904,21 @@ MonoBehaviour:
   plusDamageText: {fileID: 1713336639}
   attackspeedText: {fileID: 1978920603}
   stastPanel: {fileID: 560651389}
+--- !u!114 &2129481742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129481736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ecf3dd25d504cb0a3027ca1f7e65d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 1888161960}
+  costText: {fileID: 1214894759}
+  hoverOffsetUI: {x: 0, y: 10}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
