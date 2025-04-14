@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using UnityEngine;
+using UnityEngine.UI;
 
 
 public class gameloop : MonoBehaviour
@@ -42,7 +42,7 @@ public class gameloop : MonoBehaviour
     void StartWave()
     {
         waveStarted = true;
-        startWaveButton.gameObject.SetActive(false); 
+        startWaveButton.gameObject.SetActive(false);
         isSpawnable = true;
         level_settings.Instance.waveSettings.numberOfEnemies = (int)(numEnemiesTospawn * level_settings.Instance.waveSettings.numberOfEnemiesMultiplier);
         numEnemiesTospawn = level_settings.Instance.waveSettings.numberOfEnemies;
@@ -51,7 +51,7 @@ public class gameloop : MonoBehaviour
     void Update()
     {
         UpdateMoney();
-        if (!waveStarted) return; 
+        if (!waveStarted) return;
 
         if (isSpawnable && Time.time >= nextSpawnTime)
         {
@@ -70,7 +70,7 @@ public class gameloop : MonoBehaviour
             startWaveButton.gameObject.SetActive(true);
             waveStarted = false;
             spawnedEnemies = 0;
-            level_settings.Instance.waveSettings.currentWave ++;
+            level_settings.Instance.waveSettings.currentWave++;
         }
 
         //if (level_settings.Instance.playerSettings.health >= 0) UpdateHealthBar(level_settings.Instance.playerSettings.health / level_settings.Instance.playerSettings.maxHealth);
@@ -89,13 +89,13 @@ public class gameloop : MonoBehaviour
         newWalker.tag = "Enemy";
         newWalker.transform.position = level_settings.Instance.enemyWaypoints[0];
         newWalker.layer = LayerMask.NameToLayer("Enemy");
-        
+
         CircleCollider2D collider = newWalker.AddComponent<CircleCollider2D>();
         collider.isTrigger = true;
 
         SpriteRenderer sr = newWalker.AddComponent<SpriteRenderer>();
         Animator anim = newWalker.AddComponent<Animator>();
-        
+
         var walker = newWalker.AddComponent<Walker>();
         walker.waypoints = new List<Vector3>(level_settings.Instance.enemyWaypoints);
 
@@ -133,23 +133,23 @@ public class gameloop : MonoBehaviour
         Canvas canvas = healthBarContainer.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.sortingOrder = 2;
-        
+
         healthBarContainer.transform.SetParent(player.transform);
         healthBarContainer.transform.localPosition = new Vector3(-0.3f, 0.5f, 0);
-        healthBarContainer.transform.localScale = new Vector3(0.01f, 0.01f, 1f); 
+        healthBarContainer.transform.localScale = new Vector3(0.01f, 0.01f, 1f);
 
         GameObject healthBarBg = new GameObject("HealthBarBackground");
         healthBarBg.transform.SetParent(healthBarContainer.transform);
         Image bgImage = healthBarBg.AddComponent<Image>();
-        bgImage.color = new Color(0.2f, 0.2f, 0.2f, 0.8f); 
+        bgImage.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
         RectTransform bgRect = bgImage.rectTransform;
-        bgRect.sizeDelta = new Vector2(100, 10); 
+        bgRect.sizeDelta = new Vector2(100, 10);
         bgRect.localPosition = Vector3.zero;
         bgRect.localScale = new Vector3(1f, 1f, 0);
 
         GameObject healthBarFillObj = new GameObject("HealthBarFill");
         healthBarFillObj.transform.SetParent(healthBarBg.transform);
-        healthBarFill = healthBarFillObj.AddComponent<Image>(); 
+        healthBarFill = healthBarFillObj.AddComponent<Image>();
         healthBarFill.color = Color.green;
         fillRect = healthBarFill.rectTransform;
         fillRect.sizeDelta = new Vector2(100, 10);
@@ -159,7 +159,8 @@ public class gameloop : MonoBehaviour
 
     public void UpdateHealthBar(float healthPercent)
     {
-        if (healthPercent <= 0 && !level_settings.Instance.playerSettings.playerDeath) {
+        if (healthPercent <= 0 && !level_settings.Instance.playerSettings.playerDeath)
+        {
             PlayerDeath();
             level_settings.Instance.playerSettings.playerDeath = true;
         }
@@ -176,16 +177,16 @@ public class gameloop : MonoBehaviour
         if (animator != null)
         {
             animator.Play("Player_death");
-            float deathAnimLength = 1.0f; 
+            float deathAnimLength = 1.0f;
             Destroy(player, deathAnimLength);
         }
     }
+
 
     public static void AddWalker(Walker walker)
     {
         activeWalkers.Add(walker);
     }
-
     public static void RemoveWalker(Walker walker)
     {
         activeWalkers.Remove(walker);

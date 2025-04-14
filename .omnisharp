@@ -1,0 +1,12 @@
+{
+  "MsBuild": {
+    "UseLegacySdkResolver": true
+  },
+  "RoslynExtensionsOptions": {
+    "EnableAnalyzersSupport": true,
+    "LocationPaths": [
+      "/Applications/Unity/Hub/Editor/6000.0.43f1/Unity.app/Contents/Managed/UnityEngine.dll",
+      "/Applications/Unity/Hub/Editor/6000.0.43f1/Unity.app/Contents/Managed/"
+    ]
+  }
+}

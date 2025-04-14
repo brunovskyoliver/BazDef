@@ -116,12 +116,12 @@ TextureImporter:
       name: card_mortar_0
       rect:
         serializedVersion: 2
-        x: 221
-        y: 177
-        width: 108
-        height: 115
+        x: 47
+        y: 21
+        width: 411
+        height: 455
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f436c07354ffe4ea3837712b928cd1c6
     internalID: 0
     vertices: []
     indices: 

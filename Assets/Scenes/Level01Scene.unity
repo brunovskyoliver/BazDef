@@ -822,6 +822,7 @@ MonoBehaviour:
   image: {fileID: 929632654}
   costText: {fileID: 522286414}
   hoverOffsetUI: {x: 0, y: 10}
+  animSpeed: 5
 --- !u!1 &558864020
 GameObject:
   m_ObjectHideFlags: 0
@@ -7709,7 +7710,7 @@ MonoBehaviour:
   waveStarted: 0
   startWaveButton: {fileID: 650270383}
   moneyText: {fileID: 1048378140}
-  money: 6
+  money: 10
 --- !u!114 &2125308855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7919,6 +7920,7 @@ MonoBehaviour:
   image: {fileID: 1888161960}
   costText: {fileID: 1214894759}
   hoverOffsetUI: {x: 0, y: 10}
+  animSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
