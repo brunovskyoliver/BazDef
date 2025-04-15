@@ -6,6 +6,7 @@ public class MortarBall : MonoBehaviour
     public Transform towerPos;
     public Walker targetedEnemy;
     public GameObject mortarBall;
+    private GameObject shadow;
     public float attackDamage = 10f;
     public float flightDuration = 0.8f;
     public float arcHeight = 2.5f;
@@ -13,6 +14,8 @@ public class MortarBall : MonoBehaviour
 
     private Vector3 startPoint;
     private Vector3 endPoint;
+    private Vector3 shadowPos;
+
     private float flightTime = 0f;
     private bool flying = true;
 
@@ -22,11 +25,14 @@ public class MortarBall : MonoBehaviour
         endPoint = targetedEnemy.transform.position;
 
         transform.position = startPoint;
+        shadowPos = startPoint;
         transform.localScale = new Vector3(1.5f, 1.5f, 0);
+        CreateShadow();
     }
 
     void Update()
     {
+        UpdateShadowPos();
         if (!flying) return;
 
         flightTime += Time.deltaTime;
@@ -37,7 +43,10 @@ public class MortarBall : MonoBehaviour
 
 
         float height = arcHeight * 4 * (t - t * t);
+
         currentPos.y += height;
+        shadowPos = new Vector3(currentPos.x, currentPos.y - height, 1);
+        
 
         transform.position = currentPos;
 
@@ -80,5 +89,21 @@ public class MortarBall : MonoBehaviour
         }
 
         return objectsInRange;
+    }
+
+    private void CreateShadow()
+    {
+        shadow = new GameObject("shadow");
+        shadow.transform.position = transform.position;
+        shadow.layer = 9;
+        shadow.transform.SetParent(transform);
+        SpriteRenderer sr = shadow.AddComponent<SpriteRenderer>();
+        sr.sprite = level_settings.Instance.enemySettings.Shadow.sprite;
+        sr.color = level_settings.Instance.enemySettings.Shadow.color;
+    }
+
+    private void UpdateShadowPos()
+    {
+        shadow.transform.position = shadowPos;
     }
 }

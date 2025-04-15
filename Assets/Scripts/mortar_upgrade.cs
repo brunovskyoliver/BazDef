@@ -36,12 +36,10 @@ public class MortarUpgrade : MonoBehaviour
         foreach (GameObject mortar in MortarPositions)
         {
             float dist = Vector2.Distance(mousePos, mortar.transform.position + new Vector3 (0, -1f, 0));
-            Debug.Log(dist);
             if (dist <= searchRadius)
             {
                 attack = mortar.GetComponent<MortarTowerAttack>();
                 ShowButton(mortar.transform.position);
-                Debug.Log("made itt");
                 return;
             }
         }

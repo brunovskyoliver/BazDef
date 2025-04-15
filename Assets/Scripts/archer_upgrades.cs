@@ -51,7 +51,7 @@ public class ArcherUpgrade : MonoBehaviour
 
     void ShowButton(Vector3 archerPos)
     {
-        UnityEngine.Debug.Log(archerPos);
+
         upgradeButtton.gameObject.SetActive(true);
         stastPanel.gameObject.SetActive(true);
         upgradeButtton.transform.position = archerPos + new Vector3 (0, -1f, 0);
