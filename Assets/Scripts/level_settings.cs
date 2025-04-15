@@ -34,7 +34,6 @@ public class EnemySettings
     public List<EnemyType> enemyTypes = new List<EnemyType>();
     public float baseAttackDamage = 1f;
     public float baseAttackSpeed = 0.8f;
-    public GameObject barFill;
     public GameObject barOutLine;
 }
 
