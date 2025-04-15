@@ -58,9 +58,10 @@ public class MortarBall : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
         }
 
-
+        // hit  
         if (t >= 1f)
         {
+            CreateExplosion();
             float radius = 1.5f;
             LayerMask enemyMask = LayerMask.GetMask("Enemy");
             List<GameObject> enemiesNearby = GetObjectsInRadius(transform.position, radius, enemyMask);
@@ -105,5 +106,114 @@ public class MortarBall : MonoBehaviour
     private void UpdateShadowPos()
     {
         shadow.transform.position = shadowPos;
+    }
+
+    public void CreateExplosion()
+    {
+        GameObject explosionGO = new GameObject("ExplosionParticles");
+        explosionGO.transform.position = new Vector3(transform.position.x, transform.position.y, -1f); // draw on top
+        explosionGO.layer = 9;
+
+        // Add ParticleSystem
+        ParticleSystem ps = explosionGO.AddComponent<ParticleSystem>();
+        var main = ps.main;
+        main.duration = 0.5f;
+        main.loop = false;
+        main.startLifetime = new ParticleSystem.MinMaxCurve(0.3f, 0.5f);
+        main.startSpeed = new ParticleSystem.MinMaxCurve(3f, 6f);
+        main.startSize = new ParticleSystem.MinMaxCurve(0.3f, 0.7f);
+        main.startColor = new ParticleSystem.MinMaxGradient(
+            new Gradient
+            {
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(new Color(1f, 0.4f, 0f), 0f), // orange
+                    new GradientColorKey(Color.yellow, 0.5f),
+                    new GradientColorKey(Color.white, 1f)
+                },
+                alphaKeys = new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(0f, 1f)
+                }
+            });
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+        main.gravityModifier = 2f;
+        main.maxParticles = 100;
+
+        // Emission burst
+        var emission = ps.emission;
+        emission.rateOverTime = 0;
+        emission.SetBursts(new ParticleSystem.Burst[] {
+            new ParticleSystem.Burst(0f, 50)
+        });
+
+        // Shape
+        var shape = ps.shape;
+        shape.shapeType = ParticleSystemShapeType.Sphere;
+        shape.radius = 0.1f;
+
+        // Velocity randomness
+        var velocity = ps.velocityOverLifetime;
+        velocity.enabled = true;
+        velocity.space = ParticleSystemSimulationSpace.Local;
+        velocity.x = new ParticleSystem.MinMaxCurve(-5f, 5f);
+        velocity.y = new ParticleSystem.MinMaxCurve(2f, 10f); // upward punch
+
+        // Rotation randomness
+        var rotation = ps.rotationOverLifetime;
+        rotation.enabled = true;
+        rotation.z = new ParticleSystem.MinMaxCurve(-360f, 360f);
+
+        // Fade out
+        var colorOverLifetime = ps.colorOverLifetime;
+        colorOverLifetime.enabled = true;
+        Gradient fade = new Gradient();
+        fade.SetKeys(
+            new GradientColorKey[] {
+                new GradientColorKey(Color.white, 0f),
+                new GradientColorKey(Color.white, 1f)
+            },
+            new GradientAlphaKey[] {
+                new GradientAlphaKey(1f, 0f),
+                new GradientAlphaKey(0f, 1f)
+            }
+        );
+        colorOverLifetime.color = new ParticleSystem.MinMaxGradient(fade);
+
+        // Shrink over time
+        var sizeOverLifetime = ps.sizeOverLifetime;
+        sizeOverLifetime.enabled = true;
+        AnimationCurve shrink = new AnimationCurve();
+        shrink.AddKey(0f, 1.2f);
+        shrink.AddKey(1f, 0f);
+        sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, shrink);
+
+        // Dampen speed
+        var limit = ps.limitVelocityOverLifetime;
+        limit.enabled = true;
+        limit.dampen = 0.4f;
+        limit.limit = 7f;
+
+        // Setup material with correct blending
+        Material explosionMat = new Material(Shader.Find("Particles/Standard Unlit"));
+        explosionMat.SetFloat("_Mode", 2f); // Fade mode
+        explosionMat.SetFloat("_BlendOp", (float)UnityEngine.Rendering.BlendOp.Add);
+        explosionMat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        explosionMat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.One);
+        explosionMat.SetFloat("_ZWrite", 0f);
+        explosionMat.DisableKeyword("_ALPHATEST_ON");
+        explosionMat.EnableKeyword("_ALPHABLEND_ON");
+        explosionMat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        explosionMat.renderQueue = 3000;
+
+        var psr = explosionGO.GetComponent<ParticleSystemRenderer>();
+        psr.material = explosionMat;
+        psr.sortingLayerName = "Enemy"; // Set to your layer above units
+        psr.sortingOrder = 100;
+        psr.renderMode = ParticleSystemRenderMode.Billboard;
+
+        ps.Play();
+        Destroy(explosionGO, main.duration + main.startLifetime.constantMax);
     }
 }
