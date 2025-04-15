@@ -44,6 +44,7 @@ public class ArcherTowerPlacement : MonoBehaviour
         ArcherPositions.Clear();
         ArcherTowerCost = startArcherTowerCost;
         UpdateCostText();
+        level_settings.Instance.ResetToDefault();
     }
     void Start()
     {

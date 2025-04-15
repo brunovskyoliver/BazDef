@@ -13,5 +13,4 @@ public class EnemyType
     public float scale = 0.25f;
     public float destroyDelay;
     public float droppedMoney = 1;
-
 }

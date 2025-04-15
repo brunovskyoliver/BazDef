@@ -69,15 +69,24 @@ public class level_settings : MonoBehaviour
     public MortarTowerSettings mortarTowerSettings;
 
     public static level_settings Instance { get; private set; }
+    private string defaultSettingsJson;
 
     void Awake()
     {
 
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            defaultSettingsJson = JsonUtility.ToJson(this);
+        }
         else
         {
             Destroy(gameObject);
         }
+    }
+    public void ResetToDefault()
+    {
+        JsonUtility.FromJsonOverwrite(defaultSettingsJson, this);
     }
 
 }

@@ -24,6 +24,7 @@ public class gameloop : MonoBehaviour
     private float moneyStart;
     private ArcherTowerPlacement archerTowerPlacement;
     private MortarTowerPlacement mortarTowerPlacement;
+    public List<EnemyType> baseEnemyTypes = new List<EnemyType>();
 
     private void Awake()
     {
@@ -35,6 +36,8 @@ public class gameloop : MonoBehaviour
     }
     public void HandleInputR()
     {
+        waveStarted = false;
+        level_settings.Instance.ResetToDefault();
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         List<GameObject> toDestroy = new List<GameObject>();
 
@@ -42,7 +45,7 @@ public class gameloop : MonoBehaviour
         {
             if (obj == null) continue;
 
-            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar"))
+            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow"))
             {
                 toDestroy.Add(obj);
             }
@@ -50,8 +53,10 @@ public class gameloop : MonoBehaviour
 
         foreach (GameObject obj in toDestroy)
         {
-            if (obj == null) continue;
-            GameObject.Destroy(obj);
+            if (obj != null)
+            {
+                GameObject.Destroy(obj);
+            }
         }
         money = moneyStart;
         spawnedEnemies = 0;
@@ -66,7 +71,6 @@ public class gameloop : MonoBehaviour
         numEnemiesTospawn = (float)level_settings.Instance.waveSettings.numberOfEnemies;
         archerTowerPlacement = FindFirstObjectByType<ArcherTowerPlacement>();
         mortarTowerPlacement = FindFirstObjectByType<MortarTowerPlacement>();
-        UnityEngine.Debug.Log("Game Started");
         SpawnPlayer();
         if (startWaveButton == null) UnityEngine.Debug.Log("Pridaj button do inspectoru");
         startWaveButton.onClick.AddListener(StartWave);

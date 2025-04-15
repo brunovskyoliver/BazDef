@@ -18,6 +18,7 @@ public class Arrow : MonoBehaviour
     {
         arrow.transform.position = towerPos.position + new Vector3(0f, 0.5f, 0); // to spawn fro marcher not the middle of tower
         arrow.transform.localScale = arrowScale;
+        arrow.tag = "Arrow";
     }
 
     void FixedUpdate()
