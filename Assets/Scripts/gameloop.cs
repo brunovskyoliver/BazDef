@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ public class gameloop : MonoBehaviour
     private GameObject player;
     private Image healthBarFill;
     private RectTransform fillRect;
-    private static List<Walker> activeWalkers = new List<Walker>();
+    public static List<Walker> activeWalkers = new List<Walker>();
     private float numEnemiesTospawn;
     public Text moneyText;
 
@@ -98,6 +99,8 @@ public class gameloop : MonoBehaviour
 
         var walker = newWalker.AddComponent<Walker>();
         walker.waypoints = new List<Vector3>(level_settings.Instance.enemyWaypoints);
+        walker.barOutline = Instantiate(level_settings.Instance.enemySettings.barOutLine);
+
 
         var enemyTypes = level_settings.Instance.enemySettings.enemyTypes;
         if (enemyTypes.Count > 0)

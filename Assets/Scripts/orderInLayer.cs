@@ -14,7 +14,7 @@ class OrderInLayer : MonoBehaviour
         {
             SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
 
-            if (sr != null && obj.layer != 7)
+            if (sr != null && obj.layer != 7 && obj.layer != 8)
             {
                 if (obj.transform.parent == null)
                 {
