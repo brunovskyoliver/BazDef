@@ -18,6 +18,7 @@ public class Walker : MonoBehaviour
     public bool toBeDestroyed = false;
     public bool toAttack = false;
     private float destroyDelay = 0.58f; 
+    public float maxhealht;
     public float health = 2f;
     private Animator player_animator;
     private float nextAttackTime = 0f;
@@ -28,8 +29,13 @@ public class Walker : MonoBehaviour
     private bool hasDealtFirstHit = false;
     private float firstHitTime = 0f;
     private float droppedMoney;
+    private float searchRadius = 5f;
+    private Vector3 mousePos;
+    public GameObject barOutline;
+    public GameObject barFill;
     private EnemyType enemyType;
     private gameloop gameloopInstance;
+
     
     public void Initialize(EnemyType type)
     {
@@ -70,10 +76,14 @@ public class Walker : MonoBehaviour
             player_animator = player.GetComponent<Animator>();
         }
         gameloop.AddWalker(this);
+        barOutline.transform.position = transform.position;
+        barFill = barOutline.transform.GetChild(0).gameObject;
+        maxhealht = health;
     }
 
     void OnDestroy()
     {
+        
         gameloop.RemoveWalker(this);
         RestoreIdleAnimation();
     }
@@ -88,11 +98,16 @@ public class Walker : MonoBehaviour
                 gameloopInstance.money += droppedMoney;
             }
         }
+
+        barOutline.transform.position = transform.position + new Vector3(0,1,0);
+        UpdateHealthBar();
+        ShowHealthBar();
     }
     void FixedUpdate()
     {
         if (toBeDestroyed)
         {
+            Destroy(barOutline);
             if (animator != null)
             {
                 animator.SetTrigger("Death");
@@ -222,5 +237,27 @@ public class Walker : MonoBehaviour
             baseScale.x = Mathf.Abs(spriteScale) * lastDirection;
             transform.localScale = baseScale;
         }
+    }
+
+    private void ShowHealthBar()
+    {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float dist = Vector2.Distance(mousePos, transform.position);
+        if (dist <= searchRadius)
+        {
+            barOutline.SetActive(true);
+            
+        }
+        else
+        {
+            barOutline.SetActive(false);
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        barFill.transform.localPosition = new Vector3(0 - (maxhealht- health) * 0.45f / maxhealht, 0, 0);
+        barFill.transform.localScale = new Vector3(0.9f  - 0.9f/maxhealht * (maxhealht- health), 0.7f, 1);
+
     }
 }
