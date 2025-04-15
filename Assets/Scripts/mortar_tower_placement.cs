@@ -30,10 +30,18 @@ public class MortarTowerPlacement : MonoBehaviour
     private float MortarTowerCost;
     private gameloop gameloopInstance; 
     public List<GameObject> MortarPositions = new List<GameObject>();
+    private float startMortarTowerCost;
 
-
+    public void Clear()
+    {
+        towerPositions.Clear();
+        MortarPositions.Clear();
+        MortarTowerCost = startMortarTowerCost;
+        UpdateCostText();
+    }
     void Start()
     {
+        startMortarTowerCost = level_settings.Instance.mortarTowerSettings.cost;
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
@@ -171,6 +179,7 @@ public class MortarTowerPlacement : MonoBehaviour
             return;
         }
         GameObject newTower = new GameObject("Mortar");
+        newTower.tag = "Mortar";
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         newTower.transform.position = position;

@@ -35,10 +35,19 @@ public class ArcherTowerPlacement : MonoBehaviour
     public float ArcherTowerCost;
     private gameloop gameloopInstance; 
     public List<GameObject> ArcherPositions = new List<GameObject>();
+    private float startArcherTowerCost;
    
 
+    public void Clear()
+    {
+        towerPositions.Clear();
+        ArcherPositions.Clear();
+        ArcherTowerCost = startArcherTowerCost;
+        UpdateCostText();
+    }
     void Start()
     {
+        startArcherTowerCost = level_settings.Instance.archerTowerSettings.cost;
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
@@ -150,12 +159,12 @@ public class ArcherTowerPlacement : MonoBehaviour
         archer.transform.localScale = archerSize;
         SpriteRenderer archerRenderer = archer.AddComponent<SpriteRenderer>();
         Animator archerAnim = archer.AddComponent<Animator>();
-        archerAnim.runtimeAnimatorController  = archerAnimator;
+        archerAnim.runtimeAnimatorController = archerAnimator;
         archerRenderer.sprite = towerArcherSprite;
         archerRenderer.sortingOrder = 1;
         archerRenderer.color = towerRenderer.color;
 
-    } 
+    }
 
     bool CheckValidPosition(Vector3 position)
     {
@@ -191,6 +200,7 @@ public class ArcherTowerPlacement : MonoBehaviour
             return;
         }
         GameObject newTower = new GameObject("Tower");
+        newTower.tag = "Archer";
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         newTower.layer = 8;
         sr.sprite = towerSprite;
