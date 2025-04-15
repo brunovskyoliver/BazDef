@@ -40,14 +40,13 @@ public class gameloop : MonoBehaviour
         waveStarted = false;
         level_settings.Instance.ResetToDefault();
         int enemyLayer = LayerMask.NameToLayer("Enemy");
-        int healthLayer = LayerMask.NameToLayer("Health");
         List<GameObject> toDestroy = new List<GameObject>();
 
         foreach (GameObject obj in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             if (obj == null) continue;
 
-            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow") || obj.layer == healthLayer)
+            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow") || obj.CompareTag("EnemyHealth"))
             {
                 toDestroy.Add(obj);
             }
@@ -142,6 +141,7 @@ public class gameloop : MonoBehaviour
         var walker = newWalker.AddComponent<Walker>();
         walker.waypoints = new List<Vector3>(level_settings.Instance.enemyWaypoints);
         walker.barOutline = Instantiate(level_settings.Instance.enemySettings.barOutLine);
+        walker.barOutline.tag = "EnemyHealth";
 
 
         var enemyTypes = level_settings.Instance.enemySettings.enemyTypes;
