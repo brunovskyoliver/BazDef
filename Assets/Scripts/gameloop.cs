@@ -40,13 +40,14 @@ public class gameloop : MonoBehaviour
         waveStarted = false;
         level_settings.Instance.ResetToDefault();
         int enemyLayer = LayerMask.NameToLayer("Enemy");
+        int healthLayer = LayerMask.NameToLayer("Health");
         List<GameObject> toDestroy = new List<GameObject>();
 
         foreach (GameObject obj in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             if (obj == null) continue;
 
-            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow"))
+            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow") || obj.layer == healthLayer)
             {
                 toDestroy.Add(obj);
             }
