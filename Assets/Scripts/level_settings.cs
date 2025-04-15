@@ -35,6 +35,7 @@ public class EnemySettings
     public float baseAttackDamage = 1f;
     public float baseAttackSpeed = 0.8f;
     public GameObject barOutLine;
+    public SpriteRenderer Shadow;
 }
 
 [System.Serializable]

@@ -35,6 +35,8 @@ public class Walker : MonoBehaviour
     public GameObject barFill;
     private EnemyType enemyType;
     private gameloop gameloopInstance;
+    private GameObject shadow;
+    private Vector3 shadowOffset = new Vector3(0, -0.7f, 0);
 
     
     public void Initialize(EnemyType type)
@@ -79,6 +81,7 @@ public class Walker : MonoBehaviour
         barOutline.transform.position = transform.position;
         barFill = barOutline.transform.GetChild(0).gameObject;
         maxhealht = health;
+        CreateShadow();
     }
 
     void OnDestroy()
@@ -203,6 +206,8 @@ public class Walker : MonoBehaviour
                 transform.localScale = baseScale;
             }
         }
+
+        UpdateShadowPos();
     }
 
     private void DealDamage()
@@ -259,5 +264,20 @@ public class Walker : MonoBehaviour
         barFill.transform.localPosition = new Vector3(0 - (maxhealht- health) * 0.45f / maxhealht, 0, 0);
         barFill.transform.localScale = new Vector3(0.9f  - 0.9f/maxhealht * (maxhealht- health), 0.7f, 1);
 
+    }
+    private void CreateShadow()
+    {
+        shadow = new GameObject("shadow");
+        shadow.transform.position = transform.position + shadowOffset;
+        shadow.layer = 9;
+        shadow.transform.SetParent(transform);
+        SpriteRenderer sr = shadow.AddComponent<SpriteRenderer>();
+        sr.sprite = level_settings.Instance.enemySettings.Shadow.sprite;
+        sr.color = level_settings.Instance.enemySettings.Shadow.color;
+    }
+
+    private void UpdateShadowPos()
+    {
+        shadow.transform.position = transform.position + shadowOffset;
     }
 }
