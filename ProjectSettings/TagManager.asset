@@ -9,6 +9,7 @@ TagManager:
   - Archer
   - Arrow
   - EnemyHealth
+  - Box
   layers:
   - Default
   - TransparentFX

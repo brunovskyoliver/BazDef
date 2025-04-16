@@ -24,6 +24,7 @@ public class MortarBall : MonoBehaviour
         startPoint = towerPos.position + new Vector3(0f, 0.5f, 0); 
         endPoint = targetedEnemy.transform.position;
         loop = FindFirstObjectByType<gameloop>();
+        mortarBall.tag = "Box";
 
         transform.position = startPoint;
         shadowPos = startPoint;

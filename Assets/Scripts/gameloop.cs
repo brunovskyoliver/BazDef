@@ -49,7 +49,7 @@ public class gameloop : MonoBehaviour
         {
             if (obj == null) continue;
 
-            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow") || obj.CompareTag("EnemyHealth"))
+            if (obj.layer == enemyLayer || obj.CompareTag("Archer") || obj.CompareTag("Mortar") || obj.CompareTag("Arrow") || obj.CompareTag("EnemyHealth") || obj.CompareTag("Box"))
             {
                 toDestroy.Add(obj);
             }
