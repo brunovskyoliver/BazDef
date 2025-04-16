@@ -60,7 +60,7 @@ public class MortarBall : MonoBehaviour
         if (t >= 1f)
         {
             CreateExplosion();
-            loop.CameraShake(0.2f, 0.15f);
+            loop.CameraShake(0.15f, 0.15f);
             Vector3 explosionPosition = transform.position;
             float radius = 1.5f;
             LayerMask enemyMask = LayerMask.GetMask("Enemy");

@@ -7,7 +7,11 @@ using System.Collections.Generic;
 class Coins : MonoBehaviour
 {
     public Sprite coinSprite;
-    public RectTransform coinBag;
+    public RectTransform coinText;
+    public GameObject coinChest;
+    public Sprite openChest;
+    public Sprite closedChest;
+
     public Camera mainCamera;
     private gameloop gameloopInstance;
 
@@ -16,10 +20,13 @@ class Coins : MonoBehaviour
     private float yDist;
     private float dist;
     public float speed = 0.01f;
+    private SpriteRenderer chestSr;
 
     void Start()
     {
         gameloopInstance = FindFirstObjectByType<gameloop>();
+        chestSr = coinChest.AddComponent<SpriteRenderer>();
+        chestSr.sprite = closedChest;
     }
     void Update()
     {
@@ -27,7 +34,7 @@ class Coins : MonoBehaviour
         foreach (GameObject coin in  allCoins)
         {
 
-            Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(mainCamera, coinBag.position);
+            Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(mainCamera, coinText.position);
             Vector3 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
 
             xDist = worldPos.x - coin.transform.position.x;
@@ -38,8 +45,15 @@ class Coins : MonoBehaviour
             {
                 Destroy(coin);
                 gameloopInstance.money +=1;
+                if (allCoins.Count == 1)
+                    chestSr.sprite = closedChest;
                 return;
             }
+            else
+            {
+                chestSr.sprite = openChest;
+            }
+            
 
             dist *= dist;
             coin.transform.position = coin.transform.position + new Vector3(xDist/dist * speed, yDist/dist * speed, 0);
