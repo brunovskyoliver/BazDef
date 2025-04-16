@@ -238,6 +238,7 @@ public class gameloop : MonoBehaviour
     {
         Vector3 originalPos = mainCamera.transform.position;
         float elapsed = 0f;
+        float waitTime = 0.01f;
 
         while (elapsed < duration)
         {
@@ -245,8 +246,8 @@ public class gameloop : MonoBehaviour
             float offsetY = UnityEngine.Random.Range(-intensity, intensity);
             mainCamera.transform.position = new Vector3(originalPos.x + offsetX, originalPos.y + offsetY, originalPos.z);
 
-            elapsed += Time.deltaTime;
-            yield return null; // wait for next frame
+            elapsed += waitTime;
+            yield return new WaitForSeconds(waitTime);
         }
         mainCamera.transform.position = originalPos;
     }

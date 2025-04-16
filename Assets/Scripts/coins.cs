@@ -7,7 +7,6 @@ using System.Collections.Generic;
 class Coins : MonoBehaviour
 {
     public Sprite coinSprite;
-    public RectTransform coinText;
     public GameObject coinChest;
     public Sprite openChest;
     public Sprite closedChest;
@@ -34,12 +33,10 @@ class Coins : MonoBehaviour
         foreach (GameObject coin in  allCoins)
         {
 
-            Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(mainCamera, coinText.position);
-            Vector3 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
 
-            xDist = worldPos.x - coin.transform.position.x;
-            yDist = worldPos.y - coin.transform.position.y;
-            dist = Vector2.Distance(worldPos, coin.transform.position);
+            xDist = coinChest.transform.position.x - coin.transform.position.x;
+            yDist = coinChest.transform.position.y - coin.transform.position.y;
+            dist = Vector2.Distance(coinChest.transform.position, coin.transform.position);
 
             if (dist < 0.7f) 
             {
