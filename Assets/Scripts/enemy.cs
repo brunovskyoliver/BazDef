@@ -97,15 +97,23 @@ public class Walker : MonoBehaviour
             if (!toBeDestroyed)
             {
                 toBeDestroyed = true;
-                animator.SetTrigger("Death");
+                if (animator != null)
+                {
+                    animator.SetTrigger("Death");
+                }
                 gameloopInstance.money += droppedMoney;
             }
+            return; 
         }
 
-        barOutline.transform.position = transform.position + new Vector3(0,1,0);
-        UpdateHealthBar();
-        ShowHealthBar();
+        if (barOutline != null && !toBeDestroyed)
+        {
+            barOutline.transform.position = transform.position + new Vector3(0, 1, 0);
+            UpdateHealthBar();
+            ShowHealthBar();
+        }
     }
+
     void FixedUpdate()
     {
         if (toBeDestroyed)
@@ -246,12 +254,13 @@ public class Walker : MonoBehaviour
 
     private void ShowHealthBar()
     {
+        if (barOutline == null) return;
+        
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float dist = Vector2.Distance(mousePos, transform.position);
         if (dist <= searchRadius)
         {
             barOutline.SetActive(true);
-            
         }
         else
         {
@@ -261,9 +270,10 @@ public class Walker : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        barFill.transform.localPosition = new Vector3(0 - (maxhealht- health) * 0.45f / maxhealht, 0, 0);
-        barFill.transform.localScale = new Vector3(0.9f  - 0.9f/maxhealht * (maxhealht- health), 0.7f, 1);
-
+        if (barFill == null) return;
+        
+        barFill.transform.localPosition = new Vector3(0 - (maxhealht - health) * 0.45f / maxhealht, 0, 0);
+        barFill.transform.localScale = new Vector3(0.9f - 0.9f/maxhealht * (maxhealht - health), 0.7f, 1);
     }
     private void CreateShadow()
     {
