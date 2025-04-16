@@ -35,6 +35,7 @@ public class Walker : MonoBehaviour
     public GameObject barFill;
     private EnemyType enemyType;
     private gameloop gameloopInstance;
+    private Coins coinsInstance;
     private GameObject shadow;
     private Vector3 shadowOffset = new Vector3(0, -0.7f, 0);
 
@@ -69,6 +70,7 @@ public class Walker : MonoBehaviour
     void Start()
     {
         gameloopInstance = FindFirstObjectByType<gameloop>();
+        coinsInstance = FindFirstObjectByType<Coins>();
         transform.position = waypoints[0];
         baseScale = new Vector3(spriteScale, spriteScale, 1);
         transform.localScale = baseScale;
@@ -100,8 +102,9 @@ public class Walker : MonoBehaviour
                 if (animator != null)
                 {
                     animator.SetTrigger("Death");
+                    coinsInstance.SpawnCoins((int)droppedMoney, transform.position);
                 }
-                gameloopInstance.money += droppedMoney;
+                
             }
             return; 
         }
