@@ -168,7 +168,7 @@ public class MortarTowerPlacement : MonoBehaviour
     {
         if (gameloop.Instance.waveStarted)
         {
-            Debug.Log("game started - cant place nomore");
+            //Debug.Log("game started - cant place nomore");
             return;
         }
         Vector3Int cellPosition = groundTilemap.WorldToCell(position);

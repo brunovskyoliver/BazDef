@@ -214,7 +214,7 @@ public class gameloop : MonoBehaviour
         }
         if (healthBarFill != null)
         {
-            UnityEngine.Debug.Log("health " + healthPercent);
+            //UnityEngine.Debug.Log("health " + healthPercent);
             fillRect.sizeDelta = new Vector2(100 * healthPercent, 10);
             fillRect.localPosition = new Vector3(50 * (1 - healthPercent), 0, 0);
         }

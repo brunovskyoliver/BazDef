@@ -52,7 +52,7 @@ public class MortarTowerAttack : MonoBehaviour
     void Attack(GameObject target)
     {
         archer = FindClosestObjectByName("Mortar", transform.position);
-        Debug.Log(target.name);
+        //Debug.Log(target.name);
         enemy = target.GetComponent<Walker>();
 
         if (!enemy.toBeDestroyed)

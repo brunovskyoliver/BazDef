@@ -52,7 +52,7 @@ public class ArcherTowerAttack : MonoBehaviour
     void Attack(GameObject target)
     {
         archer = FindClosestObjectByName("Archer", transform.position);
-        Debug.Log(target.name);
+        //Debug.Log(target.name);
         enemy = target.GetComponent<Walker>();
 
         Animator archerAnim = archer.GetComponent<Animator>();

@@ -31,12 +31,12 @@ public class TowerPlacement : MonoBehaviour
             if (CheckObjectClicked("Archer_tower_button"))
             {
                 archerTowerPlacement.isMouseOver = true;
-                Debug.Log("clicked");
+                //Debug.Log("clicked");
             }
             else if (CheckObjectClicked("Mortar_tower_button"))
             {
                 mortarTowerPlacement.isMouseOver = true;
-                Debug.Log("clicked");
+                //Debug.Log("clicked");
             }
         }
         
