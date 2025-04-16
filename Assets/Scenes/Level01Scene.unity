@@ -7674,7 +7674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArcherTowerButton: {fileID: 528101411}
-  MortarTowerButton: {fileID: 0}
+  MortarTowerButton: {fileID: 2129481736}
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
