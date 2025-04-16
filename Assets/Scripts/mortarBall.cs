@@ -4,6 +4,7 @@ using UnityEngine;
 public class MortarBall : MonoBehaviour
 {
     public Transform towerPos;
+    private gameloop loop;
     public Walker targetedEnemy;
     public GameObject mortarBall;
     private GameObject shadow;
@@ -22,6 +23,7 @@ public class MortarBall : MonoBehaviour
     {
         startPoint = towerPos.position + new Vector3(0f, 0.5f, 0); 
         endPoint = targetedEnemy.transform.position;
+        loop = FindFirstObjectByType<gameloop>();
 
         transform.position = startPoint;
         shadowPos = startPoint;
@@ -56,6 +58,8 @@ public class MortarBall : MonoBehaviour
         // hit  
         if (t >= 1f)
         {
+            CreateExplosion();
+            loop.CameraShake(0.2f, 0.15f);
             Vector3 explosionPosition = transform.position;
             float radius = 1.5f;
             LayerMask enemyMask = LayerMask.GetMask("Enemy");
@@ -113,6 +117,7 @@ public class MortarBall : MonoBehaviour
         shadow.transform.position = shadowPos;
     }
 
+
     public void CreateExplosion()
     {
         if (this == null || gameObject == null) return; // Safety check
@@ -146,7 +151,7 @@ public class MortarBall : MonoBehaviour
                 }
             });
         main.simulationSpace = ParticleSystemSimulationSpace.World;
-        main.gravityModifier = 2f;
+        main.gravityModifier = 0.5f;
         main.maxParticles = 100;
 
         var emission = ps.emission;

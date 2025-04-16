@@ -653,10 +653,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.0072556552
     y: 0
-    width: 0.9995743
-    height: 1
+    width: 0.9850619
+    height: 0.99999994
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -7977,6 +7977,7 @@ MonoBehaviour:
   waveStarted: 0
   startWaveButton: {fileID: 650270383}
   moneyText: {fileID: 1048378140}
+  mainCamera: {fileID: 519420028}
   money: 10
   baseEnemyTypes: []
 --- !u!114 &2125308855

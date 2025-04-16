@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 
 public class gameloop : MonoBehaviour
@@ -20,6 +22,7 @@ public class gameloop : MonoBehaviour
     public static List<Walker> activeWalkers = new List<Walker>();
     private float numEnemiesTospawn;
     public Text moneyText;
+    public GameObject mainCamera;
 
     public float money = 10;
     private float moneyStart;
@@ -227,6 +230,26 @@ public class gameloop : MonoBehaviour
         }
     }
 
+    public void CameraShake(float intensity, float duration)
+    {
+        StartCoroutine(DoCameraShake(intensity, duration));
+    }
+    private IEnumerator DoCameraShake(float intensity, float duration)
+    {
+        Vector3 originalPos = mainCamera.transform.position;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float offsetX = UnityEngine.Random.Range(-intensity, intensity);
+            float offsetY = UnityEngine.Random.Range(-intensity, intensity);
+            mainCamera.transform.position = new Vector3(originalPos.x + offsetX, originalPos.y + offsetY, originalPos.z);
+
+            elapsed += Time.deltaTime;
+            yield return null; // wait for next frame
+        }
+        mainCamera.transform.position = originalPos;
+    }
 
     public static void AddWalker(Walker walker)
     {

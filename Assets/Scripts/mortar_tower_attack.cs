@@ -107,6 +107,7 @@ public class MortarTowerAttack : MonoBehaviour
         ball.mortarBall = ballObject;
         ball.attackDamage = attackDamage;
 
+
     }
 
 
