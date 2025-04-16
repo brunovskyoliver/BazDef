@@ -653,10 +653,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0072556552
+    x: 0.101167314
     y: 0
-    width: 0.9850619
-    height: 0.99999994
+    width: 0.79766536
+    height: 1.0379747
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -7333,7 +7333,7 @@ MonoBehaviour:
       moveSpeed: 2
       scale: 0.25
       destroyDelay: 1.2
-      droppedMoney: 1.5
+      droppedMoney: 2
     baseAttackDamage: 1
     baseAttackSpeed: 0.8
     barOutLine: {fileID: 807450516}
@@ -7940,6 +7940,7 @@ GameObject:
   - component: {fileID: 2125308853}
   - component: {fileID: 2125308854}
   - component: {fileID: 2125308855}
+  - component: {fileID: 2125308856}
   m_Layer: 0
   m_Name: gameloop
   m_TagString: Untagged
@@ -7992,6 +7993,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08180af66a83466e818915b2ca691f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2125308856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125308852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8319576e3e24040138c252cd62dfc5ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinSprite: {fileID: -855298285791758126, guid: 7c1a31ef75fdb44639eb563111844177, type: 3}
+  coinBag: {fileID: 1048378139}
+  mainCamera: {fileID: 519420031}
+  speed: 1
 --- !u!1 &2129481736
 GameObject:
   m_ObjectHideFlags: 0
