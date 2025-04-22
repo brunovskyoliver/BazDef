@@ -5,6 +5,7 @@ public class MortarBall : MonoBehaviour
 {
     public Transform towerPos;
     private gameloop loop;
+    private Stats stats;
     public Walker targetedEnemy;
     public GameObject mortarBall;
     private GameObject shadow;
@@ -24,6 +25,7 @@ public class MortarBall : MonoBehaviour
         startPoint = towerPos.position + new Vector3(0f, 0.5f, 0); 
         endPoint = targetedEnemy.transform.position;
         loop = FindFirstObjectByType<gameloop>();
+        stats = FindFirstObjectByType<Stats>();
         mortarBall.tag = "Box";
 
         transform.position = startPoint;
@@ -73,6 +75,7 @@ public class MortarBall : MonoBehaviour
                     if (enemyScript != null)
                     {
                         enemyScript.health -= attackDamage;
+                        stats.allMortarDamage += attackDamage;
                     }
                 }
             }

@@ -5,6 +5,7 @@ public class Arrow : MonoBehaviour
 {
     public Transform towerPos;
     public Walker targetedEnemy;
+    private Stats stats;
     public GameObject arrow;
     private Vector3 move;
     private float arrowSpeed = 0.2f;
@@ -19,6 +20,8 @@ public class Arrow : MonoBehaviour
         arrow.transform.position = towerPos.position + new Vector3(0f, 0.5f, 0); // to spawn fro marcher not the middle of tower
         arrow.transform.localScale = arrowScale;
         arrow.tag = "Arrow";
+
+        stats = FindFirstObjectByType<Stats>();
     }
 
     void FixedUpdate()
@@ -36,6 +39,7 @@ public class Arrow : MonoBehaviour
             if (targetedEnemy != null)
             {
                 targetedEnemy.health -= attackDamage;
+                stats.allArcherDamage += attackDamage;
                 Destroy(arrow);
             }
         }
