@@ -13,7 +13,7 @@ class Stats : MonoBehaviour
     public Button statsButton;
     public Button exitButton;
 
-    private Vector2 targetSizeMax = new (150, 200);
+    private Vector2 targetSizeMax = new (130, 200);
     private Vector2 targetSizeMin = new (30, 30);
     public float animSpeed = 1f;
 
