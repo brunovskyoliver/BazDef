@@ -18,7 +18,7 @@ class Coins : MonoBehaviour
     private float xDist;
     private float yDist;
     private float dist;
-    public float speed = 0.01f;
+    public float speed;
     private SpriteRenderer chestSr;
 
     void Start()
@@ -53,7 +53,7 @@ class Coins : MonoBehaviour
             
 
             dist *= dist;
-            coin.transform.position = coin.transform.position + new Vector3(xDist/dist * speed, yDist/dist * speed, 0);
+            coin.transform.position = coin.transform.position + new Vector3(xDist/dist * speed * Time.deltaTime, yDist/dist * speed * Time.deltaTime, 0);
 
             
         }

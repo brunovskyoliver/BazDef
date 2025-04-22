@@ -31,6 +31,8 @@ public class MortarTowerPlacement : MonoBehaviour
     private gameloop gameloopInstance; 
     public List<GameObject> MortarPositions = new List<GameObject>();
     private float startMortarTowerCost;
+    public RuntimeAnimatorController mortarAnimator;
+
 
     public void Clear()
     {

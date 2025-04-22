@@ -1,5 +1,8 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
+
 
 
 public class MortarTowerAttack : MonoBehaviour
@@ -10,10 +13,10 @@ public class MortarTowerAttack : MonoBehaviour
     public float attackCooldown = 2f;
     private float nextAttackTime = 0f;
     public float attackDamage = 10f;
-    private const float animLenght = 0.5f;
-    private int enemyDir; // 0 = down, 1 = up, 2 = left, 3 = right
+    private const float animLenght = 0.39f;
     private Walker enemy;
     public float upgradeCost = 10f;
+    private Animator mortarAnim;
 
 
     void Start()
@@ -23,6 +26,8 @@ public class MortarTowerAttack : MonoBehaviour
         placement = FindAnyObjectByType<MortarTowerPlacement>();
         attackCooldown = level_settings.Instance.mortarTowerSettings.attackSpeed;
         attackDamage = level_settings.Instance.mortarTowerSettings.attackDamage;
+        mortarAnim = this.AddComponent<Animator>();
+        mortarAnim.runtimeAnimatorController = placement.mortarAnimator;
 
 
     }
@@ -54,49 +59,18 @@ public class MortarTowerAttack : MonoBehaviour
         archer = FindClosestObjectByName("Mortar", transform.position);
         //Debug.Log(target.name);
         enemy = target.GetComponent<Walker>();
+        mortarAnim.Play("MortarShoot");
 
         if (!enemy.toBeDestroyed)
-        { 
-            enemyDir = FindEnemeyDir();
-            CreateArrow();
+        {
+            StartCoroutine(CreateArrow());
         }
 
     }
 
-    int FindEnemeyDir()
+    IEnumerator CreateArrow()
     {
-        int dir;
-        float xOffset = archer.transform.position.x - enemy.transform.position.x;
-        float yOffset = archer.transform.position.y - enemy.transform.position.y;
-        if (Math.Abs(yOffset) > Math.Abs(xOffset))
-        {
-            if (yOffset > 0)
-            {
-                dir = 1;
-            }
-            else
-            {
-                dir = 0;
-            }
-        }
-        else
-        {
-            if (xOffset > 0)
-            {
-                dir = 2;
-            }
-            else
-            {
-                dir = 3;
-            }
-        }
-
-        return dir;
-    }
-
-    void CreateArrow()
-    {
-
+        yield return new WaitForSeconds(animLenght);
         GameObject ballObject = new GameObject("mortarBall");
         var ball = ballObject.AddComponent<MortarBall>();
         SpriteRenderer ballsr = ballObject.AddComponent<SpriteRenderer>();
@@ -106,6 +80,8 @@ public class MortarTowerAttack : MonoBehaviour
         ball.targetedEnemy = enemy;
         ball.mortarBall = ballObject;
         ball.attackDamage = attackDamage;
+        mortarAnim.Play("mortar idle");
+
 
 
     }
