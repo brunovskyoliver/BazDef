@@ -108,6 +108,11 @@ public class MortarUpgrade : MonoBehaviour
             attack.attackDamage = Mathf.Round(attack.attackDamage * 100) / 100;
             attack.upgradeCost = Mathf.Round(attack.upgradeCost * 100) / 100;
 
+            upgradeText.text = $"cost: {attack.upgradeCost}";
+            damageText.text = $"damage: {attack.attackDamage}";
+            plusDamageText.text = $"plus damage: {attack.attackDamage * attackDamageMultiplier -attack.attackDamage}";
+            attackspeedText.text = $"attack speed: {attack.attackCooldown}";
+
         }
     }
 
