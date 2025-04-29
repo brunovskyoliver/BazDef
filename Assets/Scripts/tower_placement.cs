@@ -6,10 +6,12 @@ public class TowerPlacement : MonoBehaviour
 {
     public GameObject ArcherTowerButton;
     public GameObject MortarTowerButton;
+    public GameObject IceTowerButton;
     public LayerMask targetLayer;
 
     private ArcherTowerPlacement archerTowerPlacement;
     private MortarTowerPlacement mortarTowerPlacement;
+    private IceTowerPlacement iceTowerPlacement;
 
     private HashSet<Vector2Int> towerPositions = new HashSet<Vector2Int>();
 
@@ -20,6 +22,9 @@ public class TowerPlacement : MonoBehaviour
         archerTowerPlacement.towerPositions = towerPositions;
         mortarTowerPlacement = FindAnyObjectByType<MortarTowerPlacement>();
         mortarTowerPlacement.towerPositions = towerPositions;
+        iceTowerPlacement = FindAnyObjectByType<IceTowerPlacement>();
+        iceTowerPlacement.towerPositions = towerPositions;
+        
         
     }
     void Update()
@@ -36,6 +41,11 @@ public class TowerPlacement : MonoBehaviour
             else if (CheckObjectClicked("Mortar_tower_button"))
             {
                 mortarTowerPlacement.isMouseOver = true;
+                //Debug.Log("clicked");
+            }
+            else if (CheckObjectClicked("Ice_tower_button"))
+            {
+                iceTowerPlacement.isMouseOver = true;
                 //Debug.Log("clicked");
             }
         }

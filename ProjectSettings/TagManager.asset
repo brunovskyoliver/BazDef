@@ -10,6 +10,7 @@ TagManager:
   - Arrow
   - EnemyHealth
   - Box
+  - Ice
   layers:
   - Default
   - TransparentFX

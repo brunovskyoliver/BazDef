@@ -59,6 +59,16 @@ public class MortarTowerSettings
     public float costMultiplier = 2f;
 }
 
+[System.Serializable]
+public class IceTowerSettings
+{
+    public float towerRange = 2f;
+    public float attackSpeed = 2f;
+    public float attackDamage = 1f;
+    public float cost = 5;
+    public float costMultiplier = 2f;
+}
+
 public class level_settings : MonoBehaviour
 {
     public PlayerSettings playerSettings;  
@@ -69,6 +79,7 @@ public class level_settings : MonoBehaviour
     public WaveSettings waveSettings;
     public ArcherTowerSettings archerTowerSettings;
     public MortarTowerSettings mortarTowerSettings;
+    public IceTowerSettings iceTowerSettings;
 
     public static level_settings Instance { get; private set; }
     private string defaultSettingsJson;

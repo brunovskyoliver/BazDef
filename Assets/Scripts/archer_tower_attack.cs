@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ArcherTowerAttack : MonoBehaviour
 {
-    private AcrherTowerTargeting targeting;
+    private ArcherTowerTargeting targeting;
     private ArcherTowerPlacement placement;
     private GameObject archer;
     public float attackCooldown;
@@ -21,7 +21,7 @@ public class ArcherTowerAttack : MonoBehaviour
     void Start()
     {
 
-        targeting = GetComponent<AcrherTowerTargeting>();
+        targeting = GetComponent<ArcherTowerTargeting>();
         placement = FindAnyObjectByType<ArcherTowerPlacement>();
         attackCooldown = level_settings.Instance.archerTowerSettings.attackSpeed;
         attackDamage = level_settings.Instance.archerTowerSettings.attackDamage;

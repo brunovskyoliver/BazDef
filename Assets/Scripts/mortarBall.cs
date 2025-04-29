@@ -10,7 +10,7 @@ public class MortarBall : MonoBehaviour
     public GameObject mortarBall;
     private GameObject shadow;
     public float attackDamage = 10f;
-    public float flightDuration = 0.8f;
+    public float flightDuration = 0.75f;
     public float arcHeight = 2.5f;
 
     private Vector3 startPoint;

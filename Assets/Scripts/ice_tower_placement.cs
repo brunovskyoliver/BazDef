@@ -7,7 +7,7 @@ using Unity.Mathematics;
 using System;
 
 
-public class ArcherTowerPlacement : MonoBehaviour
+public class IceTowerPlacement : MonoBehaviour
 {
     public Tilemap groundTilemap;
     public TileBase grassTile;
@@ -16,12 +16,8 @@ public class ArcherTowerPlacement : MonoBehaviour
     private GameObject towerPreview;
     public Sprite towerSprite;
     public Sprite towerRangeSprite; 
-    public Material arrowTrailMaterial;
     public Sprite towerRangePlacedSprite;
-    public Sprite towerArcherSprite;
-    public RuntimeAnimatorController archerAnimator;
-    public Sprite arrowSprite;
-    public Vector3 archerSize = new Vector3(3,3,0);
+    public Sprite towerIceSprite;
     public Text costText;
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
@@ -33,28 +29,30 @@ public class ArcherTowerPlacement : MonoBehaviour
     public HashSet<Vector2Int> towerPositions;
     public float towerRange = 2f; 
     public Color rangeColor = new Color(1f, 1f, 1f, 0.2f);
-    public float ArcherTowerCost;
+    public float IceTowerCost;
     private gameloop gameloopInstance; 
-    public List<GameObject> ArcherPositions = new List<GameObject>();
-    private float startArcherTowerCost;
+    public List<GameObject> IcePositions = new List<GameObject>();
+    private float startIceTowerCost;
+    public Vector3 iceSize = new (1,1,1);
+    public Sprite iceSprite;
    
 
     public void Clear()
     {
         towerPositions.Clear();
-        ArcherPositions.Clear();
-        ArcherTowerCost = startArcherTowerCost;
+        IcePositions.Clear();
+        IceTowerCost = level_settings.Instance.iceTowerSettings.cost;
         UpdateCostText();
         level_settings.Instance.ResetToDefault();
     }
     void Start()
     {
-        startArcherTowerCost = level_settings.Instance.archerTowerSettings.cost;
+        startIceTowerCost = level_settings.Instance.iceTowerSettings.cost;
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTower = GameObject.Find("Player_tower");
-        towerRange = level_settings.Instance.archerTowerSettings.towerRange;
-        ArcherTowerCost = level_settings.Instance.archerTowerSettings.cost;
+        towerRange = level_settings.Instance.iceTowerSettings.towerRange;
+        IceTowerCost = level_settings.Instance.iceTowerSettings.cost;
         gameloopInstance = FindFirstObjectByType<gameloop>();
         UpdateCostText();
 
@@ -63,7 +61,7 @@ public class ArcherTowerPlacement : MonoBehaviour
 
     void Update()
     {
-        if (gameloopInstance.money < ArcherTowerCost) 
+        if (gameloopInstance.money < IceTowerCost) 
         {
             isMouseOver = false;
             return;
@@ -88,12 +86,12 @@ public class ArcherTowerPlacement : MonoBehaviour
             bool isValidPosition = CheckValidPosition(mousePosition);
             towerPreview.GetComponent<SpriteRenderer>().color = 
                 isValidPosition ? validColor : invalidColor;
-            Transform archerPreview = towerPreview.transform.Find("Archer");
-            if (archerPreview != null)
+            Transform icePreview = towerPreview.transform.Find("Ice");
+            if (icePreview != null)
             {
-                Color archerColorCurrent = isValidPosition ? 
+                Color iceColorCurrent = isValidPosition ? 
                     validColor : new Color(invalidColor.r, invalidColor.g, invalidColor.b, validColor.a);
-                archerPreview.GetComponent<SpriteRenderer>().color = archerColorCurrent;
+                icePreview.GetComponent<SpriteRenderer>().color = iceColorCurrent;
             }
             Transform rangeCircle = towerPreview.transform.Find("TowerPreviewRange");
             if (rangeCircle != null)
@@ -120,7 +118,6 @@ public class ArcherTowerPlacement : MonoBehaviour
         SpriteRenderer sr = towerPreview.AddComponent<SpriteRenderer>();
         sr.sprite = towerSprite;
         sr.color = validColor;
-        CreateArcher(towerPreview, sr);
         CreateTowerPreviewRange(towerPreview);
     }
 
@@ -152,21 +149,6 @@ public class ArcherTowerPlacement : MonoBehaviour
         rangeCircle.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
     }
 
-
-    void CreateArcher(GameObject tower, SpriteRenderer towerRenderer)
-    {
-        GameObject archer = new GameObject("Archer");
-        archer.transform.SetParent(tower.transform);
-        archer.transform.localPosition = new Vector3(0, 0.5f, 0);
-        archer.transform.localScale = archerSize;
-        SpriteRenderer archerRenderer = archer.AddComponent<SpriteRenderer>();
-        Animator archerAnim = archer.AddComponent<Animator>();
-        archerAnim.runtimeAnimatorController = archerAnimator;
-        archerRenderer.sprite = towerArcherSprite;
-        archerRenderer.sortingOrder = 1;
-        archerRenderer.color = towerRenderer.color;
-
-    }
 
     bool CheckValidPosition(Vector3 position)
     {
@@ -201,18 +183,17 @@ public class ArcherTowerPlacement : MonoBehaviour
             return;
         }
         GameObject newTower = new GameObject("Tower");
-        newTower.tag = "Archer";
+        newTower.tag = "Ice";
         SpriteRenderer sr = newTower.AddComponent<SpriteRenderer>();
         newTower.layer = 8;
         sr.sprite = towerSprite;
         newTower.transform.position = position;
-        ArcherPositions.Add(newTower);
+        IcePositions.Add(newTower);
         PurchaseTower();
         
         CreateTowerRange(newTower);
-        CreateArcher(newTower, sr);
-        newTower.AddComponent<ArcherTowerTargeting>();
-        newTower.AddComponent<ArcherTowerAttack>();
+        newTower.AddComponent<IceTowerTargeting>();
+        newTower.AddComponent<IceTowerAttack>();
         towerPositions.Add(gridPosition);
         CancelPlacement();
     }
@@ -221,9 +202,9 @@ public class ArcherTowerPlacement : MonoBehaviour
 
     void PurchaseTower()
     {
-        gameloopInstance.money -= ArcherTowerCost;
-        ArcherTowerCost *= level_settings.Instance.archerTowerSettings.costMultiplier;
-        ArcherTowerCost = (float)Math.Round(ArcherTowerCost, 2);
+        gameloopInstance.money -= IceTowerCost;
+        IceTowerCost *= level_settings.Instance.iceTowerSettings.costMultiplier;
+        IceTowerCost = (float)Math.Round(IceTowerCost, 2);
         UpdateCostText();
     }
 
@@ -239,6 +220,6 @@ public class ArcherTowerPlacement : MonoBehaviour
 
     void UpdateCostText()
     {
-        costText.text = $"cost: {ArcherTowerCost}";
+        costText.text = $"cost: {IceTowerCost}";
     }
 }

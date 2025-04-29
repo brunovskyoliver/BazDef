@@ -98,7 +98,4 @@ class Coins : MonoBehaviour
         }
     }
 
-  
-
-
 }
