@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class IceProjectile : MonoBehaviour
 {
-     public Transform towerPos;
+    public Transform towerPos;
     public Walker targetedEnemy;
     private Stats stats;
     public GameObject projectile;
@@ -12,8 +15,10 @@ public class IceProjectile : MonoBehaviour
     private float xOffset;
     private float yOffset;
     public float attackDamage;
+    private bool destroyed = false;
     private Vector3 arrowScale = new Vector3(2f, 2f, 0);
     private GameObject arrowTrail;
+    public float speedmultiplier = 0.5f;
     
     void Start()
     {
@@ -34,13 +39,16 @@ public class IceProjectile : MonoBehaviour
         xOffset = projectile.transform.position.x - targetedEnemy.transform.position.x;
         yOffset = projectile.transform.position.y - targetedEnemy.transform.position.y;
         
-        if (Mathf.Abs(xOffset) < 0.1f && Mathf.Abs(yOffset) < 0.1f) 
+        if (Mathf.Abs(xOffset) < 0.1f && Mathf.Abs(yOffset) < 0.1f && !destroyed) 
         {
             if (targetedEnemy != null)
             {
                 targetedEnemy.health -= attackDamage;
-                stats.allArcherDamage += attackDamage;
-                Destroy(projectile);
+                targetedEnemy.speed *= speedmultiplier;
+                StartCoroutine(WaitForSeconds(2.0f,targetedEnemy));
+                destroyed = true;
+                projectile.transform.localScale = new Vector3(0,0,0);
+                
             }
         }
         double angleToEnemyRadians = Math.Atan(yOffset/xOffset);
@@ -58,5 +66,14 @@ public class IceProjectile : MonoBehaviour
         
 
         
+    }
+
+    IEnumerator WaitForSeconds(float time, Walker targetedEnemy)
+    {
+        yield return new WaitForSeconds(time);
+        
+        targetedEnemy.speed *= 1/speedmultiplier;
+        Debug.Log(targetedEnemy.speed);
+        Destroy(projectile);
     }
 }

@@ -931,10 +931,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.101167314
+    x: 0.6174662
     y: 0
-    width: 0.79766536
-    height: 1.0379747
+    width: 0.45100453
+    height: 0.53536665
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -2874,7 +2874,7 @@ MonoBehaviour:
   towerSprite: {fileID: 6937817954938267909, guid: 50a5b5b60eebe4d7cb41236b5225458f, type: 3}
   towerRangeSprite: {fileID: -2036660381736881138, guid: 634bff306018c4f0eb24277dcdcc2491, type: 3}
   towerRangePlacedSprite: {fileID: -7817414820505436063, guid: 75cd0ebf53f5442f49b52bf0b0e34619, type: 3}
-  towerIceSprite: {fileID: 4130640169021434097, guid: 52294b3ed09b040d78b9e9e8a3530e9e, type: 3}
+  towerIceSprite: {fileID: 7607144487970100932, guid: 79d4064d1a9384e28906f2d6016a4c08, type: 3}
   costText: {fileID: 106145003}
   isMouseOver: 0
   towerRange: 2
@@ -2882,7 +2882,7 @@ MonoBehaviour:
   IceTowerCost: 0
   IcePositions: []
   iceSize: {x: 1, y: 1, z: 1}
-  iceSprite: {fileID: -855298285791758126, guid: 7c1a31ef75fdb44639eb563111844177, type: 3}
+  iceSprite: {fileID: 8090044376762718091, guid: 106a74b94bb8c4427acdd653614926cd, type: 3}
 --- !u!1 &1256451739
 GameObject:
   m_ObjectHideFlags: 0

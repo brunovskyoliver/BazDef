@@ -265,5 +265,7 @@ public class gameloop : MonoBehaviour
     {
         return activeWalkers.Any(w => w != null && w.toAttack);
     }
+
+    
 }
 
